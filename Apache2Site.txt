@@ -1,0 +1,25 @@
+
+<VirtualHost *:80>
+
+
+  ServerAdmin webmaster@wallaz.com
+  ServerName  wallaze.local
+  ServerAlias www.wallaze.local
+
+
+
+  DocumentRoot /home/viczz/proyectos/Wallaze/
+  <Directory /home/viczz/proyectos/Wallaze>
+     Options -Indexes +FollowSymLinks +Multiviews
+     AllowOverride All
+     Require all granted
+  </Directory>
+  # Custom log file locations
+  LogLevel warn
+  ErrorLog /var/log/apache2/error-mydomainname.com.log
+  CustomLog /var/log/apache2/access-mydomainname.com.log combined
+
+</VirtualHost>
+
+
+127.0.0.1       www.wallaze.com
