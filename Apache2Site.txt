@@ -8,8 +8,8 @@
 
 
 
-  DocumentRoot /home/viczz/proyectos/Wallaze/
-  <Directory /home/viczz/proyectos/Wallaze>
+  DocumentRoot /home/vcz/persona/Wallaze/
+  <Directory /home/vcz/persona/Wallaze>
      Options -Indexes +FollowSymLinks +Multiviews
      AllowOverride All
      Require all granted
