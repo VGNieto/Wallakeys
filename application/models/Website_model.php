@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Website_model extends CI_Model {
 
-    private $website = 'website';
+    private $website = 'websites';
 	
     function get_website_list() {
         $query = $this->db->get($this->website);
