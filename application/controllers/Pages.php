@@ -1,16 +1,14 @@
 <?php
 class Pages extends CI_Controller{
 
-    public function view($page = 'home'){
-        if(!file_exists(__DIR__.'/../views/pages/'.$page.'.php')){
-           
-            show_404();
-        }
-        $data['title'] = ucfirst($page); // Capitalize the first letter
+    public function ajax(){
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('pages/'.$page, $data);
-        $this->load->view('templates/footer', $data);
+        $this->load->model('Website_model');
+        $data['query'] = $this->Website_model->get_website_list();
+        $response['success'] = 1;
+
+        $this->output->set_status_header(200)->set_content_type('application/json')->set_output(json_encode($data['query']));
+
     }
 }
 
