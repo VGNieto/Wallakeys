@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Website_model extends CI_Model {
 
-    private $website = 'websites';
+    private $website = 'website';
 	
     function get_website_list() {
         $query = $this->db->get($this->website);
@@ -14,5 +14,8 @@ class Website_model extends CI_Model {
         return NULL;
     }
 
+    function delete_id($id){
+        $query = $this->db->delete($this->website, array('id' => $id));
+    }
 
 }

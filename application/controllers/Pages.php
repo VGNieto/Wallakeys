@@ -8,7 +8,15 @@ class Pages extends CI_Controller{
         $response['success'] = 1;
 
         $this->output->set_status_header(200)->set_content_type('application/json')->set_output(json_encode($data['query']));
-
+        
     }
+
+    public function delete($id){
+        $this->load->model('Website_model');
+        $this->Website_model->delete_id($id);
+        $response['success'] = 1;
+        
+    }
+
 }
 
