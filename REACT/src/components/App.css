@@ -4,3 +4,7 @@
 body{
     background-color: lightgrey;
 }
+
+.center-align{
+    text-align: center;
+}

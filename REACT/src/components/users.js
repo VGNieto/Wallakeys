@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios';
-import { Button, ButtonToolbar } from 'react-bootstrap';
 
 class Users extends React.Component {
 
@@ -35,9 +34,7 @@ class Users extends React.Component {
               )}
             
             </ul>
-            <ButtonToolbar>
-                <Button variant="danger"> Let's go!</Button>
-            </ButtonToolbar>
+           
           </div>
         );
       }

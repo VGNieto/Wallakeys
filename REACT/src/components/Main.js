@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-
-import { Button, ButtonGroup, Dropdown, DropdownButton, Container } from 'react-bootstrap';
-
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 class Main extends Component {
@@ -63,7 +60,7 @@ class Main extends Component {
     render() {
         return (
             <div>
-               
+              
             </div>
         )
     }
