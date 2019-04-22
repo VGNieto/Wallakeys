@@ -12,7 +12,7 @@ class Pages extends REST_Controller{
     }
     public function ajax_get(){
         
-       
+        
         $data['query'] = $this->Website_model->get_website_list();
         
         $this->response(json_encode($data['query']));

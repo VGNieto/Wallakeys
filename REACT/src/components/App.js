@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 import Header from './Header'
 import Main from './Main'
+import './App.css';
+import '../../node_modules/react-bootstrap/dist/react-bootstrap'
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 class App extends Component {
 
   render() {
     return (
-      
-        <div className="container" >
+        <div>
           <Header />
           <Main  />
-          </div>
+        </div>
+        
       
     );
   }

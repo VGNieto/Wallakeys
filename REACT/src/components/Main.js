@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -19,7 +18,7 @@ class Main extends Component {
         
         axios({
             method: 'get',
-            url: 'https://www.imviczz.com/ajax',
+            url: 'http://localhost/Codeigniter/ajax',
           })
         .then(res => {
             
