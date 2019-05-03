@@ -7,17 +7,16 @@ require APPPATH . '/libraries/Format.php';
 class Pages extends REST_Controller{
     public function __construct(){
         parent::__construct();
-        $this->load->model('Website_model');
         
     }
-    public function ajax_get(){
+    /* public function ajax_get(){
         
         
         $data['query'] = $this->Website_model->get_website_list();
         
         $this->response(json_encode($data['query']));
        
-    }
+    } */
 
     
 

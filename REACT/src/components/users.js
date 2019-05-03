@@ -6,31 +6,26 @@ class Users extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          posts: []
+          users: []
         }
         
       }
 
       componentDidMount(){
-        axios.get('http://wallaze.local/ajax')
+        axios.get('http://localhost:8888/api/users')
         .then(res => {
-            const postss = res.data;
-            console.log(postss);
-            console.log(window.location.hostname)
-            this.setState({ posts:postss  });
+            this.setState({ users:res.data  });
         });
         }
     
       render() {
-      
-        
-    
+  
         return (
           <div>
             <h1>{`/r/Welcome to my account`}</h1>
             <ul>
-              {this.state.posts.map(post =>
-                <li key={post.id}>{post.title}</li>
+              {this.state.users.map(user =>
+                <li key={user.email}>{user.username}</li>
               )}
             
             </ul>

@@ -51,5 +51,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $route['ajax'] = 'pages/ajax';
+$route['login']['POST'] = 'login/login_post';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

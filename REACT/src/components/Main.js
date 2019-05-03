@@ -18,12 +18,11 @@ class Main extends Component {
         
         axios({
             method: 'get',
-            url: 'http://localhost/Codeigniter/ajax',
+            url: 'http://localhost:8888/api/users',
           })
         .then(res => {
             
             let data = (res.data);
-            console.log(data)
             this.setState({ posts:  data });
         });
     }
