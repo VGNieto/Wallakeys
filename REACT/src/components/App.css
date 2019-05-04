@@ -1,5 +1,19 @@
 
-body{
-    background-color: rgb(245, 245, 245);
+
+.login-panel{
+  width: 250px;
+}
+
+
+.logo-categories{
+    width: 30px;
+    color:white;
+}
+
+.categorie-span{
+    color:white;
+    text-decoration: none;
+    background: none;
+    border: none;
 }
 
