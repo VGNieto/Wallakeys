@@ -1,8 +1,8 @@
 
 import React, { Component } from 'react';
-import logo from './logo.png';
 import { Navbar, Row, Col, Form, FormControl, Button, Container ,ListGroup} from '../../node_modules/react-bootstrap/'
 import Login from './Login'
+import logo from '../img/logo.png';
 import './App.css';
 
 

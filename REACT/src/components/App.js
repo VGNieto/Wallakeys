@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import '../../node_modules/react-bootstrap/dist/react-bootstrap'
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
 import Header from './Header'
 import Main from './Main'
 import Categories from './Categories'
 import {Container} from 'react-bootstrap'
 import './App.css';
-import '../../node_modules/react-bootstrap/dist/react-bootstrap'
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
+
 
 class App extends Component {
 
@@ -41,7 +42,6 @@ class App extends Component {
           
           
           <Header isLogged={this.state.isLogged } handleLogged={this.handleLogged} logout={this.logout}/>
-          <Categories />
           <Main  />
           
         </div>

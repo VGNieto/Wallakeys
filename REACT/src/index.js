@@ -6,6 +6,7 @@ import './index.css';
 import App from './components/App'
 import Users from './components/users'
 import * as serviceWorker from './serviceWorker';
+import Header from './components/Header';
 
 const routing = (
     <Router>
