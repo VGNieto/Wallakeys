@@ -32,7 +32,7 @@ class Login extends Component {
     sendLogin = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:8888/api/user/login',
+            url: 'http://localhost:8080/api/user/login',
             params: {
                 email:this.state.email,
                 password: this.state.password
@@ -41,9 +41,9 @@ class Login extends Component {
         .then(res => {
             
             let data = (res.data);
-            if(data===true){
+            if(data!==false){
                 this.props.handleLogged(data);
-                sessionStorage.setItem("isLogged", 'true');
+                sessionStorage.setItem("token_id", JSON.stringify(data));
             }
         });
     
@@ -53,39 +53,6 @@ class Login extends Component {
 
         return (
 
-            /* <div className={this.checkLogin()} >
-                
-                <article className="card-body" >
-                    <h4 className="card-title text-center mb-4 mt-1">Sign in</h4>
-
-                    
-                        <div className="form-group">
-                            <div className="input-group">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text"> <i className="fas fa-user"></i> </span>
-                                </div>
-                                <input name="" className="form-control" placeholder="Email" type="email"
-                                value={this.state.email} onChange={this.handleEmailChange} />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <div className="input-group">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text"> <i className="fas fa-lock"></i> </span>
-                                </div>
-                                <input className="form-control" placeholder="******" type="password" 
-                                value={this.state.password} onChange={this.handlePasswordChange}/>
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <button onClick={this.sendLogin} className="btn btn-primary btn-block"> Login  </button>
-                        </div>
-                        <p className="text-center"><a href="#?" className="btn">Forgot password?</a></p>
-                        <p className="text-center"><a href="#?" className="btn">Don't you have account? Register </a></p>
-
-                
-                </article>
-            </div> */
             <div className="dropdown">
             <Button variant="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ marginLeft: "10px" }} onClick={this.changeLogin}> Login </Button>
 

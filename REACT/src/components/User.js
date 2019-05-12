@@ -9,7 +9,7 @@ import { Container } from 'react-bootstrap'
 import './App.css';
 
 
-class App extends Component {
+class User extends Component {
 
 
   constructor() {
@@ -57,7 +57,6 @@ class App extends Component {
     return (
       <div>
         <Header token_id={this.state.token_id.token} handleLogged={this.handleLogged} logout={this.logout} />
-        <Main token_id={this.state.token_id.token} />
 
       </div>
 
@@ -70,4 +69,4 @@ class App extends Component {
 
 
 
-export default App;
+export default User;

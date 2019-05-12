@@ -53,6 +53,10 @@ class ComposerStaticInitfeea805cb2a84a0a2f4411ffbbaa7fc0
         ),
     );
 
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/bryanjhv/slim-session/src',
+    );
+
     public static $prefixesPsr0 = array (
         'P' => 
         array (
@@ -68,6 +72,7 @@ class ComposerStaticInitfeea805cb2a84a0a2f4411ffbbaa7fc0
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitfeea805cb2a84a0a2f4411ffbbaa7fc0::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitfeea805cb2a84a0a2f4411ffbbaa7fc0::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitfeea805cb2a84a0a2f4411ffbbaa7fc0::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitfeea805cb2a84a0a2f4411ffbbaa7fc0::$prefixesPsr0;
 
         }, null, ClassLoader::class);

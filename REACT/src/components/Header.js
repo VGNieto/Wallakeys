@@ -47,7 +47,7 @@ class Header extends Component {
                 <div  className="float-lg-right d-flex justify-content-center" style={{ margin: 5 }}>
                   <FormControl type="text" placeholder="Search..." />
                   <Button variant="outline-primary" className="ml-2" >Search</Button>
-                  {!this.props.isLogged ? <Login loginModal={this.state.loginModal} handleLogged={this.props.handleLogged} /> : 
+                  {this.props.token_id == "false" ? <Login loginModal={this.state.loginModal} handleLogged={this.props.handleLogged} /> : 
                 
                 <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} onClick={this.props.logout}> Logout </Button> }
                 </div>

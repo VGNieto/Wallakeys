@@ -1,18 +1,17 @@
 <?php
+session_cache_limiter(false);
+session_start();
+
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require 'vendor/autoload.php';
 require 'src/config/db.php';
 
+
+//Get slim component
 $app = new \Slim\App;
-$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
-    $name = $args['name'];
-    $response->getBody()->write("Hello, $name");
-
-    return $response;
-});
-
 
 //Users routes
 

@@ -16,7 +16,7 @@ import test2 from '../img/test2.jpg';
 class Carousel extends Component{
     render(){
         return(
-            <div id="carouselExampleSlidesOnly" className="carousel slide" data-ride="carousel">
+            <div id="carouselExampleSlidesOnly" className="carousel slide p-top-10" data-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <img src={test} className=" item-img"  alt="..."/>

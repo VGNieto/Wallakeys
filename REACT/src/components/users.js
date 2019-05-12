@@ -12,11 +12,34 @@ class Users extends React.Component {
       }
 
       componentDidMount(){
-        axios.get('http://localhost:8888/api/users')
-        .then(res => {
-            this.setState({ users:res.data  });
-        });
-        }
+        axios({
+          method: 'get',
+          url: 'http://localhost:8080/api/products',
+          headers: {
+              "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTc2OTMyMjYsImV4cCI6MTU1NzY5NDEyNiwianRpIjoiNFdqQUNsMndDa2pvM3RFSHJxUDVVeCIsInN1YiI6bnVsbCwidXNlcl9pZCI6bnVsbH0.J6Y_9mXHRS7S8Un25IrVM5y8VhFHvzWgZ_bbRYJZqUY"
+          }
+        })
+      .then(res => {
+          
+          let data = (res.data);
+          if(data!==null){
+
+            data = data.map((product) =>{
+              Object.entries(product).map((item) =>{
+                console.log(typeof item[0])
+              })
+            })
+           /*  data[0].product_categories = JSON.parse(data[0].product_categories);
+            data[0].product_platforms = JSON.parse(data[0].product_platforms);
+            data[0].product_minimum_requeriments = JSON.parse(data[0].product_minimum_requeriments);
+            data[0].product_recommended_requeriments = JSON.parse(data[0].product_recommended_requeriments);
+            data[0].product_languages = JSON.parse(data[0].product_languages); */
+          }
+            
+          
+      });      }
+      
+
     
       render() {
   

@@ -5,30 +5,36 @@ import Categories from './Categories'
 import Carousel from './Carousel'
 import Filters from './Filters'
 import Breadcrumbs from './Breadcrumbs'
+import Games from './Games'
+
+
 class Main extends Component {
 
     constructor(props) {
 
         super(props);
         this.state = {
-            posts: [],
+            
         }
         
     }
 
     componentDidMount(){
-        
+        console.log(this.props.token_id);
+        const token = "Bearer "+ this.props.token_id;
+        console.log(token);
         axios({
             method: 'get',
-            url: 'http://localhost:8888/api/users',
+            url: 'http://localhost:8080/api/user',
+            headers:{
+              "Authorization": token,
+            }
           })
         .then(res => {
             
             let data = (res.data);
-            this.setState({ posts:  data });
         });
     }
-
     
 
     render() {
@@ -36,7 +42,7 @@ class Main extends Component {
             <div className="main-section">
              
                 <Categories />
-                <Container>
+                <Container style={{backgroundColor:"#ffffff"}}>
                     <Carousel />
                     <Row className="top-section">
                         <Col xs={12}>
@@ -44,6 +50,9 @@ class Main extends Component {
                         </Col>
                         <Col xs={12} sm={12} md={3} lg={3} xl={3}>
                             <Filters />
+                        </Col>
+                        <Col xs={12} sm={12} md={9} lg={9} xl={9}>
+                            <Games />
                         </Col>
                     </Row>
                 </Container>

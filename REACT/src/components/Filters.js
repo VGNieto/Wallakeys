@@ -57,14 +57,14 @@ class Filters extends Component {
                         </div>
                         <div id="collapseThree" className="collapse" aria-labelledby="headingThree" >
                             <div className="card-body">
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
                                         <label>Min</label>
-                                        <input type="number" class="form-control" id="inputEmail4" placeholder="$0"/>
+                                        <input type="number" className="form-control" id="inputEmail4" placeholder="$0"/>
                                     </div>
-                                    <div class="form-group col-md-6 text-right">
+                                    <div className="form-group col-md-6 text-right">
                                         <label>Max</label>
-                                        <input type="number" class="form-control" placeholder="$1,0000"/>
+                                        <input type="number" className="form-control" placeholder="$1,0000"/>
                                     </div>
                                 </div>
                             </div>

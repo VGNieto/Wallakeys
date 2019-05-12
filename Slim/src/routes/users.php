@@ -2,12 +2,11 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-$app = new \Slim\App;
-
-
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
+
+
 
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
@@ -20,8 +19,10 @@ $app->add(function ($req, $res, $next) {
 //Get all users
 
 $app->get('/api/users',function(Request $request,Response $response){
+    
 
-
+    print_r($_SESSION);
+   
     $sql = "select * from users";
 
     try{
@@ -41,8 +42,13 @@ $app->get('/api/users',function(Request $request,Response $response){
     }
 }); 
 
-$app->post('/api/user/login',function(Request $request,Response $response){
 
+
+
+//Login user
+
+
+$app->post('/api/user/login',function(Request $request,Response $response){
     $email = $request->getParam('email');
     $password = $request->getParam('password');
 
@@ -56,7 +62,14 @@ $app->post('/api/user/login',function(Request $request,Response $response){
         $query = $db->query($sql);
         $users = $query->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        
+
+        print_r($_SESSION);
+
+        $_SESSION['tonto'] = "xd";
+
+        print_r($_SESSION);
+       
+
         return count($users)>0 ? $response->withStatus(200)->write("true"):$response->withStatus(200)->write("false");
 
 
