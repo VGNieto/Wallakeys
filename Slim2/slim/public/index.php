@@ -27,12 +27,12 @@ $dependencies($app);
 $middleware = require __DIR__ . '/../src/middleware.php';
 $middleware($app);
 
+$db = require __DIR__ . '/../src/db.php';
+
 // Register routes
 $routes = require __DIR__ . '/../src/routes.php';
 $routes($app);
 
-// Register DB
-$db = require __DIR__ . '/../src/config/db.php';
 
 // Run app
 $app->run();
