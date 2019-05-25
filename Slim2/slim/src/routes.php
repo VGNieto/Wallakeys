@@ -22,7 +22,7 @@ return function (App $app) {
         $db = new db();
         $mongo = $db->connect();
         
-        $user = $mongo->admin->users->find(['email'=>$email,'password'=>$password])->toArray();
+        $user = $mongo->wallakeys->users->find(['email'=>$email,'password'=>$password])->toArray();
 
         //Create the token and encode it.
         if (count($user)>0 && count($user)<2) {
@@ -68,12 +68,12 @@ return function (App $app) {
         $mongo = $db->connect();
 
         //Check if the user exists in db.
-        $checkUser = $mongo->admin->users->find(['email'=>$email])->toArray();
+        $checkUser = $mongo->wallakeys->users->find(['email'=>$email])->toArray();
          //User not exist
          if(count($checkUser)==0){
             
             //Introduce new user
-            $inserted = $mongo->admin->users->insertOne(['email'=>$email,'password'=>$password],array());
+            $inserted = $mongo->wallakeys->users->insertOne(['email'=>$email,'password'=>$password],array());
 
             $now = new DateTime();
             $future = new DateTime('+60 minutes');
@@ -114,7 +114,7 @@ return function (App $app) {
         $db = new db();
         $mongo = $db->connect();
        
-        $delete = $mongo->admin->users->deleteOne(['_id' => new MongoDB\BSON\ObjectId($oid)]);
+        $delete = $mongo->wallakeys->users->deleteOne(['_id' => new MongoDB\BSON\ObjectId($oid)]);
         
         if(($delete->getDeletedCount())>0){
             return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
@@ -136,7 +136,7 @@ return function (App $app) {
 
         $db = new db();
         $mongo = $db->connect();
-        $data = $mongo->admin->product->find()->toArray();
+        $data = $mongo->wallakeys->product->find()->toArray();
 
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
