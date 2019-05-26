@@ -1,26 +1,28 @@
 
-import React, { Component } from 'react';
-import { Navbar, Row, Col, Form, FormControl, Button, Container ,ListGroup} from '../../node_modules/react-bootstrap/'
+import React, { useContext,useState,useEffect } from 'react';
+import { Navbar, Row, Col, Form, FormControl, Button, Container ,ListGroup} from '../../../node_modules/react-bootstrap/'
 import Login from './Login'
-import logo from '../img/logo.png';
-import './App.css';
+import logo from '../../img/logo.png';
+import { UserContext } from '../UserDispatch';
 
 
-class Header extends Component {
+const Header = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      loginModal: false,
-    }
+  
+  const [loginModal,setLoginModal] = useState(false)
+  const [user,dispatch] = useContext(UserContext);
 
+
+
+  const changeLogin = () => {
+    setLoginModal(!loginModal)
   }
 
-  changeLogin = () => {
-    this.setState({ loginModal: !this.state.loginModal })
+  const handleLogout = () =>{
+    dispatch({type: 'logout'});
   }
 
-  render() {
+
     return (
       <div>
         <Navbar style={{ backgroundColor: "rgb(24, 24, 24)",borderBottom: "1px solid gray"}} className="d-flex align-items-center" variant="dark">
@@ -29,7 +31,7 @@ class Header extends Component {
             <Row noGutters="true" style={{ flexGrow: 1 }}>
 
               <Col xs={12} sm={12} md={5} lg={6} xl={6} className="d-flex justify-content-center justify-content-lg-start justify-content-xl-start" >
-                <Navbar.Brand href="#">
+                <Navbar.Brand href="/">
                   <img
                     alt=""
                     src={logo}
@@ -47,9 +49,9 @@ class Header extends Component {
                 <div  className="float-lg-right d-flex justify-content-center" style={{ margin: 5 }}>
                   <FormControl type="text" placeholder="Search..." />
                   <Button variant="outline-primary" className="ml-2" >Search</Button>
-                  {this.props.token_id == "false" ? <Login loginModal={this.state.loginModal} handleLogged={this.props.handleLogged} /> : 
+                  {user.token == null ? <Login loginModal={loginModal} changeLogin={changeLogin} /> : 
                 
-                <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} onClick={this.props.logout}> Logout </Button> }
+                <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} onClick={handleLogout}> Logout </Button> }
                 </div>
 
 
@@ -66,8 +68,7 @@ class Header extends Component {
 
 
     )
-  }
-
+  
 }
 
 export default Header

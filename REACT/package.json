@@ -17,7 +17,12 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "react/jsx-uses-react": "off",
+      "react/jsx-uses-vars": "off",
+      "no-unused-expressions": "off"
+    }
   },
   "browserslist": [
     ">0.2%",

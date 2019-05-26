@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
-import { Navbar, Row, Col, Form, FormControl, Button, Container, ListGroup } from '../../node_modules/react-bootstrap/'
-import './App.css';
+import { Navbar, Row, Col, Form, FormControl, Button, Container, ListGroup } from 'react-bootstrap'
 
 class Filters extends Component {
 

@@ -27,7 +27,7 @@ return function (App $app) {
         //Create the token and encode it.
         if (count($user)>0 && count($user)<2) {
             $now = new DateTime();
-            $future = new DateTime('+60 minutes');
+            $future = new DateTime('+500 minutes');
             $server = $request->getServerParams();
             $jti = (new Base62)->encode(random_bytes(16));
             $payload = [
@@ -76,7 +76,7 @@ return function (App $app) {
             $inserted = $mongo->wallakeys->users->insertOne(['email'=>$email,'password'=>$password],array());
 
             $now = new DateTime();
-            $future = new DateTime('+60 minutes');
+            $future = new DateTime('+500 minutes');
             $server = $request->getServerParams();
             $jti = (new Base62)->encode(random_bytes(16));
             $payload = [

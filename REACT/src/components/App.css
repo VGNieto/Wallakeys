@@ -1,6 +1,15 @@
 /* General options */
 
 
+.categories a, .categories a:hover{
+ 
+    color: white;
+    text-decoration: none;
+    list-style: none;
+    padding-left: 5px;
+}
+
+
 
 @media screen and (max-width: 767px) {
   .justify-content-xs-center {
