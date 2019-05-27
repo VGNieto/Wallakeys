@@ -1,60 +1,32 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useReducer } from 'react';
 import ReactDOM from 'react-dom';
-import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom'
+import './index.css';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 import { UserContext, UserReducer } from './components/UserDispatch';
 
-
-import './index.css';
-import App from './components/App'
-import User from './components/UserComponents/User';
-import WishList from './components/UserComponents/WishList';
-import Cart from './components/UserComponents/Cart';
-import Products from './components/Products/Products';
-import Product from './components/Products/Product';
-
-import Test from './components/Test';
+const cosas = () =>{
+    
 
 
-function CheckUser(props) {
+    return (
+
+        <UserReducer>
+            <App />
+        </UserReducer>
+    )
 
 
-  const [user, dispatch] = useContext(UserContext);
-  return user;
+
+
 
 }
 
+ReactDOM.render(cosas(), document.getElementById('root'));
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    CheckUser == null ? <Component {...props} /> : <Redirect to='/' />
-
-  )} />
-)
-
-
-const routing = (
-  <Router>
-    <div>
-      <UserReducer>
-        
-        <Route exact path="/" component={App} />
-        <PrivateRoute exact path="/user/view:id" component={User} />
-        <PrivateRoute exact path = "/user/:id/wishlist" component={WishList} />
-        <PrivateRoute exact path = "/user/:id/cart" component={Cart} />
-        <Route exact path= "/platform/:id" component={Products} />
-        <Route exact path = "/products" component={Products} />
-        <Route exact path="/product/:id" component={Product} />
-        <PrivateRoute exact path="/test" component={Test} />
-
-      </UserReducer>
-    </div>
-  </Router>
-)
-
-
-ReactDOM.render(routing, document.getElementById('root'));
-
-
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+

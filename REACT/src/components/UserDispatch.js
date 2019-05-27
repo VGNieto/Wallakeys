@@ -8,12 +8,13 @@ export const UserReducer = (props) => {
     const initialState = {
         token: null,
         expires: null,
+        oid: null,
     };
 
     function reducer(state, action) {
         switch (action.type) {
             case 'login':
-                return {token: action.text.token,expires: action.text.expires };
+                return {token: action.text.token,expires: action.text.expires, oid:action.text.oid };
             case 'logout':
                 sessionStorage.clear();
                 return {token:null,expires:null}
@@ -22,7 +23,6 @@ export const UserReducer = (props) => {
         }
     }
     const [user, dispatch] = useReducer(reducer, initialState);
-
 
     useEffect(() => {
         const myItem = sessionStorage.getItem("token_id");

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Navbar, Row, Col, Form, FormControl, Button, Container, ListGroup } from 'react-bootstrap'
+import React from 'react';
+import { Col} from 'react-bootstrap'
 
 const Breadcrumbs = () => {
 
@@ -10,8 +10,8 @@ const Breadcrumbs = () => {
         <div className="breadcrumb-container breadcrumb">
 
             <Col xs={12} sm={8} className="d-flex align-self-center justify-content-xs-center">
-                <li className="breadcrumb-item"><a href="#">Home</a></li>
-                <li className="breadcrumb-item"><a href="#">Page</a></li>
+                <li className="breadcrumb-item"></li>
+                <li className="breadcrumb-item"></li>
                 <li className="breadcrumb-item active" aria-current="page">Page</li>
             </Col>
             <Col xs={12} sm={12} md={4} className="d-flex justify-content-end">

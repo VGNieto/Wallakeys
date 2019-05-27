@@ -1,10 +1,10 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useContext,useState,useEffect } from 'react';
-import { Navbar, Row, Col, Form, FormControl, Button, Container ,ListGroup} from '../../../node_modules/react-bootstrap/'
+import { Navbar, Row, Col, Form, FormControl, Button, Container} from '../../../node_modules/react-bootstrap/'
 import Login from './Login'
 import logo from '../../img/logo.png';
 import { UserContext } from '../UserDispatch';
-
+import {Link} from 'react-router-dom';
 
 const Header = () => {
 
@@ -49,9 +49,25 @@ const Header = () => {
                 <div  className="float-lg-right d-flex justify-content-center" style={{ margin: 5 }}>
                   <FormControl type="text" placeholder="Search..." />
                   <Button variant="outline-primary" className="ml-2" >Search</Button>
-                  {user.token == null ? <Login loginModal={loginModal} changeLogin={changeLogin} /> : 
-                
-                <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} onClick={handleLogout}> Logout </Button> }
+
+                  {user.token == null ? 
+                    null
+                    : 
+                    <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} ><Link to={'/user/'+user.oid}> My Profile </Link> </Button>
+                  }
+                  
+                  {user.token == null ? 
+                    <Login loginModal={loginModal} changeLogin={changeLogin} /> 
+                    
+                    : 
+
+                    <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} onClick={handleLogout}> Logout </Button>
+                  }
+      
+                  
+                  
+
+                  
                 </div>
 
 

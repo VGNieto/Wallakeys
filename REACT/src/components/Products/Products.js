@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 
 import React, { Component } from 'react';
 import axios from 'axios';
@@ -8,19 +8,12 @@ import nfs from '../../img/nfs.jpg';
 import sims from '../../img/sims.jpg'
 import skyrim from '../../img/skyrim.jpg';
 
-class Products extends Component {
+const  Products = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        }
-
-    }
-
-    render_games = () => {
+   
+    const render_games = () => {
         return (
-        <div className="row">
+       /*  <div className="row">
             <div className="col-sm-6 col-md-4 col-lg-3">
                 <div className="product-grid3">
                     <div className="product-image3">
@@ -107,22 +100,21 @@ class Products extends Component {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */1
         )
 
 
     }
 
-    render() {
         return (
 
 
-            this.render_games()
+            render_games()
 
 
 
         )
-    }
+    
 }
 
 export default Products

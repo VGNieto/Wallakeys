@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useState,useContext } from 'react';
 import axios from 'axios';
 import {Button} from 'react-bootstrap'
@@ -36,6 +36,7 @@ const Login = (props) =>{
             
             let data = (res.data);
             if(data!==false){   
+                console.log(data);
                 handleLogin(data);   
                 sessionStorage.setItem("token_id", JSON.stringify(data));
                 
@@ -44,7 +45,6 @@ const Login = (props) =>{
     }
 
     
-    console.log(user);
     return (
         <div className="dropdown">
             
