@@ -93,7 +93,8 @@ return function (App $app) {
         
             $data['token'] = $token;
             $data['expires'] = $future->getTimeStamp();
-        
+            $data['oid'] = $inserted->getInsertedID();
+
             return $response->withStatus(201)
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
@@ -142,6 +143,47 @@ return function (App $app) {
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
+
+
+    //Get user's info
+    $app->get('/api/user/info',function(Request $request, Response $response, array $args) use ($container){
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+       
+        $info = $mongo->wallakeys->users->find( ['_id' => new MongoDB\BSON\ObjectId($oid)],['projection' => ['password' => 0,'_id'=> 0]]   )->toArray();
+        
+       
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    
+    });
+
+    //Update user's info
+    $app->post('/api/user/update',function(Request $request, Response $response, array $args) use ($container){
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+         //Get the request parameters.
+        $data['fullname'] = $request->getParam('fullname');
+        $data['country'] = $request->getParam('country');
+        $data['birthday'] = $request->getParam('birthday');
+
+
+        foreach ($data as $key => $value) {
+            $info[] = $mongo->wallakeys->users->findOneAndUpdate( ['_id' => new MongoDB\BSON\ObjectId($oid)],
+            
+            [ '$set' => [$key => $value]],['upsert' => true]);
+        }
+        
+       
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    
+    });
+
 
 
     

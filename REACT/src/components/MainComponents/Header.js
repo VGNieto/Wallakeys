@@ -30,39 +30,52 @@ const Header = () => {
 
             <Row noGutters="true" style={{ flexGrow: 1 }}>
 
-              <Col xs={12} sm={12} md={5} lg={6} xl={6} className="d-flex justify-content-center justify-content-lg-start justify-content-xl-start" >
-                <Navbar.Brand href="/">
-                  <img
-                    alt=""
-                    src={logo}
-                    width="200"
-                    className="d-inline-block"
+              <Col xs={12} sm={12} md={4} lg={4} xl={4} className="d-flex justify-content-center justify-content-lg-start justify-content-xl-start" >
+              <Link to="/">
+                <Navbar.Brand> 
+                    <img
+                      alt=""
+                      src={logo}
+                      width="200"
+                      className="d-inline-block"
 
-                  />
+                    />
                 </Navbar.Brand>
+              </Link>
+                
               </Col>
 
 
 
-              <Col xs={12} sm={12} md={7} lg={6} xl={6} className="d-flex justify-content-center d-md-block d-lg-block d-xl-block  "  >
+              <Col xs={12} sm={12} md={8} lg={8} xl={8} className="d-flex justify-content-center d-md-block d-lg-block d-xl-block  "  >
                 
                 <div  className="float-lg-right d-flex justify-content-center" style={{ margin: 5 }}>
-                  <FormControl type="text" placeholder="Search..." />
+                  <input type="text" placeholder=" Search..." />
                   <Button variant="outline-primary" className="ml-2" >Search</Button>
 
                   {user.token == null ? 
                     null
                     : 
-                    <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} ><Link to={'/user/'+user.oid}> My Profile </Link> </Button>
+                    <Link to={'/account/account-details'}><Button variant="btn btn-warning" style={{ marginLeft: "10px" }} > <i className="fa fa-user"></i> My Profile </Button> </Link> 
                   }
+
+
+                  {user.token == null ? 
+                    null
+                    : 
+                    <Link to={'/account/account-details'}><Button variant="btn btn-warning" style={{ marginLeft: "10px" }} > <i className="fa fa-shopping-cart"></i> Cart</Button> </Link> 
+                  }
+
                   
                   {user.token == null ? 
                     <Login loginModal={loginModal} changeLogin={changeLogin} /> 
                     
                     : 
 
-                    <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} onClick={handleLogout}> Logout </Button>
+                    <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} onClick={handleLogout}>Logout  <i className="fa fa-sign-out-alt"> </i> </Button>
                   }
+                  
+                  
       
                   
                   

@@ -7,12 +7,16 @@ import '../fontawesome-free/css/all.css';
 
 import './App.css';
 import React, { useContext, useReducer,useEffect} from 'react';
-import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Redirect, Link } from 'react-router-dom'
 
 import { UserContext, UserReducer } from './UserDispatch';
 import User from './UserComponents/User';
 import WishList from './UserComponents/WishList';
 import Cart from './UserComponents/Cart';
+import Password from './UserComponents/Password';
+import PhoneNumber from './UserComponents/PhoneNumber'
+import Orders from './UserComponents/Orders'
+
 import Products from './Products/Products';
 import Product from './Products/Product';
 import Test from './Test';
@@ -24,13 +28,29 @@ function  App () {
 
   const [user,setUser] = useContext(UserContext);
 
+  console.log(user);
 
-  const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => (
-      user.token != null ? <Component {...props} /> : <Redirect to='/' />
   
-    )} />
-  )
+
+  const PrivateRoute = ({component: Component,...rest}) => {
+          const isAuth = sessionStorage.getItem('token_id');
+          return (
+              <Route
+                  {...rest}
+                  render={props =>
+                      isAuth ? (
+                          <Component {...props} {...rest} />
+                      ) : (
+                              <Redirect
+                                  to={{
+                                      pathname: "/",
+                                  }}
+                              />
+                          )
+                      }
+              />
+          );
+      }
 
     return (
 
@@ -42,9 +62,15 @@ function  App () {
             <Header />
 
             <Route exact path="/" component={Main} />
-          
-            <PrivateRoute path="/user/:id" component={User} />
-            <PrivateRoute  path = "/wishlist" component={WishList} />
+
+                  
+              <PrivateRoute path="/account/account-details" component={User} />
+              <PrivateRoute path="/account/password" component={Password} />
+              <PrivateRoute path="/account/phone-number" component={PhoneNumber} />
+              <PrivateRoute path="/account/orders" component={Orders} />
+              
+
+            <PrivateRoute path = "/wishlist" component={WishList} />
             <PrivateRoute exact path = "/cart" component={Cart} />
             
             <Route exact path= "/platform/:id" component={Products} />
