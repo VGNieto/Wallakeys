@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext,useState,useEffect } from 'react';
-import { Navbar, Row, Col, Form, FormControl, Button, Container} from '../../../node_modules/react-bootstrap/'
+import React, { useContext, useState, useEffect } from 'react';
+import { Navbar, Row, Col, Form, FormControl, Button, Container } from '../../../node_modules/react-bootstrap/'
 import Login from './Login'
 import logo from '../../img/logo.png';
 import { UserContext } from '../UserDispatch';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
 
-  
-  const [loginModal,setLoginModal] = useState(false)
-  const [user,dispatch] = useContext(UserContext);
+
+  const [loginModal, setLoginModal] = useState(false)
+  const [user, dispatch] = useContext(UserContext);
 
 
 
@@ -18,86 +18,90 @@ const Header = () => {
     setLoginModal(!loginModal)
   }
 
-  const handleLogout = () =>{
-    dispatch({type: 'logout'});
+  const handleLogout = () => {
+    dispatch({ type: 'logout' });
   }
 
 
-    return (
-      <div>
-        <Navbar style={{ backgroundColor: "rgb(24, 24, 24)",borderBottom: "1px solid gray"}} className="d-flex align-items-center" variant="dark">
-          <Container   >
+  return (
+    <div>
+      <Navbar style={{ backgroundColor: "rgb(24, 24, 24)", borderBottom: "1px solid gray" }} className="d-flex align-items-center" variant="dark">
+        <Container   >
 
-            <Row noGutters="true" style={{ flexGrow: 1 }}>
+          <Row noGutters="true" style={{ flexGrow: 1 }}>
 
-              <Col xs={12} sm={12} md={4} lg={4} xl={4} className="d-flex justify-content-center justify-content-lg-start justify-content-xl-start" >
+            <Col xs={12} sm={12} md={4} lg={4} xl={4} className="d-flex justify-content-center justify-content-lg-start justify-content-xl-start" >
               <Link to="/">
-                <Navbar.Brand> 
-                    <img
-                      alt=""
-                      src={logo}
-                      width="200"
-                      className="d-inline-block"
+                <Navbar.Brand style={{margin:"0px"}}>
+                  <img
+                    alt=""
+                    src={logo}
+                    width="200"
+                    className="d-inline-block"
 
-                    />
+                  />
                 </Navbar.Brand>
               </Link>
-                
-              </Col>
+
+            </Col>
 
 
 
-              <Col xs={12} sm={12} md={8} lg={8} xl={8} className="d-flex justify-content-center d-md-block d-lg-block d-xl-block  "  >
-                
-                <div  className="float-lg-right d-flex justify-content-center" style={{ margin: 5 }}>
-                  <input type="text" placeholder=" Search..." />
-                  <Button variant="outline-primary" className="ml-2" >Search</Button>
+            <Col xs={12} sm={12} md={8} lg={8} xl={8}  >
 
-                  {user.token == null ? 
+              <div className="float-lg-right right-nav" >
+                 
+                <input type="text" placeholder=" Search..." style={{marginTop:"13px",height:"30px" }} />
+                <Button variant="outline-primary" style={{marginTop:"10px"}} className="ml-2" >Search</Button>
+
+                <div className="navbar-buttons">
+                  {user.token == null ?
                     null
-                    : 
-                    <Link to={'/account/account-details'}><Button variant="btn btn-warning" style={{ marginLeft: "10px" }} > <i className="fa fa-user"></i> My Profile </Button> </Link> 
+                    :
+                    <Link to={'/account/account-details'}><Button variant="btn btn-warning" style={{ marginLeft: "10px" }} > <i className="fa fa-user"></i> My Profile </Button> </Link>
                   }
 
 
-                  {user.token == null ? 
+                  {user.token == null ?
                     null
-                    : 
-                    <Link to={'/account/account-details'}><Button variant="btn btn-warning" style={{ marginLeft: "10px" }} > <i className="fa fa-shopping-cart"></i> Cart</Button> </Link> 
+                    :
+                    <Link to={'/account/account-details'}><Button variant="btn btn-warning" style={{ marginLeft: "10px" }} > <i className="fa fa-shopping-cart"></i> Cart</Button> </Link>
                   }
 
-                  
-                  {user.token == null ? 
-                    <Login loginModal={loginModal} changeLogin={changeLogin} /> 
-                    
-                    : 
+
+                  {user.token == null ?
+                    <Login loginModal={loginModal} changeLogin={changeLogin} />
+
+                    :
 
                     <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} onClick={handleLogout}>Logout  <i className="fa fa-sign-out-alt"> </i> </Button>
                   }
-                  
-                  
-      
-                  
-                  
 
-                  
                 </div>
 
-
-              </Col>
-
-            </Row>
-
-          </Container>
-
-        </Navbar>
+              </div>
 
 
-      </div>
 
 
-    )
-  
+
+
+
+
+            </Col>
+
+          </Row>
+
+        </Container>
+
+      </Navbar>
+
+
+    </div>
+
+
+  )
+
 }
 
 export default Header

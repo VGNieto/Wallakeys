@@ -133,15 +133,32 @@ return function (App $app) {
 
     //Get all products
     $app->get('/api/products', function (Request $request, Response $response, array $args) use ($container) {
-        $token =  $request->getAttribute('jwt');
-        $oid = $token['oid']->{'$oid'};
-
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
-        $data = $mongo->wallakeys->product->find()->toArray();
+        $data = $mongo->wallakeys->games->find()->toArray();
 
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+    //Get specific product
+    $app->get('/api/product/info',function(Request $request, Response $response, array $args) use ($container){
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+
+        $productID = $request->getParam('productID');
+
+        $db = new db();
+        $mongo = $db->connect();
+       
+        $info = $mongo->wallakeys->games->find( ['_id' => new MongoDB\BSON\ObjectId($productID)])->toArray();
+        
+       
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    
     });
 
 

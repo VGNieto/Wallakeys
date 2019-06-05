@@ -6,7 +6,7 @@ import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
 import '../fontawesome-free/css/all.css';
 
 import './App.css';
-import React, { useContext, useReducer,useEffect} from 'react';
+import React, { useContext} from 'react';
 import { Route, BrowserRouter as Router, Redirect, Link } from 'react-router-dom'
 
 import { UserContext, UserReducer } from './UserDispatch';
@@ -28,7 +28,6 @@ function  App () {
 
   const [user,setUser] = useContext(UserContext);
 
-  console.log(user);
 
   
 
@@ -60,7 +59,6 @@ function  App () {
 
           <UserReducer>
             <Header />
-
             <Route exact path="/" component={Main} />
 
                   
@@ -69,6 +67,7 @@ function  App () {
               <PrivateRoute path="/account/phone-number" component={PhoneNumber} />
               <PrivateRoute path="/account/orders" component={Orders} />
               
+
 
             <PrivateRoute path = "/wishlist" component={WishList} />
             <PrivateRoute exact path = "/cart" component={Cart} />

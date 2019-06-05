@@ -1,0 +1,98 @@
+{
+    "name": "Warhammer: Chaosbane",
+    "stock": 10,
+    "price": 27.19,
+    "description": "In a world ravaged by war and dominated by magic, you are the last hope for the Empire of Man against the Chaos hordes.Playing solo or with up to 4 in local or online co-op, choose a hero from 4 character classes with unique and complementary skills, and prepare for epic battles wielding some of the most powerful artefacts of the Old World.",
+    "img":"chaosbane.jpg",
+    "release": "4 June 2019",
+    "platforms":["steam"],
+    "categories": ["Action","Adventure","RPG","Wargame","Multiplayer","Violent"],
+    "languages":["Spanish","English","Chinese"],
+    "comments":{
+
+    },
+    "minimum-requirements":
+        {
+            "os": "Windows 10",
+            "processor": "Intel Core i3 or AMD Phenom X3",
+            "graphics": "NVIDIA® GeForce® GTX 660 or AMD Radeon HD 7850 with 2 GB RAM",
+            "memory": "6 GB RAM",
+            "directx": "Version 11",
+            "storage": "15 GB available space",
+            "soundcard": "DirectX Compatible Soundcard"
+        },
+    "recommended-requirements":
+        {
+            "os": "Windows 10",
+            "processor": "Intel® Core i5 or AMD FX 8150",
+            "memory": "8 GB RAM",
+            "graphics": "NVIDIA® GeForce® GTX 780 or AMD Radeon™ R9 290 with 2 GB RAM",
+            "directx": "Version 11",
+            "storage": "15 GB available space",
+            "soundcard": "DirectX Compatible Soundcard"
+        }
+}
+
+{
+    "name": "Forza Horizon 4",
+    "stock": 12,
+    "price": 34.99,
+    "description": "Dynamic seasons change everything at the world’s greatest automotive festival. Go it alone or team up with others to explore beautiful and historic Britain in a shared open world. Collect, modify and drive over 450 cars. Race, stunt, create and explore – choose your own path to become a Horizon Superstar. The Forza Horizon 4 Standard Edition digital bundle includes the full game of Forza Horizon 4 and the Formula Drift Car Pack.",
+    "img":"horizon4.jpg",
+    "release": "2 October 2018",
+    "platforms":["Xbox"],
+    "categories": ["Racing","Sports"],
+    "languages":["Multilanguage"],
+    "comments":{
+
+    },
+    "minimum-requirements":
+        {
+            "os": "Windows 10",
+            "processor": "Core i3-4170 3.7GHz / FX-6120",
+            "graphics": "GeForce GT 740 / Radeon R7 250X",
+            "memory": "	8 GB",
+            "storage": "55 GB",
+        },
+    "recommended-requirements":
+        {
+            "os": "Windows 10",
+            "processor": "	Core i7-3820 4-Core 3.60GHz / Ryzen R5 1400",
+            "memory": "12 GB",
+            "graphics": "GeForce GTX 1060 3GB / Radeon RX 470 4GB",
+            "storage": "55 GB",
+        }
+}
+
+{
+    "name": "F1 2019",
+    "stock": 60,
+    "price": 31.49,
+    "description": "F1 2019, el videojuego oficial de 2019 FIA FORMULA ONE WORLD CHAMPIONSHIP, te desafía a que superes a tus rivales en el título más ambicioso de la historia de Codemasters. F1 2019 incluye todos los equipos, pilotos y los 21 circuitos oficiales de la temporada 2019. Este año el juego incluye la F2, que permite participar en la temporada 2018 con pilotos como George Russell, Lando Norris y Alexander Albon. Se ha hecho un gran énfasis en la fidelidad gráfica y ha habido una mejora significativa en los entornos, lo que hace que los circuitos cobren vida como nunca antes lo habían hecho. Las carreras nocturnas se han transformado completamente y han mejorado enormemente los niveles de realismo. Además, se ha mejorado el sonido y la imagen de las retransmisiones de F1, lo que añade autenticidad a todos los aspectos del fin de semana. Se necesita conexión para descargar los vehículos de 2019 finales de las escuderías de F1 (si procede) y el contenido de la temporada 2019 de F2",
+    "img":"f12019.jpg",
+    "release": "28 junio 2019",
+    "platforms":["Steam"],
+    "categories": ["Racing","Sports","Simulation","Driving"],
+    "languages":["Multilanguage"],
+    "comments":{
+
+    },
+    "minimum-requirements":
+        {
+            "os": "Windows 10",
+            "processor": "Intel i3 2130 / AMD FX4300",
+            "graphics": "Nvidia GTX640 / HD7750",
+            "memory": "8 GB RAM",
+            "directx": "Version 11",
+            "storage": "80 GB available space",
+        },
+    "recommended-requirements":
+        {
+            "os": "Windows 10",
+            "processor": "Intel i5 9600k / AMD Ryzen 5 2600x",
+            "graphics": "Nvidia GTX 1660ti / RX590",
+            "memory": "16 GB RAM",
+            "directx": "Version 12",
+            "storage": "80 GB available space",
+        }
+}

@@ -29,7 +29,7 @@ return function (App $app) {
         "rules" => [
             new Tuupola\Middleware\JwtAuthentication\RequestPathRule([
                 "path" => "/",
-                "ignore" => ["/token", "/not-secure", "/home", "/api/user/login","/api/user/register"]
+                "ignore" => ["/token", "/not-secure", "/home", "/api/user/login","/api/user/register","/api/products","/api/product/info"]
             ]),
             new Tuupola\Middleware\JwtAuthentication\RequestMethodRule([
                 "ignore" => ["OPTIONS"]

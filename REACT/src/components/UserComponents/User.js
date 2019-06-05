@@ -4,8 +4,7 @@ import axios from 'axios';
 import 'react-bootstrap/dist/react-bootstrap'
 
 import { UserContext } from '../UserDispatch';
-import Header from '../MainComponents/Header';
-import Main from '../MainComponents/Main'
+
 
 const User = (props) => {
 
@@ -192,7 +191,7 @@ const User = (props) => {
                         <span className="sr-only">Loading...</span>
                     </div>
                   </div>
-                  <p className="d-none" id="saved-changes" style={{margin:"0",paddingLeft:"15px"}}> Se han guardado los cambios.</p>
+                  <p className="d-none" id="saved-changes" style={{margin:"0",paddingLeft:"15px"}}>Changes saved.</p>
                 </div>
               </form>
             </div>
