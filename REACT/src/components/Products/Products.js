@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import { UserContext } from '../UserDispatch';
-var images = require.context('../../img', true);
+const images = require.context('../../img', true);
 
 const Products = () => {
 
@@ -37,12 +37,20 @@ const Products = () => {
     const show_games = () => {
         console.log(games);
         return (
-               <div className="row">
+               <div className="container row">
                 {games.map((game) =>
-                    <div className="col-sm-6 col-md-4 col-lg-3">
+                    <div className="col-sm-6 col-md-4 col-lg-3" key={game._id.$oid}>
                         <div className="product-grid3">
                             <div className="product-image3">
-                                <Link to={"/product/"+game._id.$oid}>
+                                <Link 
+                                to={{
+                                    pathname: "/product/"+game.name.split(" ").join("-").toLowerCase(),
+                                    state: { 
+                                      productID: game._id.$oid,
+                                     
+                                    }
+                                  }}
+                                >
                                 <img src={images(`./${game.img}`)}/>
 
                                 </Link>

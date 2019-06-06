@@ -10,6 +10,9 @@ import React, { useContext} from 'react';
 import { Route, BrowserRouter as Router, Redirect, Link } from 'react-router-dom'
 
 import { UserContext, UserReducer } from './UserDispatch';
+import { CartContext, CartReducer } from './CartDispatch';
+
+
 import User from './UserComponents/User';
 import WishList from './UserComponents/WishList';
 import Cart from './UserComponents/Cart';
@@ -22,7 +25,7 @@ import Product from './Products/Product';
 import Test from './Test';
 import Main from './MainComponents/Main'
 import Header from './MainComponents/Header';
-
+import Footer from './MainComponents/Footer'
 
 function  App () {
 
@@ -58,25 +61,27 @@ function  App () {
           <div>
 
           <UserReducer>
-            <Header />
-            <Route exact path="/" component={Main} />
+            <CartReducer>
+              <Header />
+              <Route exact path="/" component={Main} />
 
-                  
-              <PrivateRoute path="/account/account-details" component={User} />
-              <PrivateRoute path="/account/password" component={Password} />
-              <PrivateRoute path="/account/phone-number" component={PhoneNumber} />
-              <PrivateRoute path="/account/orders" component={Orders} />
+                    
+                <PrivateRoute path="/account/account-details" component={User} />
+                <PrivateRoute path="/account/password" component={Password} />
+                <PrivateRoute path="/account/phone-number" component={PhoneNumber} />
+                <PrivateRoute path="/account/orders" component={Orders} />
+                
+
+
+              <PrivateRoute path = "/wishlist" component={WishList} />
+              <PrivateRoute exact path = "/cart" component={Cart} />
               
-
-
-            <PrivateRoute path = "/wishlist" component={WishList} />
-            <PrivateRoute exact path = "/cart" component={Cart} />
-            
-            <Route exact path= "/platform/:id" component={Products} />
-            <Route exact path = "/products" component={Products} />
-            <Route exact path="/product/:id" component={Product} />
-            <PrivateRoute exact path="/test" component={Test} />
-    
+              <Route exact path= "/platform/:id" component={Products} />
+              <Route exact path = "/products" component={Products} />
+              <Route exact path="/product/:id" component={Product} />
+              <PrivateRoute exact path="/test" component={Test} />
+              <Footer />
+            </CartReducer>
           </UserReducer>
           </div>
 
