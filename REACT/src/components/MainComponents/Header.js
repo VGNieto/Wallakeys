@@ -25,14 +25,13 @@ const Header = () => {
 
   const totalProducts = () =>{
     let total = 0;
-    console.log(cart.items);
     cart.items.forEach((element) => {
       total = total + element.quantity;
     }) 
     return total;
   }
 
-console.log(cart.items.length);
+  console.log(cart);
   return (
     <div>
       <Navbar style={{ backgroundColor: "#1b2327", borderBottom: "1px solid gray" }} className="d-flex align-items-center" variant="dark">

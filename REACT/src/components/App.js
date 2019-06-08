@@ -26,6 +26,7 @@ import Test from './Test';
 import Main from './MainComponents/Main'
 import Header from './MainComponents/Header';
 import Footer from './MainComponents/Footer'
+import Checkout from './UserComponents/Checkout'
 
 function  App () {
 
@@ -71,7 +72,8 @@ function  App () {
                 <PrivateRoute path="/account/password" component={Password} />
                 <PrivateRoute path="/account/phone-number" component={PhoneNumber} />
                 <PrivateRoute path="/account/orders" component={Orders} />
-                <PrivateRoute path="/account/cart" component={Cart} />
+                <PrivateRoute exact path="/account/cart" component={Cart} />
+                <PrivateRoute exact path="/account/cart/checkout" component={Checkout} />
 
 
               <PrivateRoute path = "/wishlist" component={WishList} />

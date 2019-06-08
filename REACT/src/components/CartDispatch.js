@@ -12,15 +12,15 @@ export const CartReducer = (props) => {
     function reducer(state, action) {
         switch (action.type) {
             case 'initialCheck':
-                    return { items: action.text }
-
+                state.items = action.text;
+                return { items: action.text }
             case 'add':
 
                 let exists = false;
                 state.items.forEach(element => {
                     console.log(element.id);
                     if (element.id == action.text.id) {
-                        element.quantity++;
+                        element.quantity = action.text.quantity;
                         element.subtotal = (element.quantity * element.price).toFixed(2);
                         exists = true;
                         return;
@@ -29,23 +29,22 @@ export const CartReducer = (props) => {
                     }
                 });
                 if (!exists) {
+                    state.items = [...state.items, action.text]
                     sessionStorage.setItem("cart", JSON.stringify(state.items));
-                    return { items: [...state.items, action.text] };
+                    return { items: [...state.items] };
                 } else {
                     sessionStorage.setItem("cart", JSON.stringify(state.items));
                     return { items: [...state.items] }
                 }
+                return;
             case 'addOne':
-                console.log(action.text)
-                state.items.forEach(element => {
+                state.items.map(element => {
                     console.log(element.id);
                     if (element.id == action.text.id) {
-                        element.quantity++;
+                        element.quantity = action.text.quantity;
                         element.subtotal = (element.quantity * element.price).toFixed(2);
-                        return;
-                    } else {
-
                     }
+                    
                 });
 
                 sessionStorage.setItem("cart", JSON.stringify(state.items));
@@ -54,7 +53,7 @@ export const CartReducer = (props) => {
                 state.items.forEach(element => {
                     console.log(element.id);
                     if (element.id == action.text.id) {
-                        element.quantity = element.quantity-1;
+                        element.quantity = action.text.quantity;
                         element.subtotal = (element.quantity * element.price).toFixed(2);
                         return;
                     } else {
@@ -72,29 +71,20 @@ export const CartReducer = (props) => {
                 })
                 sessionStorage.setItem("cart", JSON.stringify(state.items));
                 return { items: [...state.items] }
-            case 'loadData':
-                    loadData();
-                    return;
 
             default:
                 throw new Error();
 
-            
+
         }
     }
     const [cart, setCart] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        const cart = sessionStorage.getItem("cart");
-        if (cart !== null) { setCart({type:'initialCheck',text: JSON.parse(cart)})} 
+        const cart = JSON.parse(sessionStorage.getItem("cart"));
+        if (cart !== null) { setCart({ type: 'initialCheck', text: cart }) }
         
     }, []);
-
-    const loadData = () =>{
-        const cart = sessionStorage.getItem("cart");
-        if (cart !== null) { setCart({type:'initialCheck',text: JSON.parse(cart)})} 
-        
-    }
 
 
     return (

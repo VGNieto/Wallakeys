@@ -42,20 +42,27 @@ const Product = (props) => {
   }, [])
 
 
-  const addToCart = (e) =>{
+  const addToCart = (game) =>{
 
+    let actualQuantity = 1;
+    cart.items.forEach(element => {
+      if(element.id == game._id.$oid){
+        actualQuantity = element.quantity+1;
+      }
+    });
+    console.log(game);
     setCart({ type: 'add', text: {
       id: game._id.$oid,
       name: game.name,
       price: game.price,
-      quantity: 1,
+      quantity: actualQuantity,
       stock: game.stock,
       subtotal: game.price,
       img: game.img,
+      platforms: game.platforms
     } });
 
   }
-  console.log(cart);
 
   const show_categories = () => {
     return (
@@ -107,7 +114,7 @@ const Product = (props) => {
 
 
                       <div className="section" style={{ paddingBottom: "20px" }}>
-                        <button className="btn btn-success" onClick={addToCart}><i className="fa fa-shopping-cart"></i>Add to Cart</button>
+                        <button className="btn btn-success" onClick={()=> {addToCart(game)}}><i className="fa fa-shopping-cart"></i>Add to Cart</button>
                         <h6 style={{ marginTop: "10px" }}><a href="#"><i className="fa fa-heart"></i> Add to Wishlist</a></h6>
                       </div>
                     </div>
