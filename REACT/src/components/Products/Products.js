@@ -28,14 +28,12 @@ const Products = () => {
                    
                     setGames(data);
 
-                    console.log(data)
 
                 }
             });
     }, [])
 
     const show_games = () => {
-        console.log(games);
         return (
                <div className="container row">
                 {games.map((game) =>
@@ -57,6 +55,7 @@ const Products = () => {
                                 <ul className="social">
                                     <li><a href="#"><i className="fa fa-shopping-bag"></i></a></li>
                                     <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
+                                    
                                 </ul>
                                 <span className="product-new-label">New</span>
                             </div>

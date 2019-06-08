@@ -63,6 +63,7 @@ function  App () {
           <UserReducer>
             <CartReducer>
               <Header />
+              
               <Route exact path="/" component={Main} />
 
                     
@@ -70,16 +71,16 @@ function  App () {
                 <PrivateRoute path="/account/password" component={Password} />
                 <PrivateRoute path="/account/phone-number" component={PhoneNumber} />
                 <PrivateRoute path="/account/orders" component={Orders} />
-                
+                <PrivateRoute path="/account/cart" component={Cart} />
 
 
               <PrivateRoute path = "/wishlist" component={WishList} />
-              <PrivateRoute exact path = "/cart" component={Cart} />
               
               <Route exact path= "/platform/:id" component={Products} />
               <Route exact path = "/products" component={Products} />
               <Route exact path="/product/:id" component={Product} />
               <PrivateRoute exact path="/test" component={Test} />
+
               <Footer />
             </CartReducer>
           </UserReducer>

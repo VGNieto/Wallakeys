@@ -17,7 +17,7 @@ const Categories = () => {
     const [categories,setCategories] = useContext(CategoriesContext);
     return (
         <div>
-        <Navbar style={{ backgroundColor: "rgb(24, 24, 24)" }}variant="dark">
+        <Navbar style={{ backgroundColor: "#263238" }}variant="dark">
             <Container className="d-flex justify-content-center categories"> 
                 <Row>
                     <Col className="text-center">

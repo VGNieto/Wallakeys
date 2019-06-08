@@ -5,13 +5,14 @@ import Login from './Login'
 import logo from '../../img/logo.png';
 import { UserContext } from '../UserDispatch';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../CartDispatch';
 
 const Header = () => {
 
 
   const [loginModal, setLoginModal] = useState(false)
   const [user, dispatch] = useContext(UserContext);
-
+  const [cart, setCart] = useContext(CartContext);
 
 
   const changeLogin = () => {
@@ -22,10 +23,19 @@ const Header = () => {
     dispatch({ type: 'logout' });
   }
 
+  const totalProducts = () =>{
+    let total = 0;
+    console.log(cart.items);
+    cart.items.forEach((element) => {
+      total = total + element.quantity;
+    }) 
+    return total;
+  }
 
+console.log(cart.items.length);
   return (
     <div>
-      <Navbar style={{ backgroundColor: "rgb(24, 24, 24)", borderBottom: "1px solid gray" }} className="d-flex align-items-center" variant="dark">
+      <Navbar style={{ backgroundColor: "#1b2327", borderBottom: "1px solid gray" }} className="d-flex align-items-center" variant="dark">
         <Container   >
 
           <Row noGutters="true" style={{ flexGrow: 1 }}>
@@ -58,14 +68,14 @@ const Header = () => {
                   {user.token == null ?
                     null
                     :
-                    <Link to={'/account/account-details'}><Button variant="btn btn-warning" style={{ marginLeft: "10px" }} > <i className="fa fa-user"></i> My Profile </Button> </Link>
+                    <Link to={'/account/account-details'}><Button variant="btn btn-primary" style={{ marginLeft: "10px" }} > <i className="fa fa-user"></i> My Profile </Button> </Link>
                   }
 
 
                   {user.token == null ?
                     null
                     :
-                    <Link to={'/account/account-details'}><Button variant="btn btn-warning" style={{ marginLeft: "10px" }} > <i className="fa fa-shopping-cart"></i> Cart</Button> </Link>
+                    <Link to={'/account/cart'}><Button variant="btn btn-primary" style={{ marginLeft: "10px" }} > <i className="fa fa-shopping-cart"></i> Cart: {totalProducts()}</Button> </Link>
                   }
 
 
@@ -74,7 +84,7 @@ const Header = () => {
 
                     :
 
-                    <Button variant="btn btn-warning" style={{ marginLeft: "10px" }} onClick={handleLogout}>Logout  <i className="fa fa-sign-out-alt"> </i> </Button>
+                    <Button variant="btn btn-primary" style={{ marginLeft: "10px" }} onClick={handleLogout}>Logout  <i className="fa fa-sign-out-alt"> </i> </Button>
                   }
 
                 </div>
