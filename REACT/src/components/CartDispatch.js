@@ -30,10 +30,10 @@ export const CartReducer = (props) => {
                 });
                 if (!exists) {
                     state.items = [...state.items, action.text]
-                    sessionStorage.setItem("cart", JSON.stringify(state.items));
+                    localStorage.setItem("cart", JSON.stringify(state.items));
                     return { items: [...state.items] };
                 } else {
-                    sessionStorage.setItem("cart", JSON.stringify(state.items));
+                    localStorage.setItem("cart", JSON.stringify(state.items));
                     return { items: [...state.items] }
                 }
                 return;
@@ -47,7 +47,7 @@ export const CartReducer = (props) => {
                     
                 });
 
-                sessionStorage.setItem("cart", JSON.stringify(state.items));
+                localStorage.setItem("cart", JSON.stringify(state.items));
                 return { items: [...state.items] }
             case 'removeOne':
                 state.items.forEach(element => {
@@ -61,7 +61,7 @@ export const CartReducer = (props) => {
                     }
                 });
 
-                sessionStorage.setItem("cart", JSON.stringify(state.items));
+                localStorage.setItem("cart", JSON.stringify(state.items));
                 return { items: [...state.items] }
 
             case 'remove':
@@ -69,7 +69,7 @@ export const CartReducer = (props) => {
                 state.items = state.items.filter((element) => {
                     return element.id != action.text.id;
                 })
-                sessionStorage.setItem("cart", JSON.stringify(state.items));
+                localStorage.setItem("cart", JSON.stringify(state.items));
                 return { items: [...state.items] }
 
             default:
@@ -81,7 +81,7 @@ export const CartReducer = (props) => {
     const [cart, setCart] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        const cart = JSON.parse(sessionStorage.getItem("cart"));
+        const cart = JSON.parse(localStorage.getItem("cart"));
         if (cart !== null) { setCart({ type: 'initialCheck', text: cart }) }
         
     }, []);

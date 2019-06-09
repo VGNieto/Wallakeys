@@ -96,7 +96,7 @@ const Checkout = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
+                                    <Link to="/account/cart/checkout/order-details"><button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button></Link>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="nav-tab-paypal">

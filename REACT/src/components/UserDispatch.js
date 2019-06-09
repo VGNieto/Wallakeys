@@ -16,7 +16,7 @@ export const UserReducer = (props) => {
             case 'login':
                 return {token: action.text.token,expires: action.text.expires, oid:action.text.oid };
             case 'logout':
-                sessionStorage.clear();
+                localStorage.clear();
                 return {token:null,expires:null}
             default:
                 throw new Error();
@@ -25,7 +25,7 @@ export const UserReducer = (props) => {
     const [user, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        const myItem = sessionStorage.getItem("token_id");
+        const myItem = localStorage.getItem("token_id");
         if (myItem !== null) { dispatch({ type: 'login', text: JSON.parse(myItem) })    }
         
     }, []);

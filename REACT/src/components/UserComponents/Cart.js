@@ -94,7 +94,7 @@ const Cart = (props) => {
                 </div>
               </div>
               <div className="col-sm-6 col-md-3 col-lg-2 col-6">
-                <h6> Subtototal</h6>
+                <h6> Subtotal</h6>
                 <h5 class="">{game.subtotal}$</h5>
               </div>
 
@@ -107,7 +107,7 @@ const Cart = (props) => {
           {cart.items.length > 0 ?
             <div className="row cart-end-row">
 
-              <div className="col-md-8"><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></div>
+              <div className="col-md-8"><Link class="btn btn-warning" to="/"><i class="fa fa-angle-left"></i> Continue Shopping</Link> </div>
               <div className="col-md-2"><strong>Total $ {totalPrice()}</strong></div>
               <div className="col-md-2"><Link to="/account/cart/checkout"><button class="btn btn-success btn-block"> Checkout <i class="fa fa-angle-right"></i></button></Link></div>
 

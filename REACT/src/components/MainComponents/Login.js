@@ -45,7 +45,7 @@ const Login = (props) =>{
                 document.getElementById("loading-spinner").className="center-align";
                 setTimeout(() => {
                     handleLogin(data);   
-                    sessionStorage.setItem("token_id", JSON.stringify(data));
+                    localStorage.setItem("token_id", JSON.stringify(data));
                 },500)
                     
                  
@@ -70,7 +70,7 @@ const Login = (props) =>{
             if(data!==false){   
                 setTimeout(()=>{
                     handleLogin(data);   
-                    sessionStorage.setItem("token_id", JSON.stringify(data));
+                    localStorage.setItem("token_id", JSON.stringify(data));
                     window.location.reload();
 
                 },500)
