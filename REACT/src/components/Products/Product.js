@@ -5,7 +5,6 @@ import Categories from '../Products/Categories'
 import Carousel from '../MainComponents/Carousel'
 import Filters from '../Products/Filters'
 import Breadcrumbs from '../MainComponents/Breadcrumbs'
-import { CategoriesProvider } from '../CategoriesContext';
 
 
 import { UserContext, UserReducer } from '../UserDispatch';
@@ -80,7 +79,6 @@ const Product = (props) => {
     <div>
 
       <div className="main-section">
-        <CategoriesProvider>
 
           <Categories />
           <Container style={{ backgroundColor: "#ffffff" }}>
@@ -138,7 +136,6 @@ const Product = (props) => {
             </Row>
           </Container>
 
-        </CategoriesProvider>
 
 
       </div>

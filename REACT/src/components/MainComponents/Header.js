@@ -30,8 +30,6 @@ const Header = () => {
     }) 
     return total;
   }
-
-  console.log(cart);
   return (
     <div>
       <Navbar style={{ backgroundColor: "#1b2327", borderBottom: "1px solid gray" }} className="d-flex align-items-center" variant="dark">

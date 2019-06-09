@@ -10,11 +10,9 @@ import origin from '../../img/origin.png'
 import psn from '../../img/psn.png'
 import battle from '../../img/battle.png'
 
-import {CategoriesContext} from '../CategoriesContext';
 
 const Categories = () => {
 
-    const [categories,setCategories] = useContext(CategoriesContext);
     return (
         <div>
         <Navbar style={{ backgroundColor: "#263238" }}variant="dark">

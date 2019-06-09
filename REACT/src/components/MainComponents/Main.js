@@ -5,18 +5,14 @@ import Carousel from './Carousel'
 import Filters from '../Products/Filters'
 import Breadcrumbs from './Breadcrumbs'
 import Games from '../Products/Products'
-import { CategoriesProvider } from '../CategoriesContext';
 
 
 const Main = () => {
 
 
-    
 
     return (
         <div className="main-section">
-        <CategoriesProvider>
-
             <Categories />
             <Container style={{backgroundColor:"#ffffff"}}>
                 <Carousel />
@@ -32,9 +28,6 @@ const Main = () => {
                     </Col>
                 </Row>
             </Container>
-            
-        </CategoriesProvider>
-            
             
         </div>
     )
