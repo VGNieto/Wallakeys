@@ -82,10 +82,12 @@ const Product = (props) => {
 
           <Categories />
           <Container style={{ backgroundColor: "#ffffff" }}>
+
             <Carousel />
             <Row className="top-section">
               <Col xs={12}>
-                <Breadcrumbs />
+              <Breadcrumbs />
+
               </Col>
               <Col xs={12} sm={12} md={3} lg={3} xl={3}>
                 <Filters />

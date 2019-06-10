@@ -59,7 +59,6 @@ const Checkout = (props) => {
 
                         <div class="tab-content payment-tabs">
                             <div class="tab-pane fade show active" id="nav-tab-card">
-                                <p class="alert alert-success">Some text success or error</p>
                                 <form role="form">
                                     <div class="form-group">
                                         <label for="username">Full name (on the card)</label>

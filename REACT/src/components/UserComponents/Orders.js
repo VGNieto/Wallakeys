@@ -31,6 +31,8 @@ const User = (props) => {
       <div className="row justify-content-center" style={{ paddingTop: "25px" }}>
 
         <div className="col-md-4">
+        <div className="card card-header text-primary">Account Dashboard</div>
+
           <div className="list-group">
 
             <div className="list-group-item"><i className="fa fa-user"></i> <span> <Link to="/account/account-details"> <span>Account Details </span></Link> </span></div>

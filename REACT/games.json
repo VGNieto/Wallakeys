@@ -3,96 +3,452 @@
     "stock": 10,
     "price": 27.19,
     "description": "In a world ravaged by war and dominated by magic, you are the last hope for the Empire of Man against the Chaos hordes.Playing solo or with up to 4 in local or online co-op, choose a hero from 4 character classes with unique and complementary skills, and prepare for epic battles wielding some of the most powerful artefacts of the Old World.",
-    "img":"chaosbane.jpg",
+    "img": "chaosbane.jpg",
     "release": "4 June 2019",
-    "platforms":["steam"],
-    "categories": ["Action","Adventure","RPG","Wargame","Multiplayer","Violent"],
-    "languages":["Spanish","English","Chinese"],
-    "comments":{
-
+    "platforms": [
+        "Steam"
+    ],
+    "categories": [
+        "Action",
+        "Adventure",
+        "RPG",
+        "Wargame",
+        "Multiplayer",
+        "Violent"
+    ],
+    "languages": [
+        "Spanish",
+        "English",
+        "Chinese"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel Core i3 or AMD Phenom X3",
+        "graphics": "NVIDIA® GeForce® GTX 660 or AMD Radeon HD 7850 with 2 GB RAM",
+        "memory": "6 GB RAM",
+        "directx": "Version 11",
+        "storage": "15 GB available space",
+        "soundcard": "DirectX Compatible Soundcard"
     },
-    "minimum-requirements":
-        {
-            "os": "Windows 10",
-            "processor": "Intel Core i3 or AMD Phenom X3",
-            "graphics": "NVIDIA® GeForce® GTX 660 or AMD Radeon HD 7850 with 2 GB RAM",
-            "memory": "6 GB RAM",
-            "directx": "Version 11",
-            "storage": "15 GB available space",
-            "soundcard": "DirectX Compatible Soundcard"
-        },
-    "recommended-requirements":
-        {
-            "os": "Windows 10",
-            "processor": "Intel® Core i5 or AMD FX 8150",
-            "memory": "8 GB RAM",
-            "graphics": "NVIDIA® GeForce® GTX 780 or AMD Radeon™ R9 290 with 2 GB RAM",
-            "directx": "Version 11",
-            "storage": "15 GB available space",
-            "soundcard": "DirectX Compatible Soundcard"
-        }
-}
-
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel® Core i5 or AMD FX 8150",
+        "memory": "8 GB RAM",
+        "graphics": "NVIDIA® GeForce® GTX 780 or AMD Radeon™ R9 290 with 2 GB RAM",
+        "directx": "Version 11",
+        "storage": "15 GB available space",
+        "soundcard": "DirectX Compatible Soundcard"
+    }
+},
 {
     "name": "Forza Horizon 4",
     "stock": 12,
     "price": 34.99,
     "description": "Dynamic seasons change everything at the world’s greatest automotive festival. Go it alone or team up with others to explore beautiful and historic Britain in a shared open world. Collect, modify and drive over 450 cars. Race, stunt, create and explore – choose your own path to become a Horizon Superstar. The Forza Horizon 4 Standard Edition digital bundle includes the full game of Forza Horizon 4 and the Formula Drift Car Pack.",
-    "img":"horizon4.jpg",
+    "img": "horizon4.jpg",
     "release": "2 October 2018",
-    "platforms":["Xbox"],
-    "categories": ["Racing","Sports"],
-    "languages":["Multilanguage"],
-    "comments":{
-
-    },
-    "minimum-requirements":
-        {
-            "os": "Windows 10",
-            "processor": "Core i3-4170 3.7GHz / FX-6120",
-            "graphics": "GeForce GT 740 / Radeon R7 250X",
-            "memory": "	8 GB",
-            "storage": "55 GB",
-        },
-    "recommended-requirements":
-        {
-            "os": "Windows 10",
-            "processor": "	Core i7-3820 4-Core 3.60GHz / Ryzen R5 1400",
-            "memory": "12 GB",
-            "graphics": "GeForce GTX 1060 3GB / Radeon RX 470 4GB",
-            "storage": "55 GB",
-        }
-}
-
+    "platforms": [
+        "Xbox"
+    ],
+    "categories": [
+        "Racing",
+        "Sports"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+},
 {
     "name": "F1 2019",
     "stock": 60,
     "price": 31.49,
     "description": "F1 2019, el videojuego oficial de 2019 FIA FORMULA ONE WORLD CHAMPIONSHIP, te desafía a que superes a tus rivales en el título más ambicioso de la historia de Codemasters. F1 2019 incluye todos los equipos, pilotos y los 21 circuitos oficiales de la temporada 2019. Este año el juego incluye la F2, que permite participar en la temporada 2018 con pilotos como George Russell, Lando Norris y Alexander Albon. Se ha hecho un gran énfasis en la fidelidad gráfica y ha habido una mejora significativa en los entornos, lo que hace que los circuitos cobren vida como nunca antes lo habían hecho. Las carreras nocturnas se han transformado completamente y han mejorado enormemente los niveles de realismo. Además, se ha mejorado el sonido y la imagen de las retransmisiones de F1, lo que añade autenticidad a todos los aspectos del fin de semana. Se necesita conexión para descargar los vehículos de 2019 finales de las escuderías de F1 (si procede) y el contenido de la temporada 2019 de F2",
-    "img":"f12019.jpg",
-    "release": "28 junio 2019",
-    "platforms":["Steam"],
-    "categories": ["Racing","Sports","Simulation","Driving"],
-    "languages":["Multilanguage"],
-    "comments":{
-
+    "img": "f12019.jpg",
+    "release": "28 june 2019",
+    "platforms": [
+        "Steam"
+    ],
+    "categories": [
+        "Racing",
+        "Sports",
+        "Simulation",
+        "Driving"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i3 2130 / AMD FX4300",
+        "graphics": "Nvidia GTX640 / HD7750",
+        "memory": "8 GB RAM",
+        "directx": "Version 11",
+        "storage": "80 GB available space",
     },
-    "minimum-requirements":
-        {
-            "os": "Windows 10",
-            "processor": "Intel i3 2130 / AMD FX4300",
-            "graphics": "Nvidia GTX640 / HD7750",
-            "memory": "8 GB RAM",
-            "directx": "Version 11",
-            "storage": "80 GB available space",
-        },
-    "recommended-requirements":
-        {
-            "os": "Windows 10",
-            "processor": "Intel i5 9600k / AMD Ryzen 5 2600x",
-            "graphics": "Nvidia GTX 1660ti / RX590",
-            "memory": "16 GB RAM",
-            "directx": "Version 12",
-            "storage": "80 GB available space",
-        }
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i5 9600k / AMD Ryzen 5 2600x",
+        "graphics": "Nvidia GTX 1660ti / RX590",
+        "memory": "16 GB RAM",
+        "directx": "Version 12",
+        "storage": "80 GB available space",
+    }
+},
+{
+    "name": "Far Cry 5",
+    "stock": 26,
+    "price": 17.99,
+    "description": "Far Cry llega a Estados Unidos en la última entrega de la exitosa franquicia. Bienvenido a Hope County, Montana, la tierra de los valientes y de la libertad, pero también de la secta apocalíptica conocida como 'Puerta del Eden'. Enfréntate a Joseph Seed, el líder de la secta, y a sus hermanos para prender la llama de la resistencia y liberar a la comunidad.",
+    "img": "farcry5.jpg",
+    "release": "1 December 2015",
+    "platforms": [
+        "Uplay"
+    ],
+    "categories": [
+        "Action",
+        "Multiplayer",
+        "Co-op",
+        "FPS",
+        "Adventure",
+        "Hunting",
+        "Shooter"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel Core i5-2400 / AMD FX-6300",
+        "graphics": "Nvidia GTX670 / R9270",
+        "memory": "8 GB RAM",
+        "directx": "Version 11",
+        "storage": "40 GB available space",
+    },
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel I7 4770k / AMD Ryzen 5 1600",
+        "graphics": "Nvidia GTX 670 / RX7970",
+        "memory": "8 GB RAM",
+        "directx": "Version 12",
+        "storage": "40 GB available space",
+    }
+},
+{
+    "name": "Grand Theft Auto V:",
+    "stock": 40,
+    "price": 12.89,
+    "description": "Grand Theft Auto V: Premium Online Edition permite disfrutar por completo de la trama de Grand Theft Auto V, acceder gratuitamente al mundo en constante evolución de Grand Theft Auto Online y a todas las mejoras y contenidos existentes, como Golpe del Juicio Final, Tráfico de armas, Smuggler's Run, Moteros y mucho más. También se incluye el Criminal Enterprise Starter Pack, la forma más rápida de dar un impulso a tu imperio criminal en Grand Theft Auto Online.",
+    "img": "gta5.jpg",
+    "release": "14 April 2015",
+    "platforms": [
+        "PS4"
+    ],
+    "categories": [
+        "Action",
+        "Adventure",
+        "Racing",
+        "Multiplayer",
+        "Co-op",
+        "Open World",
+        "Sandbox",
+        "Shooter"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+},
+{
+    "name": "Battlefield V",
+    "stock": 12,
+    "price": 23.98,
+    "description": "Vive el mayor conflicto de la humanidad con Battlefield V gracias a este regreso de la saga a sus orígenes con una representación inédita de la 2ª Guerra Mundial. Ve a la guerra con tu patrulla en un multijugador sin cuartel en modos como el inmenso Grandes operaciones y el cooperativo Armas combinadas, o experimenta el drama humano vivido durante esta época en las Historias de guerra de la campaña. Combate en ubicaciones espectaculares, totalmente inesperadas, por todo el mundo, y disfruta del Battlefield más completo hasta la fecha.",
+    "img": "bf5.jpg",
+    "release": "28 June 2018",
+    "platforms": [
+        "Origin"
+    ],
+    "categories": [
+        "Action",
+        "FPS",
+        "Wargame",
+        "Multiplayer",
+        "Shooter"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i3 2130 / AMD FX4300",
+        "graphics": "Nvidia GTX640 / HD7750",
+        "memory": "8 GB RAM",
+        "directx": "Version 11",
+        "storage": "80 GB available space",
+    },
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i5 9600k / AMD Ryzen 5 2600x",
+        "graphics": "Nvidia GTX 1660ti / RX590",
+        "memory": "16 GB RAM",
+        "directx": "Version 12",
+        "storage": "80 GB available space",
+    }
+},
+{
+    "name": "The Sims 4 ",
+    "stock": 67,
+    "price": 10.99,
+    "description": "Los Sims 4 es el esperadísimo juego de simulación social que permite jugar a la vida como nunca antes. Crea y controla nuevos Sims con mente, cuerpo y corazón propios. Constrúyeles casas únicas. Dirige y explora las historias de tus Sims, y disfruta con los emocionantes resultados. Las nuevas herramientas creativas táctiles de Crear un Sim y un modo Construir por habitaciones ofrecen formas intuitivas y divertidas de crear contenido atractivo. Muéstrale al mundo tus creaciones favoritas con las novedosas maneras de compartir y compra contenido de la comunidad para inspirarte.",
+    "img": "sims.jpg",
+    "release": "4 September 2014",
+    "platforms": [
+        "Origin"
+    ],
+    "categories": [
+        "Simulation",
+        "Building",
+        "Single Player",
+        "Casual",
+        "Family Friendly"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows XP",
+        "processor": "Core 2 Duo E4300 / AMD 64 X2 Dual Core",
+        "graphics": "GeForce 6600 GT / Radeon X1300 256MB",
+        "memory": "2 GB RAM",
+        "directx": "Version 11",
+        "storage": "9 GB available space",
+    },
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i5 680 / AMD X4 750K",
+        "graphics": "Nvidia GTX 650 / HD 7750",
+        "memory": "4 GB RAM",
+        "directx": "Version 12",
+        "storage": "80 GB available space",
+    }
+},
+{
+    "name": "The Elder Scrolls V: Skyrim ",
+    "stock": 2,
+    "price": 5.44,
+    "description": "The next chapter in the highly anticipated Elder Scrolls saga arrives from the makers of the 2006 and 2008 Games of the Year, Bethesda Game Studios. Skyrim reimagines and revolutionizes the open-world fantasy epic, bringing to life a complete virtual world open for you to explore any way you choose",
+    "img": "skyrim.jpg",
+    "release": "11 November 2011",
+    "platforms": [
+        "Steam"
+    ],
+    "categories": [
+        "Action",
+        "Adventure",
+        "RPG",
+        "Open World",
+        "Fantasy",
+        "Sandbox",
+        "Magic"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows XP",
+        "processor": "Core 2 Duo E4300 / AMD 64 X2 Dual Core",
+        "graphics": "GeForce 6600 GT / Radeon X1300 256MB",
+        "memory": "2 GB RAM",
+        "directx": "Version 11",
+        "storage": "9 GB available space",
+    },
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i5 680 / AMD X4 750K",
+        "graphics": "Nvidia GTX 650 / HD 7750",
+        "memory": "4 GB RAM",
+        "directx": "Version 12",
+        "storage": "80 GB available space",
+    }
+},
+{
+    "name": "Call of Duty: Black Ops III ",
+    "stock": 6,
+    "price": 8.19,
+    "description": "Treyarch, developer of the two most-played games in Call of Duty® history, returns with Call of Duty®: Black Ops III. For the first time with three-years of development, the revered, award-winning studio has created its first title for next-gen hardware in the critically acclaimed Black Ops series. Welcome to Call of Duty: Black Ops 3, a dark, twisted future where a new breed of Black Ops soldier emerges and the lines are blurred between our own humanity and the technology we created to stay ahead, in a world where cutting-edge military robotics define warfare.",
+    "img": "blackops3.jpg",
+    "release": "5 November 2015",
+    "platforms": [
+        "Steam"
+    ],
+    "categories": [
+        "Action",
+        "Adventure",
+        "FPS",
+        "Simulation",
+        "Multiplayer",
+        "Wargame",
+        "Zombies",
+        "Shooter"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows XP",
+        "processor": "Core 2 Duo E4300 / AMD 64 X2 Dual Core",
+        "graphics": "GeForce 6600 GT / Radeon X1300 256MB",
+        "memory": "2 GB RAM",
+        "directx": "Version 11",
+        "storage": "9 GB available space",
+    },
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i5 680 / AMD X4 750K",
+        "graphics": "Nvidia GTX 650 / HD 7750",
+        "memory": "4 GB RAM",
+        "directx": "Version 12",
+        "storage": "80 GB available space",
+    }
+},
+{
+    "name": "Need for Speed ",
+    "stock": 64,
+    "price": 9.12,
+    "description": "Ready to own the streets? Get behind the wheel of iconic cars and floor it through Ventura Bay, a sprawling urban playground. Explore overlapping stories as you build your reputation – and your dream car – and become the ultimate racing icon. Play again and again because this time, you have 5 distinct ways to win.",
+    "img": "nfs.jpg",
+    "release": "11 november 2011",
+    "platforms": [
+        "Origin"
+    ],
+    "categories": [
+        "Action",
+        "Singleplayer",
+        "Multiplayer",
+        "Racing",
+        "Driving"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows XP",
+        "processor": "Core 2 Duo E4300 / AMD 64 X2 Dual Core",
+        "graphics": "GeForce 6600 GT / Radeon X1300 256MB",
+        "memory": "2 GB RAM",
+        "directx": "Version 11",
+        "storage": "9 GB available space",
+    },
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i5 680 / AMD X4 750K",
+        "graphics": "Nvidia GTX 650 / HD 7750",
+        "memory": "4 GB RAM",
+        "directx": "Version 12",
+        "storage": "80 GB available space",
+    }
+},
+{
+    "name": "Dark Souls 3 Deluxe Edition",
+    "stock": 64,
+    "price": 14.71,
+    "description": "Winner of gamescom award 2015 'Best RPG' and over 35 E3 2015 Awards and Nominations - The DARK SOULS™ III Deluxe Edition includes the full game & the Season Pass. Expand your experience with the Season Pass featuring new maps, bosses, enemies and additional weapon and armor sets. DARK SOULS™ III continues to push the boundaries with the latest, ambitious chapter in the critically-acclaimed and genre-defining series. ",
+    "img": "ds3.jpg",
+    "release": "12 April 2016",
+    "platforms": [
+        "Steam"
+    ],
+    "categories": [
+        "Action",
+        "RPG",
+        "Co-op"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows XP",
+        "processor": "Core 2 Duo E4300 / AMD 64 X2 Dual Core",
+        "graphics": "GeForce 6600 GT / Radeon X1300 256MB",
+        "memory": "2 GB RAM",
+        "directx": "Version 11",
+        "storage": "9 GB available space",
+    },
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i5 680 / AMD X4 750K",
+        "graphics": "Nvidia GTX 650 / HD 7750",
+        "memory": "4 GB RAM",
+        "directx": "Version 12",
+        "storage": "80 GB available space",
+    }
+},
+{
+    "name": "Red Dead Redemption 2: Ultimate Edition",
+    "stock": 43,
+    "price": 69.60,
+    "description": "The Red Dead Redemption 2: Ultimate Edition delivers all of the Story Mode content from the Special Edition plus additional bonuses for online. ",
+    "img": "rdr2.jpg",
+    "release": "12 October 2018",
+    "platforms": [
+        "Xbox"
+    ],
+    "categories": [
+        "Action",
+        "Adventure",
+        "Western",
+        "Historical",
+        "Shooter"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+},
+{
+    "name": "Assassin's Creed Odyssey",
+    "stock": 54,
+    "price": 26.02,
+    "description": "Choose your fate in Assassin's Creed Odyssey. From outcast to living legend, embark on an odyssey to uncover the secrets of your past and change the fate of Ancient Greece.",
+    "img": "odyssey.jpg",
+    "release": "5 October 2018",
+    "platforms": [
+        "Uplay"
+    ],
+    "categories": [
+        "Action",
+        "Adventure",
+        "Open World",
+        "Single Player"
+    ],
+    "languages": [
+        "Multilanguage"
+    ],
+    "comments": {},
+    "minimum-requirements": {
+        "os": "Windows XP",
+        "processor": "Core 2 Duo E4300 / AMD 64 X2 Dual Core",
+        "graphics": "GeForce 6600 GT / Radeon X1300 256MB",
+        "memory": "2 GB RAM",
+        "directx": "Version 11",
+        "storage": "9 GB available space",
+    },
+    "recommended-requirements": {
+        "os": "Windows 10",
+        "processor": "Intel i5 680 / AMD X4 750K",
+        "graphics": "Nvidia GTX 650 / HD 7750",
+        "memory": "4 GB RAM",
+        "directx": "Version 12",
+        "storage": "80 GB available space",
+    }
 }

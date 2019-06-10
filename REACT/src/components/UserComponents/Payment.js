@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import 'react-bootstrap/dist/react-bootstrap'
@@ -9,22 +9,24 @@ import { UserContext } from '../UserDispatch';
 const Payment = (props) => {
 
   const [user, setUser] = useContext(UserContext);
+  const [cards, setCards] = useState([]);
 
+  
 
   const handleNewMethod = (e) => {
     let form = document.getElementById("new-payment-method");
     form.className == "account-payment-active" ? form.className = "account-payment" : form.className = "account-payment-active"
   }
 
-const handleOpenDetails = (e) =>{
+  const handleOpenDetails = (e) => {
     const dataButton = e.target.getAttribute("data-button");
     let detailToOpen = document.getElementById(dataButton);
     console.log(detailToOpen);
-    
+
     detailToOpen.className == "order-details-active" ? detailToOpen.className = "order-details" : detailToOpen.className = "order-details-active"
+  }
 
 
-}
 
   return (
 
@@ -32,6 +34,8 @@ const handleOpenDetails = (e) =>{
       <div className="row justify-content-center" style={{ paddingTop: "25px" }}>
 
         <div className="col-md-4">
+          <div className="card card-header text-primary">Account Dashboard</div>
+
           <div className="list-group">
 
             <div className="list-group-item"><i className="fa fa-user"></i> <span> <Link to="/account/account-details"> <span>Account Details </span></Link> </span></div>
@@ -62,7 +66,7 @@ const handleOpenDetails = (e) =>{
                   <span class="form-control" defaultValue=""> </span>
                 </div>
 
-                
+
                 <div class="row">
                   <div class="col-sm-8">
                     <div class="form-group">
@@ -73,12 +77,12 @@ const handleOpenDetails = (e) =>{
                       </div>
                     </div>
                   </div>
-                  
+
                 </div>
 
               </div>
 
-              
+
 
 
 
