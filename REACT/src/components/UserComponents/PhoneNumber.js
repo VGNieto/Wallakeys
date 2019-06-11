@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext,useState,useEffect } from 'react';
+import axios from  'axios'
 import 'react-bootstrap/dist/react-bootstrap'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 
 import { UserContext } from '../UserDispatch';
@@ -9,12 +10,91 @@ import { UserContext } from '../UserDispatch';
 const User = (props) => {
 
   const [user, setUser] = useContext(UserContext);
+  const [phoneNumber, setPhoneNumber] = useState();
 
+  const [result, setResult] = useState();
+  const [spinnerTimeOut, setSpinnerTimeOut] = useState();
+  const [savedTimeOut, setSavedTimeOut] = useState();
 
+  const handlePhoneChange = (e) => {
+    setPhoneNumber(e.target.value);
+  }
 
+  
 
+  const showResult = () => {
 
+    if (result == true) {
+      return (
+        <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "green" }}>Phone changed</p>
+      )
+    } else if (result == false) {
+      return (
+        <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "red" }}>Phone not changed</p>
+      )
+    } else {
+      return (
+        <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "red" }}></p>
 
+      )
+    }
+
+  }
+
+  const saveChanges = (e) => {
+    const token = 'Bearer ' + user.token;
+    let spinner = document.getElementById("loading-spinner");
+    let savedchanges = document.getElementById("saved-changes");
+    spinner.className = "";
+    savedchanges.className = "d-none";
+
+    clearTimeout(spinnerTimeOut);
+    clearTimeout(savedTimeOut);
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/api/user/updatephone',
+      headers: {
+        Authorization: token,
+
+      },
+      params: {
+        phoneNumber: phoneNumber
+      }
+    }).then(res => {
+      setResult(res.data);
+
+      setSpinnerTimeOut(setTimeout(() => {
+        savedchanges.className = "";
+        spinner.className = "d-none";
+        setSavedTimeOut(setTimeout(() => {
+          savedchanges.className = "d-none";
+        }, 2000))
+      }, 1000))
+
+    });
+
+  }
+
+  useEffect(() => {
+    const token = 'Bearer ' + user.token;
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/user/info',
+      headers: {
+        Authorization: token
+      }
+    })
+      .then(res => {
+
+        let data = (res.data);
+        if (data !== false) {
+          setPhoneNumber(data[0].phoneNumber)
+        }
+      });
+  }, [])
+
+  console.log(phoneNumber);
   return (
     <div className="container">
       <div className="row justify-content-center" style={{ paddingTop: "25px" }}>
@@ -39,18 +119,24 @@ const User = (props) => {
             <div className="card-body">
               <form action="" method="">
                 <div className="form-group row">
-                  <label htmlFor="email_address" className="col-md-4 col-form-label text-md-right">Phone Number</label>
+                  <label htmlFor="phone_number" className="col-md-4 col-form-label text-md-right">Phone Number</label>
                   <div className="col-md-6">
-                    <input type="text" id="email_address" className="form-control" name="email-address" required autoFocus />
+                    <input type="text" id="phone_number" onChange={handlePhoneChange} className="form-control"  value={phoneNumber} required autoFocus />
                   </div>
                 </div>
 
-                <div className="col-md-6 offset-md-4">
-                  <button type="submit" className="btn btn-primary">
+                <div className="col-md-6 offset-md-4 center-align"style={{alignItems:"center"}}>
+                  <button type="button" className="btn btn-primary" onClick={saveChanges}>
                     Save Changes
                           </button>
-
+                  <div id="loading-spinner" className="d-none" style={{padding:"10px"}}> 
+                    <div className="spinner-border d-flex justify-content-center " role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                  {showResult()}
                 </div>
+
               </form>
             </div>
           </div>

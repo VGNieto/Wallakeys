@@ -15,6 +15,9 @@ const User = (props) => {
     birthday: "",
     country: "",
   })
+  const [result, setResult] = useState();
+  const [spinnerTimeOut, setSpinnerTimeOut] = useState();
+  const [savedTimeOut, setSavedTimeOut] = useState();
 
 
   const countryHandle = () => {
@@ -66,10 +69,34 @@ const User = (props) => {
 
   }
 
+  const showResult = () => {
+
+    if (result == true) {
+      return (
+        <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "green" }}>Changes saved</p>
+      )
+    } else if (result == false) {
+      return (
+        <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "red" }}>Changes not saved</p>
+      )
+    } else {
+      return (
+        <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "red" }}></p>
+
+      )
+    }
+
+  }
+
   const saveChanges = () => {
     const token = 'Bearer ' + user.token;
-
-
+    let spinner = document.getElementById("loading-spinner");
+    let savedchanges = document.getElementById("saved-changes");
+    spinner.className = "";
+    savedchanges.className = "d-none";
+    clearTimeout(spinnerTimeOut);
+    clearTimeout(savedTimeOut);
+    
     axios({
       method: 'post',
       url: 'http://localhost:8080/api/user/update',
@@ -84,12 +111,15 @@ const User = (props) => {
       }
     })
       .then(res => {
-        document.getElementById("loading-spinner").className="";
-        setTimeout(() => {
-            document.getElementById("saved-changes").className="";
-            document.getElementById("loading-spinner").className="d-none";
+        setResult(res.data);
 
-        },1000)
+        setSpinnerTimeOut(setTimeout(() => {
+          savedchanges.className = "";
+          spinner.className = "d-none";
+          setSavedTimeOut(setTimeout(() => {
+            savedchanges.className = "d-none";
+          }, 2000))
+        }, 1000))
 
       });
 
@@ -112,7 +142,6 @@ const User = (props) => {
 
   useEffect(() => {
     const token = 'Bearer ' + user.token;
-    console.log(token);
     axios({
       method: 'get',
       url: 'http://localhost:8080/api/user/info',
@@ -128,7 +157,6 @@ const User = (props) => {
         }
       });
   }, [])
-  console.log(userDetails);
 
 
   return (
@@ -195,7 +223,7 @@ const User = (props) => {
                         <span className="sr-only">Loading...</span>
                     </div>
                   </div>
-                  <p className="d-none" id="saved-changes" style={{margin:"0",paddingLeft:"15px"}}>Changes saved.</p>
+                  {showResult()}
                 </div>
               </form>
             </div>

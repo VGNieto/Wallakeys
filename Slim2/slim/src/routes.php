@@ -123,7 +123,6 @@ return function (App $app) {
 
     //Get all products
     $app->get('/api/products', function (Request $request, Response $response, array $args) use ($container) {
-       
         $db = new db();
         $mongo = $db->connect();
         $data = $mongo->wallakeys->games->find()->toArray();
@@ -134,8 +133,6 @@ return function (App $app) {
 
     //Filter Products
     $app->get('/api/products/filter', function (Request $request, Response $response, array $args) use ($container) {
-
-        
         $db = new db();
         $mongo = $db->connect();
         $categories = explode(",", $request->getQueryParam("filterCategories"));
@@ -150,11 +147,11 @@ return function (App $app) {
             $categories = null;
         }
         
-        if ( !isset($price[0]) and !isset($price[1])) {
+        if (!isset($price[0]) and !isset($price[1])) {
             $price = null;
-        } elseif ( !isset($price[0]) and isset($price[1])) {
+        } elseif (!isset($price[0]) and isset($price[1])) {
             $maxPrice = $price[1];
-        } elseif ( isset($price[0]) and !isset($price[1])) {
+        } elseif (isset($price[0]) and !isset($price[1])) {
             $minPrice = $price[0];
         } else {
             $maxPrice= $price[1];
@@ -176,31 +173,29 @@ return function (App $app) {
                                                                       ["price" =>['$lt'=>intval($maxPrice)]]]    ])->toArray();
         
         //If categories not null and prices change
-        }elseif ($categories != null and isset($maxPrice) and isset($minPrice)) {
+        } elseif ($categories != null and isset($maxPrice) and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
                                                                   ["price" =>['$gt'=>intval($minPrice),'$lt'=>intval($maxPrice)]] ]   ])->toArray();
-        }else if ($categories != null and isset($minPrice)) {
+        } elseif ($categories != null and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
                                                                         ["price" =>['$gt'=>intval($minPrice)]] ]   ])->toArray();
-                     
-        }else if ($categories != null and isset($maxPrice)) {
+        } elseif ($categories != null and isset($maxPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
                                                                         ["price" =>['$lt'=>intval($maxPrice)]] ]   ])->toArray();
                            
         //If platforms not null and prices change
-        }elseif ($platforms != null and isset($maxPrice) and isset($minPrice)) {
+        } elseif ($platforms != null and isset($maxPrice) and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [     ["platforms" =>['$all'=>$platforms]],
                                                                         ["price" =>['$gt'=>intval($minPrice),'$lt'=>intval($maxPrice)]] ]   ])->toArray();
-        }else if ($platforms != null and isset($minPrice)) {
+        } elseif ($platforms != null and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [     ["platforms" =>['$all'=>$platforms]],
                                                                         ["price" =>['$gt'=>intval($minPrice)]] ]   ])->toArray();
-                     
-        }else if ($platforms != null and isset($maxPrice)) {
+        } elseif ($platforms != null and isset($maxPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["platforms" =>['$all'=>$platforms]],
                                                                         ["price" =>['$lt'=>intval($maxPrice)]] ]   ])->toArray();
 
         //If platforms and categories are not null but prices are
-        }elseif ($platforms != null and $categories != null) {
+        } elseif ($platforms != null and $categories != null) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
                                                                       ["platforms" =>['$all'=>$platforms]] ]])->toArray();
 
@@ -231,7 +226,6 @@ return function (App $app) {
 
     //Get specific product
     $app->get('/api/product/info', function (Request $request, Response $response, array $args) use ($container) {
-       
         $productID = $request->getParam('productID');
 
         $db = new db();
@@ -246,7 +240,6 @@ return function (App $app) {
 
     //Get categories
     $app->get('/api/categories', function (Request $request, Response $response, array $args) use ($container) {
-      
         $db = new db();
         $mongo = $db->connect();
         $data = $mongo->wallakeys->games->distinct('categories');
@@ -257,7 +250,6 @@ return function (App $app) {
 
     //Get platforms
     $app->get('/api/platforms', function (Request $request, Response $response, array $args) use ($container) {
-       
         $db = new db();
         $mongo = $db->connect();
         $data = $mongo->wallakeys->games->distinct('platforms');
@@ -281,7 +273,7 @@ return function (App $app) {
         ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
 
-    //Update user's info
+    //Update user's account details info
     $app->post('/api/user/update', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('jwt');
         $oid = $token['oid'];
@@ -300,9 +292,115 @@ return function (App $app) {
                 ['upsert' => true]
             );
         }
-        
+        if(!is_null($info[0])){
+            $info = true;
+        }
        
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
+
+
+    //Update user's password 
+    $app->post('/api/user/updatepassword', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+        //Get the request parameters.
+        $oldpassword = $request->getParam('oldPassword');
+        $newpassword = $request->getParam('newPassword');
+
+
+        
+        $info[] = $mongo->wallakeys->users->findOneAndUpdate(
+            ['_id' => new MongoDB\BSON\ObjectId($oid),'password' => $oldpassword],
+            [ '$set' => ['password' => $newpassword]],
+        );
+        
+        if(!is_null($info[0])){
+            $info = true;
+        }
+       
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+    //Update user's phone
+    $app->post('/api/user/updatephone', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+        //Get the request parameters.
+        $phoneNumber = $request->getParam('phoneNumber');
+
+
+        
+        $info[] = $mongo->wallakeys->users->findOneAndUpdate(
+            ['_id' => new MongoDB\BSON\ObjectId($oid)],
+            [ '$set' => ['phoneNumber' => $phoneNumber]],
+            ['upsert' => true]
+        );
+        
+        if(!is_null($info[0])){
+            $info = true;
+        }
+       
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+    //Set new user's card
+    $app->post('/api/user/addcard', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+        //Get the request parameters.
+        $fullName = $request->getParam('fullName');
+        $number = $request->getParam('number');
+        $month = $request->getParam('month');
+        $year = $request->getParam('year');
+        $CVV = $request->getParam('CVV');
+
+
+        
+        $info[] = $mongo->wallakeys->users->findOneAndUpdate(
+            ['_id' => new MongoDB\BSON\ObjectId($oid)],
+            [ '$push' =>['cards' => ['id' =>new MongoDB\BSON\ObjectId(), 'fullname' => $fullName,'number'=> $number,'month'=>$month,'year' => $year,'cvv' => $CVV] ] ],
+            ['upsert' => true]
+        );
+
+        if(!is_null($info[0])){
+            $info = true;
+        }
+
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+    //Delete user's card
+    $app->delete('/api/user/deletecard', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+        //Get the request parameters.
+        $cardID = $request->getParam('cardID');
+
+        $info[] = $mongo->wallakeys->users->findOneAndUpdate(
+            ['_id' => new MongoDB\BSON\ObjectId($oid)],
+            [ '$pull' => ['cards' => [ 'id' => new MongoDB\BSON\ObjectId($cardID)]]],
+        );
+
+        if(!is_null($info[0])){
+            $info = true;
+        }
+
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+
+
 };
