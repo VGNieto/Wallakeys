@@ -18,6 +18,7 @@ const Checkout = (props) => {
         return (parseFloat(totalPrice).toFixed(2));
       }
     
+    console.log(cart);
 
     const showProducts = () => {
         return (

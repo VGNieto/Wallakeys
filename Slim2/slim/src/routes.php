@@ -28,13 +28,11 @@ return function (App $app) {
         if (count($user)>0 && count($user)<2) {
             $now = new DateTime();
             $future = new DateTime('+500 minutes');
-            $server = $request->getServerParams();
             $jti = (new Base62)->encode(random_bytes(16));
             $payload = [
             'iat' => $now->getTimeStamp(),
             'exp' => $future->getTimeStamp(),
             'jti' => $jti,
-            'sub' => $server['PHP_AUTH_USER'],
             'oid' => strval($user[0]->_id)
             ];
 
@@ -292,7 +290,7 @@ return function (App $app) {
                 ['upsert' => true]
             );
         }
-        if(!is_null($info[0])){
+        if (!isset($info[0])) {
             $info = true;
         }
        
@@ -301,7 +299,7 @@ return function (App $app) {
     });
 
 
-    //Update user's password 
+    //Update user's password
     $app->post('/api/user/updatepassword', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('jwt');
         $oid = $token['oid'];
@@ -315,10 +313,10 @@ return function (App $app) {
         
         $info[] = $mongo->wallakeys->users->findOneAndUpdate(
             ['_id' => new MongoDB\BSON\ObjectId($oid),'password' => $oldpassword],
-            [ '$set' => ['password' => $newpassword]],
+            [ '$set' => ['password' => $newpassword]]
         );
         
-        if(!is_null($info[0])){
+        if (!isset($info[0])) {
             $info = true;
         }
        
@@ -343,7 +341,7 @@ return function (App $app) {
             ['upsert' => true]
         );
         
-        if(!is_null($info[0])){
+        if (!is_null($info[0])) {
             $info = true;
         }
        
@@ -372,7 +370,7 @@ return function (App $app) {
             ['upsert' => true]
         );
 
-        if(!is_null($info[0])){
+        if (!is_null($info[0])) {
             $info = true;
         }
 
@@ -387,20 +385,45 @@ return function (App $app) {
         $mongo = $db->connect();
         //Get the request parameters.
         $cardID = $request->getParam('cardID');
+        $password = $request->getParam('password');
 
         $info[] = $mongo->wallakeys->users->findOneAndUpdate(
-            ['_id' => new MongoDB\BSON\ObjectId($oid)],
-            [ '$pull' => ['cards' => [ 'id' => new MongoDB\BSON\ObjectId($cardID)]]],
+            ['_id' => new MongoDB\BSON\ObjectId($oid),'password' => $password],
+            [ '$pull' => ['cards' => [ 'id' => new MongoDB\BSON\ObjectId($cardID)]]]
         );
 
-        if(!is_null($info[0])){
-            $info = true;
+        if (!is_null($info[0])) {
+            $info = "deleted";
+        } else{
+            $info = "notdeleted";
         }
 
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
 
+    //Delete user's card
+    $app->post('/api/order/new', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+        //Get the request parameters.
+        $cardID = $request->getParam('cardID');
+        $password = $request->getParam('password');
 
+        $info[] = $mongo->wallakeys->users->findOneAndUpdate(
+            ['_id' => new MongoDB\BSON\ObjectId($oid),'password' => $password],
+            [ '$pull' => ['cards' => [ 'id' => new MongoDB\BSON\ObjectId($cardID)]]]
+        );
 
+        if (!is_null($info[0])) {
+            $info = "deleted";
+        } else{
+            $info = "notdeleted";
+        }
+
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
 };

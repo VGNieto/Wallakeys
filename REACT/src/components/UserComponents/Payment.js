@@ -10,6 +10,10 @@ const Payment = (props) => {
 
   const [user, setUser] = useContext(UserContext);
   const [cards, setCards] = useState();
+  const [card, setCard] = useState();
+
+  const[disabledNew,setDisabledNew] = useState(false);
+  const [password, setPassword] = useState();
 
   const [fullName, setFullName] = useState();
   const [number, setNumber] = useState();
@@ -17,10 +21,15 @@ const Payment = (props) => {
   const [year, setYear] = useState();
   const [cvv, setCVV] = useState();
 
+
   const [result, setResult] = useState();
   const [spinnerTimeOut, setSpinnerTimeOut] = useState();
   const [savedTimeOut, setSavedTimeOut] = useState();
 
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  }
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);
   }
@@ -60,6 +69,14 @@ const Payment = (props) => {
       return (
         <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "red" }}>Card not added</p>
       )
+    } else if (result == "deleted") {
+      return (
+        <p className="" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "green" }}>Card deleted</p>
+      )
+    } else if (result == "notdeleted") {
+      return (
+        <p className="" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "red" }}>Incorrect password</p>
+      )
     } else {
       return (
         <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "red" }}></p>
@@ -76,7 +93,7 @@ const Payment = (props) => {
           <div>
             <div class="form-group">
               <button class="form-control  card-details-button" data-button={card.id.$oid} onClick={handleOpenDetails} >
-                <p data-button="card-1"> Card terminated in  {card.number.substr(card.number.length-4,card.number.length)} </p>
+                <p data-button="card-1"> Card terminated in  {card.number.substr(card.number.length - 4, card.number.length)} </p>
                 <i className="fa fa-chevron-down " data-button={card.id.$oid} disabled></i>
               </button>
             </div>
@@ -102,7 +119,8 @@ const Payment = (props) => {
                 </div>
 
                 <div class="col-sm-4 vertical-align-delete-card">
-                  <button className="btn btn-danger" onClick={deleteCard} data-button={card.id.$oid}><i class="fa fa-exclamation-circle"></i> Delete Card</button>
+                  <a href="#" data-target="#pwdModal" data-toggle="modal" onClick={() => { setCard(card.id.$oid) }}>Delete card</a>
+
                 </div>
               </div>
 
@@ -113,15 +131,15 @@ const Payment = (props) => {
     )
   }
 
-  const deleteCard = (e) => {
+  const confirmDelete = (e) => {
     const token = 'Bearer ' + user.token;
     let spinner = document.getElementById("loading-spinner");
     let savedchanges = document.getElementById("saved-changes");
-    spinner.className = "";
     savedchanges.className = "d-none";
-    const dataButton = e.target.getAttribute("data-button");
 
-    clearTimeout(spinnerTimeOut);
+    let details = document.getElementById(card);
+    details.className = "d-none";
+
     clearTimeout(savedTimeOut);
 
     axios({
@@ -132,30 +150,31 @@ const Payment = (props) => {
 
       },
       params: {
-        cardID: dataButton,
+        cardID: card,
+        password: password,
       }
     }).then(res => {
+      setPassword("");
       setResult(res.data);
-
-      setSpinnerTimeOut(setTimeout(() => {
-        savedchanges.className = "";
-        spinner.className = "d-none";
-        setSavedTimeOut(setTimeout(() => {
-          savedchanges.className = "d-none";
-        }, 2000))
-      }, 1000))
+      savedchanges.className="";
+      setSavedTimeOut(setTimeout(()=>{
+        setResult();
+        savedchanges.className="d-none"
+      },3000)
+      
+      )
 
     });
 
   }
 
   const addCard = (e) => {
+    setDisabledNew(true);
     const token = 'Bearer ' + user.token;
     let spinner = document.getElementById("loading-spinner");
     let savedchanges = document.getElementById("saved-changes");
     spinner.className = "";
     savedchanges.className = "d-none";
-
     clearTimeout(spinnerTimeOut);
     clearTimeout(savedTimeOut);
 
@@ -174,14 +193,21 @@ const Payment = (props) => {
         CVV: cvv,
       }
     }).then(res => {
-      setResult(res.data);
+
 
       setSpinnerTimeOut(setTimeout(() => {
+
         savedchanges.className = "";
         spinner.className = "d-none";
         setSavedTimeOut(setTimeout(() => {
           savedchanges.className = "d-none";
         }, 2000))
+        setCVV(""); setFullName(""); setMonth(""); setYear(""); setNumber("");
+
+        setResult();
+        setResult(res.data);
+        setDisabledNew(false);
+        handleNewMethod();
       }, 1000))
 
     });
@@ -204,7 +230,7 @@ const Payment = (props) => {
           setCards(data[0].cards)
         }
       });
-  }, [])
+  }, [result])
 
 
   console.log(cards);
@@ -236,29 +262,24 @@ const Payment = (props) => {
 
 
 
-            { cards != undefined ? showCards():null}
+              {cards != undefined ? showCards() : null}
 
 
-
-              <ul class="nav bg-light nav-pills rounded nav-fill mb-3 payment-methods" role="tablist">
-                <li class="nav-item dropdown">
-                  <button className="btn btn-primary" onClick={handleNewMethod}><i class="fa fa-credit-card"></i> Add new payment method</button> </li>
-              </ul>
-
-
-
-
-
+              <div className="col-md-12 offset-md-12 center-align"style={{alignItems:"center"}}>
+                <button className="btn btn-primary" onClick={handleNewMethod}><i class="fa fa-credit-card"></i> Add new payment method</button>
+                {showResult()}
+              </div>
+              
               <form role="form " className="account-payment" id="new-payment-method">
                 <div class="form-group">
                   <label for="username">Full name</label>
-                  <input type="text" class="form-control" onChange={handleFullNameChange} name="username" placeholder="" required="" />
+                  <input type="text" class="form-control" onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
                 </div>
 
                 <div class="form-group">
                   <label for="cardNumber">Card number</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" onChange={handleNumberChange} name="cardNumber" placeholder="" />
+                    <input type="text" class="form-control" onChange={handleNumberChange} name="cardNumber" value={number} placeholder="" />
                     <div class="input-group-append">
                       <span class="input-group-text text-muted">
                         <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>
@@ -273,30 +294,62 @@ const Payment = (props) => {
                     <div class="form-group">
                       <label><span class="hidden-xs">Expiration</span> </label>
                       <div class="input-group">
-                        <input type="number" class="form-control" onChange={handleMonthChange} placeholder="MM" name="" />
-                        <input type="number" class="form-control" onChange={handleYearChange} placeholder="YY" name="" />
+                        <input type="number" class="form-control" onChange={handleMonthChange} placeholder="MM" name="" value={month} />
+                        <input type="number" class="form-control" onChange={handleYearChange} placeholder="YY" name="" value={year} />
                       </div>
                     </div>
                   </div>
                   <div class="col-sm-4">
                     <div class="form-group">
                       <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV </label>
-                      <input type="number" class="form-control" onChange={handleCVVChange} required="" />
+                      <input type="number" class="form-control" onChange={handleCVVChange} value={cvv} required="" />
                     </div>
                   </div>
                 </div>
                 <div className="col-md-6 offset-md-4 center-align" style={{ alignItems: "center" }}>
-                  <button type="button" className="btn btn-primary" onClick={addCard}>
-                    Add new card
-                          </button>
+                  <button type="button" className="btn btn-primary" onClick={addCard} disabled={disabledNew}> Add new card</button>
                   <div id="loading-spinner" className="d-none" style={{ padding: "10px" }}>
                     <div className="spinner-border d-flex justify-content-center " role="status">
                       <span className="sr-only">Loading...</span>
                     </div>
                   </div>
-                  {showResult()}
                 </div>
               </form>
+
+
+              <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="center-align">Introduce your password</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="col-md-12">
+                        <div class="panel panel-default">
+                          <div class="panel-body">
+                            <div class="text-center">
+                              <div class="panel-body">
+                                <fieldset>
+                                  <div class="form-group">
+                                    <input class="form-control input-lg" placeholder="Password" value={password} onChange={handlePasswordChange} name="Password" type="Password" />
+                                  </div>
+                                  <button class="btn btn-lg btn-primary btn-block" data-dismiss="modal" aria-hidden="true" onClick={confirmDelete}>Delete Card</button>
+                                </fieldset>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <div class="col-md-12">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
 
             </div>
           </div>

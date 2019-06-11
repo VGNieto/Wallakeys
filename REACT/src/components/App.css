@@ -655,3 +655,32 @@ input[type="checkbox"]:checked+label:before {
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+
+/* Remove item transition */
+
+.removed-item {
+  animation: removed-item-animation 1.2s cubic-bezier(.65,-0.02,.72,.29);
+}
+
+@keyframes removed-item-animation {
+ 0% {
+      opacity: 1;
+      transform: translateX(0);
+  }
+
+  30% {
+      opacity: 1;
+      transform: translateX(50px);
+  }
+
+  80% {
+      opacity: 1;
+      transform: translateX(-800px);
+  }
+
+  100% {
+      opacity: 0;
+      transform: translateX(-800px);
+  }
+}
