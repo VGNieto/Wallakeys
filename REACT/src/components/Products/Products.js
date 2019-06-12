@@ -19,7 +19,7 @@ const Products = () => {
 
         axios({
             method: 'get',
-            url: 'http://www.imviczz.com:8080/api/products',
+            url: 'https://www.imviczz.com:8080/api/products',
         })
             .then(res => {
 
@@ -52,7 +52,7 @@ const Products = () => {
     const updateGames = () => {
         axios({
             method: 'get',
-            url: 'http://www.imviczz.com:8080/api/products/filter',
+            url: 'https://www.imviczz.com:8080/api/products/filter',
             params: {
                 filterCategories: filters.filters.filterCategories.toString(),
                 filterPlatforms: filters.filters.filterPlatforms.toString(),
@@ -73,7 +73,7 @@ const Products = () => {
     const loadAllGames = () =>{
         axios({
             method: 'get',
-            url: 'http://www.imviczz.com:8080/api/products',
+            url: 'https://www.imviczz.com:8080/api/products',
         })
             .then(res => {
 

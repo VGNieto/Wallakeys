@@ -54,7 +54,7 @@ const User = (props) => {
 
     axios({
       method: 'post',
-      url: 'http://www.imviczz.com:8080/api/user/updatephone',
+      url: 'https://www.imviczz.com:8080/api/user/updatephone',
       headers: {
         Authorization: token,
 
@@ -81,7 +81,7 @@ const User = (props) => {
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
-      url: 'http://www.imviczz.com:8080/api/user/info',
+      url: 'https://www.imviczz.com:8080/api/user/info',
       headers: {
         Authorization: token
       }
