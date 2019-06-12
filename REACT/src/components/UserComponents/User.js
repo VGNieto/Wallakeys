@@ -68,7 +68,7 @@ const User = (props) => {
       )
 
   }
-
+  console.log(userDetails);
   const showResult = () => {
 
     if (result == true) {

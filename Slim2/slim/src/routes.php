@@ -76,13 +76,11 @@ return function (App $app) {
 
             $now = new DateTime();
             $future = new DateTime('+500 minutes');
-            $server = $request->getServerParams();
             $jti = (new Base62)->encode(random_bytes(16));
             $payload = [
             'iat' => $now->getTimeStamp(),
             'exp' => $future->getTimeStamp(),
             'jti' => $jti,
-            'sub' => $server['PHP_AUTH_USER'],
             'oid' => $inserted->getInsertedID()
             ];
 
@@ -271,6 +269,22 @@ return function (App $app) {
         ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
 
+    //Get user's info
+    $app->get('/api/user/account/cards', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+       
+        $info = $mongo->wallakeys->users->find(['_id' => new MongoDB\BSON\ObjectId($oid)], ['projection' => ['cards' => 1]])->toArray();
+        
+       
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+
+
     //Update user's account details info
     $app->post('/api/user/update', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('jwt');
@@ -394,7 +408,7 @@ return function (App $app) {
 
         if (!is_null($info[0])) {
             $info = "deleted";
-        } else{
+        } else {
             $info = "notdeleted";
         }
 
@@ -409,20 +423,52 @@ return function (App $app) {
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
-        $cardID = $request->getParam('cardID');
-        $password = $request->getParam('password');
+        $games = $request->getParam('games');
+        $totalOrder = $request->getParam('total');
+        $arrayGames = explode(",", $games);
+        
+        $keys = array();
+        foreach ($arrayGames as $key => $value) {
+            $quantity = intval(substr($value, strpos($value, "+")+1));
+            for ($i=0; $i <  $quantity;  $i++) {
+                $new = substr(str_shuffle(str_repeat("0123456789ABDCEFGHIJKLMNOPQRSTUVWXYZ", 10)), 0, 10);
+                $keys[] =  $new;
+            }
 
-        $info[] = $mongo->wallakeys->users->findOneAndUpdate(
-            ['_id' => new MongoDB\BSON\ObjectId($oid),'password' => $password],
-            [ '$pull' => ['cards' => [ 'id' => new MongoDB\BSON\ObjectId($cardID)]]]
-        );
+            $id=substr($value, 0, strpos($value, "+"));
+            $game = $mongo->wallakeys->games->find(['_id' => new MongoDB\BSON\ObjectId($id)])->toArray();
 
-        if (!is_null($info[0])) {
-            $info = "deleted";
-        } else{
-            $info = "notdeleted";
+
+            $data[] = ['id' => substr($value, 0, strpos($value, "+")), 'quantity' => substr($value, strpos($value, "+")+1, ),
+                'keys' => $keys,'name'=>$game[0]->name,'price'=>$game[0]->price,'image'=>$game[0]->img
+            ];
+            $keys = [];
         }
 
+         $info[] = $mongo->wallakeys->users->findOneAndUpdate(
+            ['_id' => new MongoDB\BSON\ObjectId($oid)],
+            [ '$push' =>['orders' => [
+                'id' => substr(str_shuffle(str_repeat("0123456789", 6)), 0, 6)
+                , 'games' =>$data ,'date' => (new DateTime())->format('Y-m-s-H-i-s'),'total' => $totalOrder ] ] ]
+
+        ); 
+
+       
+
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+    //Get user's orders
+    $app->get('/api/user/orders', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+       
+        $info = $mongo->wallakeys->users->find(['_id' => new MongoDB\BSON\ObjectId($oid)], ['projection' => ['orders' => 1]])->toArray();
+        
+       
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
