@@ -26,7 +26,7 @@ const Checkout = (props) => {
     const [year, setYear] = useState();
     const [cvv, setCVV] = useState();
 
-    const [card,setCard] = useState();
+    const [card,setCard] = useState("undefined");
     const [result, setResult] = useState();
     const [spinnerTimeOut, setSpinnerTimeOut] = useState();
     const [savedTimeOut, setSavedTimeOut] = useState();
@@ -116,12 +116,11 @@ const Checkout = (props) => {
 
     }
     const createOrder = () => {
-
         const token = 'Bearer ' + user.token;
         const games = (cart.items.map((element) => {
             return (element.id + "+" + element.quantity)
         }));
-
+        
         if (saveCreditCard ) {
             addCard();
         }
@@ -146,7 +145,7 @@ const Checkout = (props) => {
         });
     }
 
-    console.log(creditCards.cards);
+    console.log(card);
     const showProducts = () => {
         return (
             <div class="container" style={{ paddingTop: "25px" }}>
@@ -188,7 +187,7 @@ const Checkout = (props) => {
                             <label class="input-group-text" for="inputGroupSelect01">Credit Card</label>
                         </div>
                         <select class="custom-select" id="inputGroupSelect01"   onChange={handleCardChange} >
-                            <option selected>Choose...</option>
+                            <option value="undefined" selected>Choose...</option>
                             {creditCards.cards.length > 0 ?
                                 creditCards.cards.map((card) =>
                             <option value={card.id.$oid} >{"Card terminated in " + card.number.substr(card.number.length - 4, card.number.length)}</option>
@@ -202,7 +201,9 @@ const Checkout = (props) => {
 
                         <div class="tab-pane fade show active" id="nav-tab-card">
                             <div className="col-md-12 offset-md-12 center-align" style={{ alignItems: "center" }}>
-                                <button className="btn btn-primary" onClick={handleNewMethod}><i class="fa fa-credit-card"></i> Use new card</button>
+                                <button className="btn btn-secondary" onClick={handleNewMethod} style={{marginRight:"20px"}}><i class="fa fa-credit-card"></i> Use new card</button>
+                                <button className="btn btn-primary" onClick={createOrder}><i class="fa fa-cash-register"></i> Confirm order</button>
+
                             </div>
 
                             <form role="form " className="account-payment" id="new-payment-method">
