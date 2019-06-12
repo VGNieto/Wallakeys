@@ -20,11 +20,9 @@ const Breadcrumbs = () => {
             <Col xs={12} sm={12} md={4} className="d-flex justify-content-end">
 
                 <select className="form-control">
-                    <option value="0" defaultValue disabled>Order by</option>
-                    <option value="1">Featured</option>
-                    <option value="2">Most popular</option>
-                    <option value="3">Top rated</option>
-                    <option value="4">Most commented</option>
+                    <option value="1" defaultValue>Cheapest first</option>
+                    <option value="2">Most expensive first</option>
+                    <option value="3" >Alphabetical Order </option>
                 </select>
 
             </Col>

@@ -11,12 +11,7 @@ const images = require.context('../../img', true);
 const User = (props) => {
 
   const [user, setUser] = useContext(UserContext);
-  const [orders, setOrders] = useState(
-    {
-      orders: "",
-      id: ""
-    }
-  );
+  const [orders, setOrders] = useState();
 
   const revealKey = (e) => {
     e.currentTarget.className = "d-none";
@@ -125,7 +120,7 @@ const User = (props) => {
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
-      url: 'http://localhost:8080/api/user/orders',
+      url: 'http://www.imviczz.com:8080/api/user/orders',
       headers: {
         Authorization: token
       }
@@ -166,7 +161,7 @@ const User = (props) => {
             <div className="card-header">My Orders</div>
             <div className="card-body">
 
-              {orders.orders.length > 0 ? showOrders() : <p>You don't have any order yet!</p>}
+              {orders && orders.orders ? showOrders() : <p>You don't have any order yet!</p>}
 
             </div>
           </div>

@@ -90,7 +90,7 @@ const Payment = (props) => {
     return (
       cards.map((card) => {
         return (
-          <div>
+          <div key={card.id.$oid}>
             <div className="form-group">
               <button className="form-control  card-details-button" data-button={card.id.$oid} onClick={handleOpenDetails} >
                 <p data-button="card-1"> Card terminated in  {card.number.substr(card.number.length - 4, card.number.length)} </p>
@@ -101,7 +101,7 @@ const Payment = (props) => {
             <div className="order-details" id={card.id.$oid}>
 
               <div className="form-group">
-                <label for="username">Full name</label>
+                <label htmlFor="username">Full name</label>
                 <span className="form-control" defaultValue=""> {card.fullname} </span>
               </div>
 
@@ -144,7 +144,7 @@ const Payment = (props) => {
 
     axios({
       method: 'delete',
-      url: 'http://localhost:8080/api/user/deletecard',
+      url: 'http://www.imviczz.com:8080/api/user/deletecard',
       headers: {
         Authorization: token,
 
@@ -180,7 +180,7 @@ const Payment = (props) => {
 
     axios({
       method: 'post',
-      url: 'http://localhost:8080/api/user/addcard',
+      url: 'http://www.imviczz.com:8080/api/user/addcard',
       headers: {
         Authorization: token,
 
@@ -218,7 +218,7 @@ const Payment = (props) => {
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
-      url: 'http://localhost:8080/api/user/info',
+      url: 'http://www.imviczz.com:8080/api/user/info',
       headers: {
         Authorization: token
       }
