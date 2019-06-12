@@ -1,8 +1,12 @@
+
+/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
 import 'react-bootstrap/dist/react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link,Redirect } from 'react-router-dom'
 import { UserContext } from '../UserDispatch';
 import { CartContext, CartReducer } from '../CartDispatch';
+import {OrderContext} from '../OrderDispatch';
+
 import axios from 'axios';
 const images = require.context('../../img', true);
 
@@ -11,47 +15,58 @@ const Checkout = (props) => {
 
     const [user, setUser] = useContext(UserContext);
     const [cart, setCart] = useContext(CartContext)
+    const [order, setOrder] = useContext(OrderContext);
+
     const [creditCards, setCreditCards] = useState({
         cards: [],
         _id: {},
 
     });
+
+    //Payment method
+    const [isPaypal,setIsPaypal] = useState(false);
+    //Show credit cards
+    const [showCreditCards,setShowCreditCards] = useState(true);
+    //Check saveCreditCard
     const [saveCreditCard, setSaveCreditCard] = useState(false);
-
+    //New card
     const [disabledNew, setDisabledNew] = useState(false);
-
     const [fullName, setFullName] = useState();
     const [number, setNumber] = useState();
     const [month, setMonth] = useState();
     const [year, setYear] = useState();
     const [cvv, setCVV] = useState();
-
-    const [card,setCard] = useState("undefined");
+    //Selected card
+    const [card, setCard] = useState("undefined");
+    //Checkout result
     const [result, setResult] = useState();
-    const [spinnerTimeOut, setSpinnerTimeOut] = useState();
-    const [savedTimeOut, setSavedTimeOut] = useState();
 
 
-    const handleCardChange = (e) =>{
-        setCard(e.target.value);
+    const handlePaypalMethod = (e) =>{
+        setIsPaypal(!isPaypal);
+    }
+    const handleCardChange = (e) => {
+        setCard(e.currentTarget.value);
     }
     const handleFullNameChange = (e) => {
-        setFullName(e.target.value);
+        setFullName(e.currentTarget.value);
     }
     const handleNumberChange = (e) => {
-        setNumber(e.target.value);
+        setNumber(e.currentTarget.value);
     }
     const handleMonthChange = (e) => {
-        setMonth(e.target.value);
+        setMonth(e.currentTarget.value);
     }
     const handleYearChange = (e) => {
-        setYear(e.target.value);
+        setYear(e.currentTarget.value);
     }
     const handleCVVChange = (e) => {
-        setCVV(e.target.value);
+        setCVV(e.currentTarget.value);
     }
 
     const handleNewMethod = (e) => {
+        setDisabledNew(!disabledNew);
+        setShowCreditCards(!showCreditCards);
         let form = document.getElementById("new-payment-method");
         form.className == "account-payment-active" ? form.className = "account-payment" : form.className = "account-payment-active"
     }
@@ -63,6 +78,7 @@ const Checkout = (props) => {
         return (parseFloat(totalPrice).toFixed(2));
     }
 
+    //Get all user cards
     useEffect(() => {
         const token = 'Bearer ' + user.token;
 
@@ -82,7 +98,7 @@ const Checkout = (props) => {
             });
     }, [])
 
-
+    //Add new card
     const addCard = (e) => {
         setDisabledNew(true);
         const token = 'Bearer ' + user.token;
@@ -113,15 +129,16 @@ const Checkout = (props) => {
 
 
         });
-
     }
-    const createOrder = () => {
+
+    //Create new order
+    const createOrder = (e) => {
         const token = 'Bearer ' + user.token;
         const games = (cart.items.map((element) => {
             return (element.id + "+" + element.quantity)
         }));
-        
-        if (saveCreditCard ) {
+
+        if (saveCreditCard) {
             addCard();
         }
 
@@ -130,7 +147,6 @@ const Checkout = (props) => {
             url: 'http://localhost:8080/api/order/new',
             headers: {
                 Authorization: token,
-
             },
             params: {
                 games: games.toString(),
@@ -138,17 +154,26 @@ const Checkout = (props) => {
 
             }
         }).then(res => {
-
             
 
+            if(res){
+                setOrder({type:"createOrder",text:res.data})
+                window.location.href = "/account/cart/checkout/order-details";
+            }
 
         });
     }
+    
+    const confirmOrderButton = () =>{
+        if(!disabledNew){
+            return (<button className="btn btn-primary" onClick={createOrder} id="actualCard"><i className="fa fa-cash-register"></i> Confirm order</button>)
+        }
+    }
 
-    console.log(card);
+    //Show all products
     const showProducts = () => {
         return (
-            <div class="container" style={{ paddingTop: "25px" }}>
+            <div className="container" style={{ paddingTop: "25px" }}>
                 <div className="card" >
                     <div className="card-header"> Complete Checkout</div>
                     <div className="card-body"></div>
@@ -159,7 +184,7 @@ const Checkout = (props) => {
                             <h6> Products</h6>
                             <ul className="checkout-item-list">
                                 {cart.items.map((item) =>
-                                    <li> {item.name} <div className="checkout-number-items">x{item.quantity} <strong> {item.subtotal}$</strong> </div></li>
+                                    <li key={item.name}> {item.name} <div className="checkout-number-items">x{item.quantity} <strong> {item.subtotal}$</strong> </div></li>
                                 )}
                             </ul>
                         </div>
@@ -171,86 +196,88 @@ const Checkout = (props) => {
                             </div>
                         </div>
                     </div>
-
-                    <ul class="nav bg-light nav-pills rounded nav-fill mb-3 payment-methods" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
-                                <i class="fa fa-credit-card"></i> Credit Card</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
-                                <i class="fab fa-paypal"></i>  Paypal</a></li>
+                    <ul className="nav bg-light nav-pills rounded nav-fill mb-3 payment-methods" role="tablist">
+                        <li className="nav-item">
+                            <a className="nav-link active" data-toggle="pill"  onClick={handlePaypalMethod} href="#nav-tab-card">
+                                <i className="fa fa-credit-card"></i> Credit Card</a></li>
+                        <li className="nav-item">
+                            <a className="nav-link" data-toggle="pill"  onClick={handlePaypalMethod} href="#nav-tab-paypal">
+                                <i className="fab fa-paypal"></i>  Paypal</a></li>
 
                     </ul>
-                                
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Credit Card</label>
+                    {showCreditCards &&  !isPaypal ? <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <label className="input-group-text" htmlFor="inputGroupSelect01">Credit Card</label>
                         </div>
-                        <select class="custom-select" id="inputGroupSelect01"   onChange={handleCardChange} >
-                            <option value="undefined" selected>Choose...</option>
-                            {creditCards.cards.length > 0 ?
+                        <select className="custom-select" id="inputGroupSelect01" onChange={handleCardChange} >
+                            <option value="undefined" defaultValue>Choose one of saved cards...</option>
+                            {creditCards.cards && creditCards.cards.length > 0 ?
                                 creditCards.cards.map((card) =>
-                            <option value={card.id.$oid} >{"Card terminated in " + card.number.substr(card.number.length - 4, card.number.length)}</option>
-
+                                    <option value={card.id.$oid} >{"Card terminated in " + card.number.substr(card.number.length - 4, card.number.length)}</option>
+                                    
                                 )
                                 : null}
                         </select>
-                    </div>
+                    </div> : null}
+                    
 
-                    <div class="tab-content payment-tabs">
+                    <div className="tab-content payment-tabs">
 
-                        <div class="tab-pane fade show active" id="nav-tab-card">
-                            <div className="col-md-12 offset-md-12 center-align" style={{ alignItems: "center" }}>
-                                <button className="btn btn-secondary" onClick={handleNewMethod} style={{marginRight:"20px"}}><i class="fa fa-credit-card"></i> Use new card</button>
-                                <button className="btn btn-primary" onClick={createOrder}><i class="fa fa-cash-register"></i> Confirm order</button>
+                        {/* Credit card tab */}
+                        <div className="tab-pane fade show active" id="nav-tab-card">
+                            <div className="col-md-12 offset-md-12 center-align checkout-confirm-orders" style={{ alignItems: "center" }}>
+
+                                
+                                <button className="btn btn-secondary" onClick={handleNewMethod} ><i className="fa fa-credit-card"></i> Use new card</button>
+                                {confirmOrderButton()}
 
                             </div>
 
-                            <form role="form " className="account-payment" id="new-payment-method">
-                                <div class="form-group">
-                                    <label for="username">Full name</label>
-                                    <input type="text" class="form-control" onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
+                            <form role="form " className="account-payment" id="new-payment-method"style={{paddingTop:"30px"}}>
+                                <div className="form-group">
+                                    <label htmlFor="username">Full name</label>
+                                    <input type="text" className="form-control" onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="cardNumber">Card number</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" onChange={handleNumberChange} name="cardNumber" value={number} placeholder="" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text text-muted">
-                                                <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>
-                                                <i class="fab fa-cc-mastercard"></i>
+                                <div className="form-group">
+                                    <label htmlFor="cardNumber">Card number</label>
+                                    <div className="input-group">
+                                        <input type="text" className="form-control" onChange={handleNumberChange} name="cardNumber" value={number} placeholder="" />
+                                        <div className="input-group-append">
+                                            <span className="input-group-text text-muted">
+                                                <i className="fab fa-cc-visa"></i>   <i className="fab fa-cc-amex"></i>
+                                                <i className="fab fa-cc-mastercard"></i>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <div class="form-group">
-                                            <label><span class="hidden-xs">Expiration</span> </label>
-                                            <div class="input-group">
-                                                <input type="number" class="form-control" onChange={handleMonthChange} placeholder="MM" name="" value={month} />
-                                                <input type="number" class="form-control" onChange={handleYearChange} placeholder="YY" name="" value={year} />
+                                <div className="row">
+                                    <div className="col-sm-8">
+                                        <div className="form-group">
+                                            <label><span className="hidden-xs">Expiration</span> </label>
+                                            <div className="input-group">
+                                                <input type="number" className="form-control" onChange={handleMonthChange} placeholder="MM" name="" value={month} />
+                                                <input type="number" className="form-control" onChange={handleYearChange} placeholder="YY" name="" value={year} />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
+                                    <div className="col-sm-4">
+                                        <div className="form-group">
                                             <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV </label>
-                                            <input type="number" class="form-control" onChange={handleCVVChange} value={cvv} required="" />
+                                            <input type="number" className="form-control" onChange={handleCVVChange} value={cvv} required="" />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-md-6 offset-md-4 center-align" style={{ alignItems: "center" }}>
                                     <div style={{ paddingRight: "30px" }}>
-                                        <input class="form-check-input" type="checkbox" onClick={() => { setSaveCreditCard(!saveCreditCard) }}
+                                        <input className="form-check-input" type="checkbox" onClick={() => { setSaveCreditCard(!saveCreditCard) }}
                                             value={saveCreditCard} id="defaultCheck1" />
-                                        <label class="form-check-label" for="defaultCheck1">
+                                        <label className="form-check-label" htmlFor="defaultCheck1">
                                             Save credit card
                                         </label>
                                     </div>
-                                    <button type="button" className="btn btn-primary" onClick={createOrder} disabled={disabledNew}> Confirm order</button>
+                                    <button type="button" className="btn btn-primary" onClick={createOrder} value="newCredit" > <i className="fa fa-cash-register"></i> Confirm order </button>
                                     <div id="loading-spinner" className="d-none" style={{ padding: "10px" }}>
                                         <div className="spinner-border d-flex justify-content-center " role="status">
                                             <span className="sr-only">Loading...</span>
@@ -260,16 +287,18 @@ const Checkout = (props) => {
                             </form>
                         </div>
 
-                        <div class="tab-pane fade" id="nav-tab-paypal">
-                            <p>Paypal is easiest way to pay online</p>
+                        <div className="tab-pane fade" id="nav-tab-paypal">
+                            <p>You will be redirected to PayPal site to complete the order.</p>
                             <p>
-                                <button type="button" class="btn btn-primary" onClick={createOrder}> <i class="fab fa-paypal"></i> Log in my Paypal </button>
+
+                              <button type="button" className="btn btn-primary" onClick={createOrder}> <i className="fab fa-paypal"></i> Checkout with Paypal </button>
+                            
                             </p>
 
                         </div>
 
                     </div>
-                    <div className="col-md-12"><Link class="btn btn-warning" to="/account/cart"> <i class="fa fa-angle-left"></i> Back to cart </Link></div>
+                    <div className="col-md-12"><Link className="btn btn-warning" to="/account/cart"> <i className="fa fa-angle-left"></i> Back to cart </Link></div>
 
 
                 </div>
@@ -280,9 +309,8 @@ const Checkout = (props) => {
 
     return (
 
-        showProducts()
-    );
-
+            cart && cart.items.length>0 ? showProducts() :<div className="col-md-12" style={{textAlign:"center",marginTop:"50px"}}>First you have to add something to your cart! <Link className="btn btn-secondary" to="/"> <i className="fa fa-angle-left"></i> Go back to home </Link></div>
+        );
 
 }
 

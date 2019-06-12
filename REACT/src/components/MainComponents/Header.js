@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable */
 import React, { useContext, useState, useEffect } from 'react';
 import { Navbar, Row, Col, Form, FormControl, Button, Container } from '../../../node_modules/react-bootstrap/'
 import Login from './Login'
@@ -25,9 +25,9 @@ const Header = () => {
 
   const totalProducts = () =>{
     let total = 0;
-    cart.items.forEach((element) => {
-      total = total + element.quantity;
-    }) 
+      cart.items.forEach((element) => {
+        total = total + element.quantity;
+      }) 
     return total;
   }
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
@@ -28,22 +29,22 @@ const Payment = (props) => {
 
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    setPassword(e.currentTarget.value);
   }
   const handleFullNameChange = (e) => {
-    setFullName(e.target.value);
+    setFullName(e.currentTarget.value);
   }
   const handleNumberChange = (e) => {
-    setNumber(e.target.value);
+    setNumber(e.currentTarget.value);
   }
   const handleMonthChange = (e) => {
-    setMonth(e.target.value);
+    setMonth(e.currentTarget.value);
   }
   const handleYearChange = (e) => {
-    setYear(e.target.value);
+    setYear(e.currentTarget.value);
   }
   const handleCVVChange = (e) => {
-    setCVV(e.target.value);
+    setCVV(e.currentTarget.value);
   }
 
   const handleNewMethod = (e) => {
@@ -52,9 +53,8 @@ const Payment = (props) => {
   }
 
   const handleOpenDetails = (e) => {
-    const dataButton = e.target.getAttribute("data-button");
+    const dataButton = e.currentTarget.getAttribute("data-button");
     let detailToOpen = document.getElementById(dataButton);
-    console.log(detailToOpen);
 
     detailToOpen.className == "order-details-active" ? detailToOpen.className = "order-details" : detailToOpen.className = "order-details-active"
   }
@@ -91,8 +91,8 @@ const Payment = (props) => {
       cards.map((card) => {
         return (
           <div>
-            <div class="form-group">
-              <button class="form-control  card-details-button" data-button={card.id.$oid} onClick={handleOpenDetails} >
+            <div className="form-group">
+              <button className="form-control  card-details-button" data-button={card.id.$oid} onClick={handleOpenDetails} >
                 <p data-button="card-1"> Card terminated in  {card.number.substr(card.number.length - 4, card.number.length)} </p>
                 <i className="fa fa-chevron-down " data-button={card.id.$oid} disabled></i>
               </button>
@@ -100,25 +100,25 @@ const Payment = (props) => {
 
             <div className="order-details" id={card.id.$oid}>
 
-              <div class="form-group">
+              <div className="form-group">
                 <label for="username">Full name</label>
-                <span class="form-control" defaultValue=""> {card.fullname} </span>
+                <span className="form-control" defaultValue=""> {card.fullname} </span>
               </div>
 
 
-              <div class="row">
-                <div class="col-sm-8">
-                  <div class="form-group">
-                    <label><span class="hidden-xs">Expiration</span> </label>
-                    <div class="input-group">
-                      <span class="form-control" defaultValue="" name="month"> {card.month}</span>
-                      <span class="form-control" defaultValue="" name="year">{card.year} </span>
+              <div className="row">
+                <div className="col-sm-8">
+                  <div className="form-group">
+                    <label><span className="hidden-xs">Expiration</span> </label>
+                    <div className="input-group">
+                      <span className="form-control" defaultValue="" name="month"> {card.month}</span>
+                      <span className="form-control" defaultValue="" name="year">{card.year} </span>
 
                     </div>
                   </div>
                 </div>
 
-                <div class="col-sm-4 vertical-align-delete-card">
+                <div className="col-sm-4 vertical-align-delete-card">
                   <a href="#" data-target="#pwdModal" data-toggle="modal" onClick={() => { setCard(card.id.$oid) }}>Delete card</a>
 
                 </div>
@@ -233,7 +233,6 @@ const Payment = (props) => {
   }, [result])
 
 
-  console.log(cards);
 
   return (
 
@@ -266,43 +265,43 @@ const Payment = (props) => {
 
 
               <div className="col-md-12 offset-md-12 center-align"style={{alignItems:"center"}}>
-                <button className="btn btn-primary" onClick={handleNewMethod}><i class="fa fa-credit-card"></i> Add new payment method</button>
+                <button className="btn btn-primary" onClick={handleNewMethod}><i className="fa fa-credit-card"></i> Add new payment method</button>
                 {showResult()}
               </div>
               
               <form role="form " className="account-payment" id="new-payment-method">
-                <div class="form-group">
-                  <label for="username">Full name</label>
-                  <input type="text" class="form-control" onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
+                <div className="form-group">
+                  <label htmlFor="username">Full name</label>
+                  <input type="text" className="form-control" onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
                 </div>
 
-                <div class="form-group">
-                  <label for="cardNumber">Card number</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" onChange={handleNumberChange} name="cardNumber" value={number} placeholder="" />
-                    <div class="input-group-append">
-                      <span class="input-group-text text-muted">
-                        <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>
-                        <i class="fab fa-cc-mastercard"></i>
+                <div className="form-group">
+                  <label htmlFor="cardNumber">Card number</label>
+                  <div className="input-group">
+                    <input type="text" className="form-control" onChange={handleNumberChange} name="cardNumber" value={number} placeholder="" />
+                    <div className="input-group-append">
+                      <span className="input-group-text text-muted">
+                        <i className="fab fa-cc-visa"></i>   <i className="fab fa-cc-amex"></i>
+                        <i className="fab fa-cc-mastercard"></i>
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-sm-8">
-                    <div class="form-group">
-                      <label><span class="hidden-xs">Expiration</span> </label>
-                      <div class="input-group">
-                        <input type="number" class="form-control" onChange={handleMonthChange} placeholder="MM" name="" value={month} />
-                        <input type="number" class="form-control" onChange={handleYearChange} placeholder="YY" name="" value={year} />
+                <div className="row">
+                  <div className="col-sm-8">
+                    <div className="form-group">
+                      <label><span className="hidden-xs">Expiration</span> </label>
+                      <div className="input-group">
+                        <input type="number" className="form-control" onChange={handleMonthChange} placeholder="MM" name="" value={month} />
+                        <input type="number" className="form-control" onChange={handleYearChange} placeholder="YY" name="" value={year} />
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
+                  <div className="col-sm-4">
+                    <div className="form-group">
                       <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV </label>
-                      <input type="number" class="form-control" onChange={handleCVVChange} value={cvv} required="" />
+                      <input type="number" className="form-control" onChange={handleCVVChange} value={cvv} required="" />
                     </div>
                   </div>
                 </div>
@@ -317,23 +316,23 @@ const Payment = (props) => {
               </form>
 
 
-              <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="center-align">Introduce your password</h4>
+              <div id="pwdModal" className="modal fade" tabIndex="-1" role="dialog" aria-hidden="true">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h4 className="center-align">Introduce your password</h4>
                     </div>
-                    <div class="modal-body">
-                      <div class="col-md-12">
-                        <div class="panel panel-default">
-                          <div class="panel-body">
-                            <div class="text-center">
-                              <div class="panel-body">
+                    <div className="modal-body">
+                      <div className="col-md-12">
+                        <div className="panel panel-default">
+                          <div className="panel-body">
+                            <div className="text-center">
+                              <div className="panel-body">
                                 <fieldset>
-                                  <div class="form-group">
-                                    <input class="form-control input-lg" placeholder="Password" value={password} onChange={handlePasswordChange} name="Password" type="Password" />
+                                  <div className="form-group">
+                                    <input className="form-control input-lg" placeholder="Password" value={password} onChange={handlePasswordChange} name="Password" type="Password" />
                                   </div>
-                                  <button class="btn btn-lg btn-primary btn-block" data-dismiss="modal" aria-hidden="true" onClick={confirmDelete}>Delete Card</button>
+                                  <button className="btn btn-lg btn-primary btn-block" data-dismiss="modal" aria-hidden="true" onClick={confirmDelete}>Delete Card</button>
                                 </fieldset>
                               </div>
                             </div>
@@ -341,9 +340,9 @@ const Payment = (props) => {
                         </div>
                       </div>
                     </div>
-                    <div class="modal-footer">
-                      <div class="col-md-12">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <div className="modal-footer">
+                      <div className="col-md-12">
+                        <button className="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                       </div>
                     </div>
                   </div>

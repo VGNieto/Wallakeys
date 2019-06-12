@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -17,17 +18,17 @@ const User = (props) => {
     }
   );
 
-  const revealKey = (e) =>{
-    e.target.className="d-none";
-    e.target.previousElementSibling.className="";
+  const revealKey = (e) => {
+    e.currentTarget.className = "d-none";
+    e.currentTarget.previousElementSibling.className = "";
   }
   const handleOpenDetails = (e) => {
-    const dataButton = e.target.getAttribute("data-button");
+
+    const dataButton = e.currentTarget.getAttribute("data-button");
     let detailToOpen = document.getElementById(dataButton);
-    console.log(detailToOpen);
 
     detailToOpen.className == "orders-row-active" ? detailToOpen.className = "orders-row" :
-      detailToOpen.className = "orders-row-active"
+    detailToOpen.className = "orders-row-active"
   }
 
 
@@ -36,77 +37,76 @@ const User = (props) => {
       <div>
 
 
-        {orders.orders.map((element) => 
-            <div class="form-group">
-{            console.log(element.games)}
-            <button class="form-control  card-details-button" data-button={element.id} onClick={handleOpenDetails} >
-              <p data-button="card-1"> {"Order nº"+element.id}</p>
-              <p style={{ fontSize: "12px" }}> {"Order date:"+element.date}</p>
+        {orders.orders.map((element) =>
+          <div className="form-group" key={element.id}>
+            <button className="form-control  card-details-button" data-button={element.id} onClick={(e) => { handleOpenDetails(e) }} >
+              <p data-button="card-1"> {"Order nº" + element.id}</p>
+              <p style={{ fontSize: "12px" }}> {"Order date:" + element.date}</p>
               <i className="fa fa-chevron-down " data-button="card-1" disabled></i>
             </button>
             <div className="row orders-row " id={element.id}>
 
-            {element.games.map((game)=>
+              {element.games.map((game) =>
 
-              <div className="orders-product-row" >
-                <div className="col-sm-12 col-md-12 col-lg-6 col-12 row orders-product-title">
-                  <Link
-                                to={{
-                                    pathname: "/product/" + game.name.split(" ").join("-").toLowerCase(),
-                                    state: {
-                                        productID: game.id,
+                <div className="orders-product-row" key={game.id}>
+                  <div className="col-sm-12 col-md-12 col-lg-6 col-12 row orders-product-title">
+                    <Link
+                      to={{
+                        pathname: "/product/" + game.name.split(" ").join("-").toLowerCase(),
+                        state: {
+                          productID: game.id,
 
-                                    }
-                                }}
-                            >
-                                <img src={images(`./${game.image}`)} class="img-responsive orders-product-image" />
+                        }
+                      }}
+                    >
+                      <img src={images(`./${game.image}`)} className="img-responsive orders-product-image" />
 
                     </Link>
-                  <div>
-                    <p>{game.name}</p>
-                    <p> Platforms: {"Xbox"}</p>
+                    <div>
+                      <p>{game.name}</p>
+                      <p> Platforms: {"Xbox"}</p>
+                    </div>
                   </div>
-                </div>
 
 
-                
 
-                <div className="col-sm-6 col-md-6 col-lg-2 col-6">
-                  <h6> Price</h6>
-                  <p class="">{game.price}</p>
-                </div>
 
-                <div className="col-sm-6 col-md-6 col-lg-2 col-6">
-                  <h6> Quantity</h6>
-                  <p class="">{game.keys.length}</p>
-                </div>
+                  <div className="col-sm-6 col-md-6 col-lg-2 col-6">
+                    <h6> Price</h6>
+                    <p className="">{game.price}</p>
+                  </div>
 
-                <div className="col-sm-6 col-md-6 col-lg-2 col-6">
-                  <h6> State</h6>
-                  <p class="text-success">Delivered</p>
-                </div>
+                  <div className="col-sm-6 col-md-6 col-lg-2 col-6">
+                    <h6> Quantity</h6>
+                    <p className="">{game.keys.length}</p>
+                  </div>
 
-                <div className="col-sm-12 col-md-12 center-align">
-                  <div>
-                    <div className="d-none">
-                      {game.keys.map((key,index)=>
-                          <p> Key {index+1}: {key} </p>
-                      )}
+                  <div className="col-sm-6 col-md-6 col-lg-2 col-6">
+                    <h6> State</h6>
+                    <p className="text-success">Delivered</p>
+                  </div>
+
+                  <div className="col-sm-12 col-md-12 center-align">
+                    <div>
+                      <div className="d-none">
+                        {game.keys.map((key, index) =>
+                          <p key={key}> Key {index + 1}: {key} </p>
+                        )}
+
+                      </div>
+
+                      {game.keys.length > 1 ? <button className="btn btn-primary" onClick={revealKey}> Click here to reveal keys</button>
+                        : <button className="btn btn-primary" onClick={revealKey}> Click here to reveal key</button>}
+
 
                     </div>
-
-                    {game.keys.length>1 ?                     <button className="btn btn-primary" onClick={revealKey}> Click here to reveal keys</button>
-                    : <button className="btn btn-primary" onClick={revealKey}> Click here to reveal key</button> }
-
-                    
                   </div>
+
+
                 </div>
 
-
+              )}
             </div>
-              
-            )}
-                          </div>
 
 
 
@@ -139,9 +139,8 @@ const User = (props) => {
       });
   }, [])
 
-  
 
-  console.log(orders)
+
 
   return (
 
@@ -167,7 +166,7 @@ const User = (props) => {
             <div className="card-header">My Orders</div>
             <div className="card-body">
 
-              {orders.orders.length > 0 ? showOrders() : null}
+              {orders.orders.length > 0 ? showOrders() : <p>You don't have any order yet!</p>}
 
             </div>
           </div>

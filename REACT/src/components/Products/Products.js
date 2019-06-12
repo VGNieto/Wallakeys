@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-
+/* eslint-disable */
 import React, { useState, useEffect, useContext, useLayoutEffect, forceUpdate, setState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';

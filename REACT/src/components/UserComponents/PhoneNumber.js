@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext,useState,useEffect } from 'react';
 import axios from  'axios'
 import 'react-bootstrap/dist/react-bootstrap'
@@ -17,7 +18,7 @@ const User = (props) => {
   const [savedTimeOut, setSavedTimeOut] = useState();
 
   const handlePhoneChange = (e) => {
-    setPhoneNumber(e.target.value);
+    setPhoneNumber(e.currentTarget.value);
   }
 
   
@@ -94,7 +95,6 @@ const User = (props) => {
       });
   }, [])
 
-  console.log(phoneNumber);
   return (
     <div className="container">
       <div className="row justify-content-center" style={{ paddingTop: "25px" }}>

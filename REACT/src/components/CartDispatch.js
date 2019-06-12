@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useReducer, createContext, useEffect } from 'react';
 
 
@@ -18,7 +19,6 @@ export const CartReducer = (props) => {
 
                 let exists = false;
                 state.items.forEach(element => {
-                    console.log(element.id);
                     if (element.id == action.text.id) {
                         element.quantity = action.text.quantity;
                         element.subtotal = (element.quantity * element.price).toFixed(2);
@@ -39,7 +39,6 @@ export const CartReducer = (props) => {
                 return;
             case 'addOne':
                 state.items.map(element => {
-                    console.log(element.id);
                     if (element.id == action.text.id) {
                         element.quantity = action.text.quantity;
                         element.subtotal = (element.quantity * element.price).toFixed(2);
@@ -51,7 +50,6 @@ export const CartReducer = (props) => {
                 return { items: [...state.items] }
             case 'removeOne':
                 state.items.forEach(element => {
-                    console.log(element.id);
                     if (element.id == action.text.id) {
                         element.quantity = action.text.quantity;
                         element.subtotal = (element.quantity * element.price).toFixed(2);
@@ -71,7 +69,11 @@ export const CartReducer = (props) => {
                 })
                 localStorage.setItem("cart", JSON.stringify(state.items));
                 return { items: [...state.items] }
-
+            case 'removeCart':
+                
+                state.items = [];
+                localStorage.removeItem("cart");
+                return {items: state.items}
             default:
                 throw new Error();
 

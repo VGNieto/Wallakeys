@@ -342,6 +342,22 @@
   padding: 30px;
 }
 
+.checkout-confirm-orders{
+  display: flex;
+  justify-content:space-between;
+  flex-direction: row-reverse; 
+}
+
+#nav-tab-paypal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#nav-tab-paypal p{
+  padding: 30px;
+}
+
 /* Order details */
 
 .order-column-details {

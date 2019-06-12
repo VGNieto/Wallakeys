@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import {Container,Row,Col, Breadcrumb} from 'react-bootstrap';
 import Categories from '../Products/Categories'

@@ -13,6 +13,7 @@ import { UserContext, UserReducer } from './UserDispatch';
 import { CartContext, CartReducer } from './CartDispatch';
 import { GamesContext, GamesReducer } from './GamesDispatch';
 import { FiltersContext, FiltersReducer } from './FiltersDispatch';
+import { OrderContext, OrderReducer } from './OrderDispatch';
 
 
 import User from './UserComponents/User';
@@ -59,6 +60,7 @@ function App() {
     );
   }
 
+  
   return (
 
 
@@ -67,33 +69,37 @@ function App() {
 
         <UserReducer>
           <CartReducer>
-            <GamesReducer>
-              <FiltersReducer>
-                <Header />
+            <OrderReducer>
+              <GamesReducer>
+                <FiltersReducer>
 
-                <Route exact path="/" component={Main} />
+                  <Header />
 
-
-                <PrivateRoute path="/account/account-details" component={User} />
-                <PrivateRoute path="/account/password" component={Password} />
-                <PrivateRoute path="/account/phone-number" component={PhoneNumber} />
-                <PrivateRoute path="/account/wishlist" component={Wishlist} />
-                <PrivateRoute path="/account/payment" component={Payment} />
-                <PrivateRoute path="/account/orders" component={Orders} />
-
-                <PrivateRoute exact path="/account/cart" component={Cart} />
-                <PrivateRoute exact path="/account/cart/checkout" component={Checkout} />
-                <PrivateRoute exact path="/account/cart/checkout/order-details" component={OrderDetails} />
+                  <Route exact path="/" component={Main} />
 
 
-                <Route exact path="/platform/:id" component={Products} />
-                <Route exact path="/products" component={Products} />
-                <Route exact path="/product/:id" component={Product} />
-                <PrivateRoute exact path="/test" component={Test} />
+                  <PrivateRoute path="/account/account-details" component={User} />
+                  <PrivateRoute path="/account/password" component={Password} />
+                  <PrivateRoute path="/account/phone-number" component={PhoneNumber} />
+                  <PrivateRoute path="/account/wishlist" component={Wishlist} />
+                  <PrivateRoute path="/account/payment" component={Payment} />
+                  <PrivateRoute path="/account/orders" component={Orders} />
 
-                <Footer />
-              </FiltersReducer>
-            </GamesReducer>
+                  <PrivateRoute exact path="/account/cart" component={Cart} />
+                  <PrivateRoute exact path="/account/cart/checkout" component={Checkout} />
+                  <PrivateRoute exact path="/account/cart/checkout/order-details" component={OrderDetails} />
+
+
+                  <Route exact path="/platform/:id" component={Products} />
+                  <Route exact path="/products" component={Products} />
+                  <Route exact path="/product/:id" component={Product} />
+                  <PrivateRoute exact path="/test" component={Test} />
+
+                  <Footer />
+                </FiltersReducer>
+
+              </GamesReducer>
+            </OrderReducer>
           </CartReducer>
         </UserReducer>
       </div>

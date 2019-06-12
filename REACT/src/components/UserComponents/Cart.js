@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useEffect } from 'react';
 import 'react-bootstrap/dist/react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -61,15 +62,15 @@ const Cart = (props) => {
 
   const showProducts = () => {
     return (
-      <div class="container" style={{ paddingTop: "25px" }}>
+      <div className="container" style={{ paddingTop: "25px" }}>
         <div className="card" >
           <div className="card-header"> Cart</div>
           <div className="card-body"></div>
 
           {cart.items.length > 0 ? cart.items.map((game) =>
-            <div className="row cart-product-row">
+            <div className="row cart-product-row" key={game.id}>
               <div className="col-sm-12 col-md-12 col-lg-5 col-12 row cart-product-title">
-                <img src={images(`./${game.img}`)} alt="..." class="img-responsive cart-product-image" />
+                <img src={images(`./${game.img}`)} alt="..." className="img-responsive cart-product-image" />
                 <div> 
                   <h5> {game.name}</h5>
                   <p> Platforms: {game.platforms}</p>
@@ -77,29 +78,29 @@ const Cart = (props) => {
               </div>
               <div className="col-sm-6 col-md-4 col-lg-2 col-6">
                 <h6> Price</h6>
-                <h5 class="">{game.price}$</h5>
+                <h5 className="">{game.price}$</h5>
               </div>
               <div className="col-sm-6 col-md-4 col-lg-2 col-6">
                 <h6>Quantity</h6>
                 <div className="cart-modify-product">
-                  <div class="form-control text-center" style={{ width: "60px" }}>{game.quantity} </div>
+                  <div className="form-control text-center" style={{ width: "60px" }}>{game.quantity} </div>
 
 
-                  <button class="btn btn-success btn-sm" onClick={ () => { addOne(game) }}><i class="fa fa-plus"></i></button>
+                  <button className="btn btn-success btn-sm" onClick={ () => { addOne(game) }}><i className="fa fa-plus"></i></button>
                   {game.quantity > 1 ?
-                    <button class="btn btn-danger btn-sm" onClick={() => { removeOne(game) }}><i class="fa fa-minus"></i></button>
-                    : <button class="btn btn-danger btn-sm" disabled><i class="fa fa-minus"></i></button>
+                    <button className="btn btn-danger btn-sm" onClick={() => { removeOne(game) }}><i className="fa fa-minus"></i></button>
+                    : <button className="btn btn-danger btn-sm" disabled><i className="fa fa-minus"></i></button>
 
                   }
                 </div>
               </div>
               <div className="col-sm-6 col-md-3 col-lg-2 col-6">
                 <h6> Subtotal</h6>
-                <h5 class="">{game.subtotal}$</h5>
+                <h5 className="">{game.subtotal}$</h5>
               </div>
 
               <div className="col-sm-6 col-md-1 col-lg-1 col-6">
-                <button class="btn btn-danger btn-sm" onClick={() => { deleteGame(game) }}><i class="fa fa-trash-alt"></i></button>
+                <button className="btn btn-danger btn-sm" onClick={() => { deleteGame(game) }}><i className="fa fa-trash-alt"></i></button>
               </div>
             </div>
           ) : <h5 className="center-align">Cart is Empty!</h5>}
@@ -107,16 +108,16 @@ const Cart = (props) => {
           {cart.items.length > 0 ?
             <div className="row cart-end-row">
 
-              <div className="col-md-8"><Link class="btn btn-warning" to="/"><i class="fa fa-angle-left"></i> Continue Shopping</Link> </div>
+              <div className="col-md-8"><Link className="btn btn-warning" to="/"><i className="fa fa-angle-left"></i> Continue Shopping</Link> </div>
               <div className="col-md-2"><strong>Total $ {totalPrice()}</strong></div>
-              <div className="col-md-2"><Link to="/account/cart/checkout"><button class="btn btn-success btn-block"> Checkout <i class="fa fa-angle-right"></i></button></Link></div>
+              <div className="col-md-2"><Link to="/account/cart/checkout"><button className="btn btn-success btn-block"> Checkout <i className="fa fa-angle-right"></i></button></Link></div>
 
 
             </div>
             :
             <div className="row cart-end-row">
 
-              <div className="col-md-12"><Link class="btn btn-warning" to="/"> <i class="fa fa-angle-left"></i> Back to Shop! </Link></div>
+              <div className="col-md-12"><Link className="btn btn-warning" to="/"> <i className="fa fa-angle-left"></i> Back to Shop! </Link></div>
             </div>
           }
 

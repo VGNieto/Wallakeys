@@ -1,5 +1,5 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
-/* eslint-disable no-unused-vars */
 import { Container, Row, Col, Breadcrumb } from 'react-bootstrap';
 import Categories from '../Products/Categories'
 import Carousel from '../MainComponents/Carousel'
@@ -49,7 +49,6 @@ const Product = (props) => {
         actualQuantity = element.quantity+1;
       }
     });
-    console.log(game);
     setCart({ type: 'add', text: {
       id: game._id.$oid,
       name: game.name,

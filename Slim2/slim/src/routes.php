@@ -445,18 +445,19 @@ return function (App $app) {
             $keys = [];
         }
 
-         $info[] = $mongo->wallakeys->users->findOneAndUpdate(
+        $orderID = substr(str_shuffle(str_repeat("0123456789", 6)), 0, 6);
+        $date = (new DateTime())->format('Y-m-s H:i:s');
+        $info[] = $mongo->wallakeys->users->findOneAndUpdate(
             ['_id' => new MongoDB\BSON\ObjectId($oid)],
             [ '$push' =>['orders' => [
-                'id' => substr(str_shuffle(str_repeat("0123456789", 6)), 0, 6)
-                , 'games' =>$data ,'date' => (new DateTime())->format('Y-m-s-H-i-s'),'total' => $totalOrder ] ] ]
+                'id' => $orderID
+                , 'games' =>$data ,'date' => $date,'total' => $totalOrder ] ] ],
+            ['new' => true]
 
-        ); 
-
-       
-
+        );         
+        
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
-        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+        ->write(json_encode($orderID, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
 
     //Get user's orders
@@ -472,4 +473,27 @@ return function (App $app) {
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
+
+    //Get order detail
+    $app->get('/api/user/order/details', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('jwt');
+        $oid = $token['oid'];
+        $db = new db();
+        $mongo = $db->connect();
+        $orderID = $request->getParam("orderID");
+
+        $info = $mongo->wallakeys->users->find(['_id' => new MongoDB\BSON\ObjectId($oid)], ['projection' => ['orders' => 1]])->toArray();
+
+        foreach ($info[0]->orders as $key => $value) {
+            if ($value['id'] == $orderID){
+                $orderDetails = $value;
+                break;
+            } 
+
+        }
+       
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($orderDetails, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
 };

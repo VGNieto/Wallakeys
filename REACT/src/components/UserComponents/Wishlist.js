@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext,useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -44,7 +45,6 @@ const Wishlist = (props) => {
         actualQuantity = element.quantity + 1;
       }
     });
-    console.log(game);
     setCart({
       type: 'add', text: {
         id: game._id.$oid,

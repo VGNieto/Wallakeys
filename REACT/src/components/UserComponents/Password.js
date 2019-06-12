@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
@@ -16,11 +17,11 @@ const Password = (props) => {
   const [savedTimeOut, setSavedTimeOut] = useState();
 
   const handleOldValue = (e) => {
-    setOldPassword(e.target.value);
+    setOldPassword(e.currentTarget.value);
   }
 
   const handleNewValue = (e) => {
-    setNewPassword(e.target.value);
+    setNewPassword(e.currentTarget.value);
   }
 
   const showResult = () => {

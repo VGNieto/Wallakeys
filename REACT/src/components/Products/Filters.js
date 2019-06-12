@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 import React, { Component, useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { FiltersContext } from '../FiltersDispatch';
@@ -95,12 +95,12 @@ const Filters = (props) => {
     const show_categories = () => {
         return (
 
-            <div class="row">
-                <div class="boxes">
+            <div className="row">
+                <div className="boxes">
                     {categories.map((item) =>
-                        <div >
+                        <div key={item}>
                             <input type="checkbox" id={item} />
-                            <label onClick={() => { update_categories(item) }} for={item}>{item}</label>
+                            <label onClick={() => { update_categories(item) }} htmlFor={item}>{item}</label>
                         </div>
 
                     )}
@@ -115,12 +115,12 @@ const Filters = (props) => {
     const show_platforms = () => {
         return (
 
-            <div class="row">
-                <div class="boxes">
+            <div className="row">
+                <div className="boxes">
                     {platforms.map((item) =>
-                        <div>
+                        <div key={item}>
                             <input type="checkbox" id={item} />
-                            <label onClick={() => { update_platforms(item) }} for={item}>{item}</label>
+                            <label onClick={() => { update_platforms(item) }} htmlFor={item}>{item}</label>
                         </div>
 
                     )}

@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable */
 import React, { useState,useContext } from 'react';
 import axios from 'axios';
 import {Button} from 'react-bootstrap'
@@ -18,10 +18,10 @@ const Login = (props) =>{
   
 
     const handleEmailChange = (e) => {
-        setEmail(e.target.value);
+        setEmail(e.currentTarget.value);
      }
     const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
+        setPassword(e.currentTarget.value);
      }
 
     const handleRegister = () =>{

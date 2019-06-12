@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -68,7 +69,6 @@ const User = (props) => {
       )
 
   }
-  console.log(userDetails);
   const showResult = () => {
 
     if (result == true) {
@@ -129,15 +129,15 @@ const User = (props) => {
   }
 
   const handleBirthdayChange = (e) => {
-    setUserdetails({ ...userDetails, birthday: e.target.value })
+    setUserdetails({ ...userDetails, birthday: e.currentTarget.value })
   }
   
   const handleFullNameChanges = (e) => {
-    setUserdetails({ ...userDetails, fullname: e.target.value })
+    setUserdetails({ ...userDetails, fullname: e.currentTarget.value })
   }
 
   const handleCountryChanges = (e) => {
-    setUserdetails({ ...userDetails, country: e.target.value })
+    setUserdetails({ ...userDetails, country: e.currentTarget.value })
   }
 
   useEffect(() => {
@@ -192,14 +192,14 @@ const User = (props) => {
                 <div className="form-group row">
                   <label htmlFor="full_name" className="col-md-4 col-form-label text-md-right">Full Name</label>
                   <div className="col-md-6">
-                    <input type="text" id="full_name" className="form-control" name="full_name" onChange={handleFullNameChanges} defaultValue={userDetails.fullname} />
+                    <input type="text" id="full_name" className="form-control" name="full_name" onChange={handleFullNameChanges} defaultValue={userDetails.fullname} required autoFocus />
                   </div>
                 </div>
 
                 <div className="form-group row">
                   <label htmlFor="country" className="col-md-4 col-form-label text-md-right">Country</label>
                   <div className="col-md-6">
-                    <select className="custom-select" id="country" name="country_select" onChange={handleCountryChanges} required autoFocus >
+                    <select className="custom-select" id="country" name="country_select" onChange={handleCountryChanges} required >
                       {countryHandle()}
                     </select>
                   </div>
@@ -209,7 +209,7 @@ const User = (props) => {
                   <label htmlFor="birth_date" className="col-md-4 col-form-label text-md-right">Birthday</label>
                   <div className="col-md-6">
                     <input type="date" id="birth_date" className="form-control" onChange={handleBirthdayChange}
-                    defaultValue={userDetails.birthday} name="birth_date" required autoFocus />
+                    defaultValue={userDetails.birthday} name="birth_date" required />
                   </div>
                 </div>
 
@@ -223,7 +223,7 @@ const User = (props) => {
                         <span className="sr-only">Loading...</span>
                     </div>
                   </div>
-                  {showResult()}
+                  { showResult()}
                 </div>
               </form>
             </div>
