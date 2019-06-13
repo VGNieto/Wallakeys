@@ -31,7 +31,7 @@ const Login = (props) =>{
     const sendRegister = () =>{
         axios({
             method: 'post',
-            url: window.location.origin+'443:/api/user/register',
+            url: window.location.origin+':443/api/user/register',
             params: {
                 email:email,
                 password: password
@@ -57,7 +57,7 @@ const Login = (props) =>{
     const sendLogin = () => {
         axios({
             method: 'post',
-            url: window.location.origin+'443:/api/user/login',
+            url: window.location.origin+':443/api/user/login',
             params: {
                 email: email,
                 password: password

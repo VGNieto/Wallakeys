@@ -26,7 +26,7 @@ const Product = (props) => {
 
     axios({
       method: "get",
-      url: window.location.origin+'443:/api/product/info',
+      url: window.location.origin+':443/api/product/info',
       params: {
         productID: props.location.state.productID,
       }

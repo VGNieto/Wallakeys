@@ -84,7 +84,7 @@ const Checkout = (props) => {
 
         axios({
             method: 'get',
-            url: window.location.origin+'443:/api/user/account/cards',
+            url: window.location.origin+':443/api/user/account/cards',
             headers: {
                 Authorization: token,
             }
@@ -105,7 +105,7 @@ const Checkout = (props) => {
 
         axios({
             method: 'post',
-            url: window.location.origin+'443:/api/user/addcard',
+            url: window.location.origin+':443/api/user/addcard',
             headers: {
                 Authorization: token,
 
@@ -144,7 +144,7 @@ const Checkout = (props) => {
 
         axios({
             method: 'post',
-            url: window.location.origin+'443:/api/order/new',
+            url: window.location.origin+':443/api/order/new',
             headers: {
                 Authorization: token,
             },
