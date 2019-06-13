@@ -120,7 +120,7 @@ const User = (props) => {
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
-      url: 'https://www.imviczz.com:8080/api/user/orders',
+      url: 'http://www.imviczz.com:8080/api/user/orders',
       headers: {
         Authorization: token
       }
