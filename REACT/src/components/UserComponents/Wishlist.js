@@ -19,7 +19,7 @@ const Wishlist = (props) => {
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
-      url: 'http://www.imviczz.com:8080/api/products',
+      url: 'http://localhost:8080/api/products',
       headers: {
         Authorization: token,
       }

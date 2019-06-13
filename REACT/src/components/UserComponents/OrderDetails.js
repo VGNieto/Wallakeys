@@ -21,7 +21,7 @@ const OrderDetails = (props) => {
 
         axios({
             method: 'get',
-            url: 'http://www.imviczz.com:8080/api/user/order/details',
+            url: 'http://localhost:8080/api/user/order/details',
             headers: {
                 Authorization: token,
 
