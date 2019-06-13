@@ -120,7 +120,7 @@ const User = (props) => {
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
-      url: 'http://localhost:8080/api/user/orders',
+      url: window.location.origin+'443:/api/user/orders',
       headers: {
         Authorization: token
       }

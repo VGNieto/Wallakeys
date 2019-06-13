@@ -21,7 +21,7 @@ const OrderDetails = (props) => {
 
         axios({
             method: 'get',
-            url: 'http://localhost:8080/api/user/order/details',
+            url: window.location.origin+'443:/api/user/order/details',
             headers: {
                 Authorization: token,
 

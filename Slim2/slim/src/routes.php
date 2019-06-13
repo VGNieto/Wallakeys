@@ -439,7 +439,7 @@ return function (App $app) {
             $game = $mongo->wallakeys->games->find(['_id' => new MongoDB\BSON\ObjectId($id)])->toArray();
 
 
-            $data[] = ['id' => substr($value, 0, strpos($value, "+")), 'quantity' => substr($value, strpos($value, "+")+1, ),
+            $data[] = ['id' => substr($value, 0, strpos($value, "+")), 'quantity' => substr($value, strpos($value, "+")+1 ),
                 'keys' => $keys,'name'=>$game[0]->name,'price'=>$game[0]->price,'image'=>$game[0]->img
             ];
             $keys = [];

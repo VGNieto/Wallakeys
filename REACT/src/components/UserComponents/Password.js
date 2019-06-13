@@ -55,7 +55,7 @@ const Password = (props) => {
 
     axios({
       method: 'post',
-      url: 'http://localhost:8080/api/user/updatepassword',
+      url: window.location.origin+'443:/api/user/updatepassword',
       headers: {
         Authorization: token,
 

@@ -144,7 +144,7 @@ const Payment = (props) => {
 
     axios({
       method: 'delete',
-      url: 'http://localhost:8080/api/user/deletecard',
+      url: window.location.origin+'443:/api/user/deletecard',
       headers: {
         Authorization: token,
 
@@ -180,7 +180,7 @@ const Payment = (props) => {
 
     axios({
       method: 'post',
-      url: 'http://localhost:8080/api/user/addcard',
+      url: window.location.origin+'443:/api/user/addcard',
       headers: {
         Authorization: token,
 
@@ -218,7 +218,7 @@ const Payment = (props) => {
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
-      url: 'http://localhost:8080/api/user/info',
+      url: window.location.origin+'443:/api/user/info',
       headers: {
         Authorization: token
       }
