@@ -84,7 +84,7 @@ const Checkout = (props) => {
 
         axios({
             method: 'get',
-            url: window.location.origin+':443/api/user/account/cards',
+            url: 'https://api.imviczz.com/api/user/account/cards',
             headers: {
                 Authorization: token,
             }
@@ -105,7 +105,7 @@ const Checkout = (props) => {
 
         axios({
             method: 'post',
-            url: window.location.origin+':443/api/user/addcard',
+            url: 'https://api.imviczz.com/api/user/addcard',
             headers: {
                 Authorization: token,
 
@@ -144,7 +144,7 @@ const Checkout = (props) => {
 
         axios({
             method: 'post',
-            url: window.location.origin+':443/api/order/new',
+            url: 'https://api.imviczz.com/api/order/new',
             headers: {
                 Authorization: token,
             },
