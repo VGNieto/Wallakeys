@@ -75,6 +75,13 @@ const Login = (props) => {
         return reg.test(e);
     }
 
+    const validateAll = () =>{
+
+        
+       return passwordError=="" && emailError=="" && passwordRegister.length>0 && emailRegister.length>0; 
+
+    }
+
     const sendRegister = () => {
         axios({
             method: 'post',
@@ -218,7 +225,10 @@ const Login = (props) => {
 
                                                 </div>
                                                 <div className="form-group">
-                                                    <button onClick={sendRegister} type="button" className="btn btn-primary btn-block"> Register  </button>
+                                                    {validateAll() ? <button onClick={sendRegister} type="button" className="btn btn-primary btn-block"> Register  </button>
+                                                        :
+                                                        
+                                                        <button  type="button" className="btn btn-primary btn-block" disabled> Register  </button>} 
                                                 </div>
 
                                                 <div className="center-align d-none" id="loading-spinner">

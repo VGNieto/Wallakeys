@@ -414,10 +414,77 @@ return function (App $app) {
         ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
 
-    //Delete user's card
+    //Insert new product to wishlist
+    $app->post('/api/user/wishlist/add', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('Authorization');
+        $oid = $token['oid']->{'$oid'};
+        $db = new db();
+        $mongo = $db->connect();
+        //Get the request parameters.
+        $game = $request->getParam('game');
+        
+
+        $info[] = $mongo->wallakeys->users->findOneAndUpdate(
+            ['_id' => new MongoDB\BSON\ObjectId($oid)],
+            [ '$addToSet' =>['wishlist' => [ '_id'=>new MongoDB\BSON\ObjectId($game)  ] ] ],
+            ['new' => true]
+
+        );         
+        
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+    //Remove  item from wishlist
+    $app->post('/api/user/wishlist/remove', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('Authorization');
+        $oid = $token['oid']->{'$oid'};
+        $db = new db();
+        $mongo = $db->connect();
+        //Get the request parameters.
+        $id = $request->getParam('id');
+        
+
+        $info[] = $mongo->wallakeys->users->findOneAndUpdate(
+            ['_id' => new MongoDB\BSON\ObjectId($oid)],
+            [ '$pull' =>['wishlist' => [ '_id'=>new MongoDB\BSON\ObjectId($id)  ] ] ],
+            ['new' => true]
+        );         
+        
+        if(!is_null(info[0])){
+            $info = true;
+        } else{
+            $info = false;
+        }
+        
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+    //Get wishlist
+    $app->get('/api/user/wishlist/get', function (Request $request, Response $response, array $args) use ($container) {
+        $token = $request->getAttribute('Authorization');
+        $oid = $token['oid']->{'$oid'};
+        $db = new db();
+        $mongo = $db->connect();
+        //Get the request parameters.
+        
+        $info[] = $mongo->wallakeys->users->find(['_id' => new MongoDB\BSON\ObjectId($oid)], ['projection' => ['wishlist' => 1]])->toArray();
+
+        foreach ($info[0][0]->wishlist as $key => $value) {
+            $games[] = $mongo->wallakeys->games->find(['_id' => $value->{'_id'} ])->toArray();
+
+        }
+
+    
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($games, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+    //Insert new order
     $app->post('/api/order/new', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.

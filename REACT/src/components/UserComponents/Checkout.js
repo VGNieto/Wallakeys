@@ -159,16 +159,45 @@ const Checkout = (props) => {
 
 
             if (res) {
-               
-                    localStorage.removeItem("cart");
-                    setCart({ type: "removeCart", text: null })
                 
+                localStorage.removeItem("cart");
+                setCart({ type: "removeCart", text: null })
+                games.forEach((game)=>{
+                    removeFromWishlist(game.substr(0,game.indexOf("+")));
+                })
                 setOrder({ type: "createOrder", text: res.data })
-                window.location.href = "/account/cart/checkout/order-details";
+
+
             }
 
         });
     }
+
+    const removeFromWishlist = (game)=>{
+        console.log(game);
+        if (user.token) {
+          const token = 'Bearer ' + user.token;
+          axios({
+            method: 'post',
+            url: 'https://api.imviczz.com/api/user/wishlist/remove',
+            headers: {
+              Authorization: token,
+            },
+            params:{
+              id: game,
+            }
+          })
+            .then(res => {
+    
+              let data = (res.data);
+              if (data !== false) {
+                
+                
+              }
+            });
+        }
+    
+      }
 
     const confirmOrderButton = () => {
         if (!disabledNew) {
