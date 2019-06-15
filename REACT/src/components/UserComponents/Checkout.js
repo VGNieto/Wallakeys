@@ -166,7 +166,10 @@ const Checkout = (props) => {
                 setCart({ type: "removeCart", text: null })
                 setOrder({ type: "createOrder", text: res.data })
 
-
+                games.forEach((game)=>{
+                    removeFromWishlist(game.substr(0,game.indexOf("+")));
+                })
+                
                 window.location.href = "/account/cart/checkout/order-details"
             }
 
