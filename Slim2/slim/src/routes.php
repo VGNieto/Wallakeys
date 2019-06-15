@@ -101,7 +101,7 @@ return function (App $app) {
     });
 
     $app->delete('/api/user/delete', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
@@ -257,7 +257,7 @@ return function (App $app) {
 
     //Get user's info
     $app->get('/api/user/info', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
@@ -271,7 +271,7 @@ return function (App $app) {
 
     //Get user's info
     $app->get('/api/user/account/cards', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
@@ -287,7 +287,7 @@ return function (App $app) {
 
     //Update user's account details info
     $app->post('/api/user/update', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
@@ -315,7 +315,7 @@ return function (App $app) {
 
     //Update user's password
     $app->post('/api/user/updatepassword', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
@@ -331,6 +331,7 @@ return function (App $app) {
         );
         
 <<<<<<< HEAD
+<<<<<<< HEAD
      	if(is_null($info[0])){
 		$info = false;
 	} else{
@@ -339,6 +340,9 @@ return function (App $app) {
 =======
        
 >>>>>>> e49d2324080fb71b8e987c7e5a9ca45a1c2377b6
+=======
+        
+>>>>>>> 1a44aea4da82a6f294f045e4ad14c5e3edf983b2
        
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
@@ -346,7 +350,7 @@ return function (App $app) {
 
     //Update user's phone
     $app->post('/api/user/updatephone', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
@@ -371,7 +375,7 @@ return function (App $app) {
 
     //Set new user's card
     $app->post('/api/user/addcard', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
@@ -399,7 +403,7 @@ return function (App $app) {
     });
     //Delete user's card
     $app->delete('/api/user/deletecard', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
@@ -424,7 +428,7 @@ return function (App $app) {
 
     //Delete user's card
     $app->post('/api/order/new', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
@@ -468,7 +472,7 @@ return function (App $app) {
 
     //Get user's orders
     $app->get('/api/user/orders', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
@@ -482,7 +486,7 @@ return function (App $app) {
 
     //Get order detail
     $app->get('/api/user/order/details', function (Request $request, Response $response, array $args) use ($container) {
-        $token = $request->getAttribute('jwt');
+        $token = $request->getAttribute('Authorization');
         $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
