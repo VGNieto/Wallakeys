@@ -25,7 +25,7 @@ return function (App $app) {
         "path" => "/",
         "logger" => $container['logger'],
         "secret" => "secret_key",
-        "attribute" => "jwt",
+        "attribute" => "Authorization",
         "rules" => [
             new Tuupola\Middleware\JwtAuthentication\RequestPathRule([
                 "path" => "/",

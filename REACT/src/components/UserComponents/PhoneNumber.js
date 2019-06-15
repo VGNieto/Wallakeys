@@ -92,6 +92,7 @@ const User = (props) => {
   }
 
   useEffect(() => {
+
     if(user.token){
       const token = 'Bearer ' + user.token;
       axios({
