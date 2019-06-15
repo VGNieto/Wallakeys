@@ -125,7 +125,7 @@ const Products = () => {
             }
         })
             .then(res => {
-
+                console.log(game._id.$oid);
                 let data = (res.data);
                 if (data !== false) {
                    

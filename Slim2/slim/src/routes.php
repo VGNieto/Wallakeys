@@ -258,7 +258,7 @@ return function (App $app) {
     //Get user's info
     $app->get('/api/user/info', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
        
@@ -272,7 +272,7 @@ return function (App $app) {
     //Get user's info
     $app->get('/api/user/account/cards', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
        
@@ -288,7 +288,7 @@ return function (App $app) {
     //Update user's account details info
     $app->post('/api/user/update', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -316,7 +316,7 @@ return function (App $app) {
     //Update user's password
     $app->post('/api/user/updatepassword', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -351,7 +351,7 @@ return function (App $app) {
     //Update user's phone
     $app->post('/api/user/updatephone', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -376,7 +376,7 @@ return function (App $app) {
     //Set new user's card
     $app->post('/api/user/addcard', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -404,7 +404,7 @@ return function (App $app) {
     //Delete user's card
     $app->delete('/api/user/deletecard', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -463,7 +463,7 @@ return function (App $app) {
             ['new' => true]
         );         
         
-        if(!is_null(info[0])){
+        if(!is_null($info[0])){
             $info = true;
         } else{
             $info = false;
@@ -540,7 +540,7 @@ return function (App $app) {
     //Get user's orders
     $app->get('/api/user/orders', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
        
@@ -554,7 +554,7 @@ return function (App $app) {
     //Get order detail
     $app->get('/api/user/order/details', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid'];
+        $oid = $token['oid']->{'$oid'};
         $db = new db();
         $mongo = $db->connect();
         $orderID = $request->getParam("orderID");
