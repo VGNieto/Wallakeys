@@ -167,7 +167,7 @@ const Checkout = (props) => {
                 })
                 setOrder({ type: "createOrder", text: res.data })
 
-
+                window.location.href="/account/cart/checkout/order-details"
             }
 
         });
