@@ -14,6 +14,7 @@ const Products = () => {
     const [games, setGames] = useContext(GamesContext);
     const [filters, setFilters] = useContext(FiltersContext);
     const [cart, setCart] = useContext(CartContext);
+    const [user, setUser] = useContext(UserContext);
 
     useEffect(() => {
 
@@ -133,8 +134,15 @@ const Products = () => {
 
                             </Link>
                             <ul className="social">
-                                <li><a href="#"><i className="fa fa-shopping-bag"></i></a></li>
-                                <li onClick={() => { addToCart(game) }}><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
+                                {user.token ? <li onClick={() => { addToCart(game) }}><a href="#"><i className="fa fa-heart"></i></a></li>
+                                :
+                                <li><a href="#" data-toggle="modal" data-target="#login-overlay"><i className="fa fa-heart"></i></a></li>
+                                }
+
+                                {user.token ? <li onClick={() => { addToCart(game) }}><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
+                                :
+                                <li><a href="#" data-toggle="modal" data-target="#login-overlay"><i className="fa fa-shopping-cart"></i></a></li>
+                                }
 
                             </ul>
                             <span className="product-new-label">New</span>

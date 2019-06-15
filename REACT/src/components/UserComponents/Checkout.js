@@ -2,10 +2,10 @@
 /* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
 import 'react-bootstrap/dist/react-bootstrap'
-import { Link,Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { UserContext } from '../UserDispatch';
 import { CartContext, CartReducer } from '../CartDispatch';
-import {OrderContext} from '../OrderDispatch';
+import { OrderContext } from '../OrderDispatch';
 
 import axios from 'axios';
 const images = require.context('../../img', true);
@@ -24,9 +24,9 @@ const Checkout = (props) => {
     });
 
     //Payment method
-    const [isPaypal,setIsPaypal] = useState(false);
+    const [isPaypal, setIsPaypal] = useState(false);
     //Show credit cards
-    const [showCreditCards,setShowCreditCards] = useState(true);
+    const [showCreditCards, setShowCreditCards] = useState(true);
     //Check saveCreditCard
     const [saveCreditCard, setSaveCreditCard] = useState(false);
     //New card
@@ -42,7 +42,7 @@ const Checkout = (props) => {
     const [result, setResult] = useState();
 
 
-    const handlePaypalMethod = (e) =>{
+    const handlePaypalMethod = (e) => {
         setIsPaypal(!isPaypal);
     }
     const handleCardChange = (e) => {
@@ -70,6 +70,7 @@ const Checkout = (props) => {
         let form = document.getElementById("new-payment-method");
         form.className == "account-payment-active" ? form.className = "account-payment" : form.className = "account-payment-active"
     }
+
     const totalPrice = () => {
         let totalPrice = 0;
         cart.items.forEach(element => {
@@ -81,21 +82,22 @@ const Checkout = (props) => {
     //Get all user cards
     useEffect(() => {
         const token = 'Bearer ' + user.token;
-
-        axios({
-            method: 'get',
-            url: 'https://api.imviczz.com/api/user/account/cards',
-            headers: {
-                Authorization: token,
-            }
-        })
-            .then(res => {
-
-                let data = (res.data);
-                if (data !== false) {
-                    setCreditCards(data[0]);
+        if (user.token) {
+            axios({
+                method: 'get',
+                url: 'https://api.imviczz.com/api/user/account/cards',
+                headers: {
+                    Authorization: token,
                 }
-            });
+            })
+                .then(res => {
+
+                    let data = (res.data);
+                    if (data !== false) {
+                        setCreditCards(data[0]);
+                    }
+                });
+        }
     }, [])
 
     //Add new card
@@ -154,18 +156,22 @@ const Checkout = (props) => {
 
             }
         }).then(res => {
-            
 
-            if(res){
-                setOrder({type:"createOrder",text:res.data})
+
+            if (res) {
+               
+                    localStorage.removeItem("cart");
+                    setCart({ type: "removeCart", text: null })
+                
+                setOrder({ type: "createOrder", text: res.data })
                 window.location.href = "/account/cart/checkout/order-details";
             }
 
         });
     }
-    
-    const confirmOrderButton = () =>{
-        if(!disabledNew){
+
+    const confirmOrderButton = () => {
+        if (!disabledNew) {
             return (<button className="btn btn-primary" onClick={createOrder} id="actualCard"><i className="fa fa-cash-register"></i> Confirm order</button>)
         }
     }
@@ -198,14 +204,14 @@ const Checkout = (props) => {
                     </div>
                     <ul className="nav bg-light nav-pills rounded nav-fill mb-3 payment-methods" role="tablist">
                         <li className="nav-item">
-                            <a className="nav-link active" data-toggle="pill"  onClick={handlePaypalMethod} href="#nav-tab-card">
+                            <a className="nav-link active" data-toggle="pill" onClick={handlePaypalMethod} href="#nav-tab-card">
                                 <i className="fa fa-credit-card"></i> Credit Card</a></li>
                         <li className="nav-item">
-                            <a className="nav-link" data-toggle="pill"  onClick={handlePaypalMethod} href="#nav-tab-paypal">
+                            <a className="nav-link" data-toggle="pill" onClick={handlePaypalMethod} href="#nav-tab-paypal">
                                 <i className="fab fa-paypal"></i>  Paypal</a></li>
 
                     </ul>
-                    {showCreditCards &&  !isPaypal ? <div className="input-group mb-3">
+                    {showCreditCards && !isPaypal ? <div className="input-group mb-3">
                         <div className="input-group-prepend">
                             <label className="input-group-text" htmlFor="inputGroupSelect01">Credit Card</label>
                         </div>
@@ -214,12 +220,12 @@ const Checkout = (props) => {
                             {creditCards.cards && creditCards.cards.length > 0 ?
                                 creditCards.cards.map((card) =>
                                     <option value={card.id.$oid} >{"Card terminated in " + card.number.substr(card.number.length - 4, card.number.length)}</option>
-                                    
+
                                 )
                                 : null}
                         </select>
                     </div> : null}
-                    
+
 
                     <div className="tab-content payment-tabs">
 
@@ -227,13 +233,13 @@ const Checkout = (props) => {
                         <div className="tab-pane fade show active" id="nav-tab-card">
                             <div className="col-md-12 offset-md-12 center-align checkout-confirm-orders" style={{ alignItems: "center" }}>
 
-                                
+
                                 <button className="btn btn-secondary" onClick={handleNewMethod} ><i className="fa fa-credit-card"></i> Use new card</button>
                                 {confirmOrderButton()}
 
                             </div>
 
-                            <form role="form " className="account-payment" id="new-payment-method"style={{paddingTop:"30px"}}>
+                            <form role="form " className="account-payment" id="new-payment-method" style={{ paddingTop: "30px" }}>
                                 <div className="form-group">
                                     <label htmlFor="username">Full name</label>
                                     <input type="text" className="form-control" onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
@@ -291,8 +297,8 @@ const Checkout = (props) => {
                             <p>You will be redirected to PayPal site to complete the order.</p>
                             <p>
 
-                              <button type="button" className="btn btn-primary" onClick={createOrder}> <i className="fab fa-paypal"></i> Checkout with Paypal </button>
-                            
+                                <button type="button" className="btn btn-primary" onClick={createOrder}> <i className="fab fa-paypal"></i> Checkout with Paypal </button>
+
                             </p>
 
                         </div>
@@ -309,8 +315,8 @@ const Checkout = (props) => {
 
     return (
 
-            cart && cart.items.length>0 ? showProducts() :<div className="col-md-12" style={{textAlign:"center",marginTop:"50px"}}>First you have to add something to your cart! <Link className="btn btn-secondary" to="/"> <i className="fa fa-angle-left"></i> Go back to home </Link></div>
-        );
+        cart && cart.items.length > 0 ? showProducts() : <div className="col-md-12" style={{ textAlign: "center", marginTop: "50px" }}>First you have to add something to your cart! <Link className="btn btn-secondary" to="/"> <i className="fa fa-angle-left"></i> Go back to home </Link></div>
+    );
 
 }
 

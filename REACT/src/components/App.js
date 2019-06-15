@@ -23,7 +23,7 @@ import PhoneNumber from './UserComponents/PhoneNumber'
 import Orders from './UserComponents/Orders'
 import Wishlist from './UserComponents/Wishlist'
 import Payment from './UserComponents/Payment'
-
+import Login from './MainComponents/Login'
 import Products from './Products/Products';
 import Product from './Products/Product';
 import Test from './Test';
@@ -74,7 +74,7 @@ function App() {
                 <FiltersReducer>
 
                   <Header />
-
+                  <Login />
                   <Route exact path="/" component={Main} />
 
 

@@ -21,6 +21,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch({ type: 'logout' });
+    window.location.href="/"
   }
 
   const totalProducts = () =>{
@@ -77,7 +78,8 @@ const Header = () => {
 
 
                   {user.token == null ?
-                    <Login loginModal={loginModal} changeLogin={changeLogin} />
+                    <Button variant="btn btn-warning dropdown-toggle" type="button" href="#" data-toggle="modal" data-target="#login-overlay" style={{ marginLeft: "10px" }}> Login </Button>
+
 
                     :
 

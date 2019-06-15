@@ -69,11 +69,12 @@ export const CartReducer = (props) => {
                 })
                 localStorage.setItem("cart", JSON.stringify(state.items));
                 return { items: [...state.items] }
+
             case 'removeCart':
-                
                 state.items = [];
                 localStorage.removeItem("cart");
                 return {items: state.items}
+                
             default:
                 throw new Error();
 

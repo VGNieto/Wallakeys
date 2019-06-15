@@ -13,14 +13,19 @@ const Payment = (props) => {
   const [cards, setCards] = useState();
   const [card, setCard] = useState();
 
-  const[disabledNew,setDisabledNew] = useState(false);
+  const [disabledNew, setDisabledNew] = useState(false);
   const [password, setPassword] = useState();
 
-  const [fullName, setFullName] = useState();
-  const [number, setNumber] = useState();
-  const [month, setMonth] = useState();
-  const [year, setYear] = useState();
-  const [cvv, setCVV] = useState();
+  const [fullName, setFullName] = useState("");
+  const [number, setNumber] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+  const [cvv, setCVV] = useState("");
+  const [isValidName, setIsValidName] = useState("");
+  const [isValidCard, setIsValidCard] = useState("");
+  const [isValidMonth, setIsValidMonth] = useState("");
+  const [isValidYear, setIsValidYear] = useState("");
+  const [isValidCVV, setIsValidCVV] = useState("");
 
 
   const [result, setResult] = useState();
@@ -31,20 +36,58 @@ const Payment = (props) => {
   const handlePasswordChange = (e) => {
     setPassword(e.currentTarget.value);
   }
+
+
   const handleFullNameChange = (e) => {
     setFullName(e.currentTarget.value);
+
+    let reg = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+    if (reg.test(e.currentTarget.value)) {
+      setIsValidName("")
+    } else {
+      setIsValidName("is-invalid");
+    }
+
+
   }
   const handleNumberChange = (e) => {
-    setNumber(e.currentTarget.value);
+    if(e.currentTarget.value.length<20){
+      setNumber(e.currentTarget.value);
+
+      if (e.currentTarget.value.length != 0) {
+        setNumber(e.currentTarget.value.replace(/-/g, "").match(/.{1,4}/g).join("-"));
+      }
+      let reg = /^\d{4}-?\d{4}-?\d{4}-?\d{4}/
+      if (reg.test(e.currentTarget.value)) {
+        setIsValidCard("")
+      } else {
+        setIsValidCard("is-invalid");
+      }
+    }
   }
   const handleMonthChange = (e) => {
     setMonth(e.currentTarget.value);
+    if (e.currentTarget.value > 0 && e.currentTarget.value < 13) {
+      setIsValidMonth("")
+    } else {
+      setIsValidMonth("is-invalid")
+    }
   }
   const handleYearChange = (e) => {
     setYear(e.currentTarget.value);
+    if (e.currentTarget.value >= new Date().getFullYear()) {
+      setIsValidYear("")
+    } else {
+      setIsValidYear("is-invalid")
+    }
   }
   const handleCVVChange = (e) => {
     setCVV(e.currentTarget.value);
+    if (e.currentTarget.value.length == 3) {
+      setIsValidCVV("")
+    } else {
+      setIsValidCVV("is-invalid")
+    }
   }
 
   const handleNewMethod = (e) => {
@@ -59,6 +102,14 @@ const Payment = (props) => {
     detailToOpen.className == "order-details-active" ? detailToOpen.className = "order-details" : detailToOpen.className = "order-details-active"
   }
 
+  const validateAll = () =>{
+    if(isValidCVV=="" && isValidCard=="" && isValidMonth=="" && isValidYear=="" && isValidName=="" && 
+      cvv.length>0 && number.length>0 && month.length>0 && year.length>0 && fullName.length>0){
+    return true;
+      } else{
+        return false;
+      }
+  }
   const showResult = () => {
 
     if (result == true) {
@@ -156,15 +207,22 @@ const Payment = (props) => {
     }).then(res => {
       setPassword("");
       setResult(res.data);
-      savedchanges.className="";
-      setSavedTimeOut(setTimeout(()=>{
+      savedchanges.className = "";
+      setSavedTimeOut(setTimeout(() => {
         setResult();
-        savedchanges.className="d-none"
-      },3000)
-      
+        savedchanges.className = "d-none"
+      }, 3000)
+
       )
 
     });
+
+  }
+
+  const formatCard = (num) => {
+    if (num.length != 0) {
+      setNumber(num.replace(/-/g, "").match(/.{1,4}/g).join("-"));
+    }
 
   }
 
@@ -177,6 +235,9 @@ const Payment = (props) => {
     savedchanges.className = "d-none";
     clearTimeout(spinnerTimeOut);
     clearTimeout(savedTimeOut);
+
+    formatCard;
+
 
     axios({
       method: 'post',
@@ -264,98 +325,128 @@ const Payment = (props) => {
               {cards != undefined ? showCards() : null}
 
 
-              <div className="col-md-12 offset-md-12 center-align"style={{alignItems:"center"}}>
+              <div className="col-md-12 offset-md-12 center-align" style={{ alignItems: "center" }}>
                 <button className="btn btn-primary" onClick={handleNewMethod}><i className="fa fa-credit-card"></i> Add new payment method</button>
                 {showResult()}
               </div>
-              
+
               <form role="form " className="account-payment" id="new-payment-method">
                 <div className="form-group">
                   <label htmlFor="username">Full name</label>
-                  <input type="text" className="form-control" onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
+                  <input type="text" className={"form-control " + isValidName} onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
+                  {isValidName != "" ? <p className="text-danger">Name must contain only letters</p> : null}
+
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="cardNumber">Card number</label>
                   <div className="input-group">
-                    <input type="text" className="form-control" onChange={handleNumberChange} name="cardNumber" value={number} placeholder="" />
+                    <input type="text" className={"form-control " + isValidCard} onChange={handleNumberChange} name="cardNumber" value={number} placeholder="" />
                     <div className="input-group-append">
                       <span className="input-group-text text-muted">
                         <i className="fab fa-cc-visa"></i>   <i className="fab fa-cc-amex"></i>
                         <i className="fab fa-cc-mastercard"></i>
                       </span>
                     </div>
+
                   </div>
+                  {isValidCard != "" ? <p className="text-danger">Card number is invalid.</p> : null}
+
                 </div>
 
                 <div className="row">
-                  <div className="col-sm-8">
-                    <div className="form-group">
-                      <label><span className="hidden-xs">Expiration</span> </label>
-                      <div className="input-group">
-                        <input type="number" className="form-control" onChange={handleMonthChange} placeholder="MM" name="" value={month} />
-                        <input type="number" className="form-control" onChange={handleYearChange} placeholder="YY" name="" value={year} />
+
+                  <div className="col-sm-8 row">
+                    <div className="col-sm-4">
+                      <div className="form-group">
+                        <label><span className="hidden-xs">Expiration</span> </label>
+                        <div className="input-group">
+                          <input type="number" className={"form-control " + isValidMonth} onChange={handleMonthChange} placeholder="MM" name="" value={month} />
+                          {isValidMonth != "" ? <p className="text-danger">Month is invalid.</p> : null}
+                        </div>
                       </div>
+
                     </div>
-                  </div>
-                  <div className="col-sm-4">
-                    <div className="form-group">
-                      <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV </label>
-                      <input type="number" className="form-control" onChange={handleCVVChange} value={cvv} required="" />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6 offset-md-4 center-align" style={{ alignItems: "center" }}>
-                  <button type="button" className="btn btn-primary" onClick={addCard} disabled={disabledNew}> Add new card</button>
-                  <div id="loading-spinner" className="d-none" style={{ padding: "10px" }}>
-                    <div className="spinner-border d-flex justify-content-center " role="status">
-                      <span className="sr-only">Loading...</span>
-                    </div>
+                    <div className="col-sm-4">
+                      <div className="form-group">
+                        <label><span className="hidden-xs">Expiration</span> </label>
+                        <div className="input-group">
+                          <input type="number" className={"form-control " + isValidYear} onChange={handleYearChange} placeholder="YY" name="" value={year} />
+                          {isValidYear != "" ? <p className="text-danger">Year is invalid.</p> : null}
+                        </div>
+                      </div>
+
+
                   </div>
                 </div>
+
+                <div className="col-sm-4">
+                  <div className="form-group">
+                    <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV </label>
+                    <input type="number" className={"form-control " + isValidCVV} onChange={handleCVVChange} value={cvv} required="" />
+                  </div>
+                  {isValidCVV != "" ? <p className="text-danger">CVV must be 3 numbers.</p> : null}
+
+                </div>
+                </div>
+              {console.log(validateAll())}
+              <div className="col-md-12" style={{display:"flex",flexDirection:"column"}} >
+              {validateAll() && !disabledNew ? <button type="button" className="btn btn-primary" onClick={addCard}> Add new card </button>
+              :
+              <button type="button" className="btn btn-primary" disabled> Add new card </button>
+              }
+
+
+                <div id="loading-spinner" className="d-none" style={{ padding: "10px" }}>
+                  <div className="spinner-border d-flex justify-content-center " role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+                {showResult()}
+              </div>
               </form>
 
 
-              <div id="pwdModal" className="modal fade" tabIndex="-1" role="dialog" aria-hidden="true">
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h4 className="center-align">Introduce your password</h4>
-                    </div>
-                    <div className="modal-body">
-                      <div className="col-md-12">
-                        <div className="panel panel-default">
-                          <div className="panel-body">
-                            <div className="text-center">
-                              <div className="panel-body">
-                                <fieldset>
-                                  <div className="form-group">
-                                    <input className="form-control input-lg" placeholder="Password" value={password} onChange={handlePasswordChange} name="Password" type="Password" />
-                                  </div>
-                                  <button className="btn btn-lg btn-primary btn-block" data-dismiss="modal" aria-hidden="true" onClick={confirmDelete}>Delete Card</button>
-                                </fieldset>
-                              </div>
+            <div id="pwdModal" className="modal fade" tabIndex="-1" role="dialog" aria-hidden="true">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h4 className="center-align">Introduce your password</h4>
+                  </div>
+                  <div className="modal-body">
+                    <div className="col-md-12">
+                      <div className="panel panel-default">
+                        <div className="panel-body">
+                          <div className="text-center">
+                            <div className="panel-body">
+                              <fieldset>
+                                <div className="form-group">
+                                  <input className="form-control input-lg" placeholder="Password" value={password} onChange={handlePasswordChange} name="Password" type="Password" />
+                                </div>
+                                <button className="btn btn-lg btn-primary btn-block" data-dismiss="modal" aria-hidden="true" onClick={confirmDelete}>Delete Card</button>
+                              </fieldset>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="modal-footer">
-                      <div className="col-md-12">
-                        <button className="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                      </div>
+                  </div>
+                  <div className="modal-footer">
+                    <div className="col-md-12">
+                      <button className="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                     </div>
                   </div>
                 </div>
               </div>
-
-
             </div>
+
+
           </div>
         </div>
-
       </div>
+
     </div>
+    </div >
 
 
 
