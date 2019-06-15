@@ -17,25 +17,24 @@ const OrderDetails = (props) => {
     const [cart, setCart] = useContext(CartContext);
 
     useEffect(() => {
-        const token = 'Bearer ' + user.token;
+        if (user.token) {
+            const token = 'Bearer ' + user.token;
 
-        axios({
-            method: 'get',
-            url: 'https://api.imviczz.com/api/user/order/details',
-            headers: {
-                Authorization: token,
+            axios({
+                method: 'get',
+                url: 'https://api.imviczz.com/api/user/order/details',
+                headers: {
+                    Authorization: token,
 
-            },
-            params: {
-                orderID: order.order
-            }
-        }).then(res => {
-            if (orderDetails != null) {
-                setCart({ type: "removeCart", text: null })
-            }
-            setOrderDetails(res.data);
-        });
-
+                },
+                params: {
+                    orderID: order.order
+                }
+            }).then(res => {
+                
+                setOrderDetails(res.data);
+            });
+        }
 
     }, [])
 
@@ -89,7 +88,7 @@ const OrderDetails = (props) => {
 
 
     return (
-        orderDetails != null ? showProducts() : <div className="col-md-12" style={{marginTop:"50px",textAlign:"center"}}>First you have to place an order  <Link className="btn btn-secondary" to="/"> <i className="fa fa-angle-left"></i> Go back to home </Link></div>
+        orderDetails != null ? showProducts() : <div className="col-md-12" style={{ marginTop: "50px", textAlign: "center" }}>First you have to place an order  <Link className="btn btn-secondary" to="/"> <i className="fa fa-angle-left"></i> Go back to home </Link></div>
 
     );
 

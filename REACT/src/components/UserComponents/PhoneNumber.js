@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React, { useContext,useState,useEffect } from 'react';
-import axios from  'axios'
+import React, { useContext, useState, useEffect } from 'react';
+import axios from 'axios'
 import 'react-bootstrap/dist/react-bootstrap'
 import { Link } from 'react-router-dom'
 
@@ -11,17 +11,31 @@ import { UserContext } from '../UserDispatch';
 const User = (props) => {
 
   const [user, setUser] = useContext(UserContext);
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const [result, setResult] = useState();
   const [spinnerTimeOut, setSpinnerTimeOut] = useState();
   const [savedTimeOut, setSavedTimeOut] = useState();
+  const [validPhone, setValidPhone] = useState("");
 
   const handlePhoneChange = (e) => {
     setPhoneNumber(e.currentTarget.value);
+    let reg = /^\d{9}$/;
+
+    if (e.currentTarget.value.length == 0) {
+      setValidPhone("");
+    } else {
+      if (reg.test(e.currentTarget.value)) {
+        setValidPhone("")
+      } else {
+        setValidPhone("is-invalid");
+      }
+    }
+
+
   }
 
-  
+
 
   const showResult = () => {
 
@@ -78,21 +92,24 @@ const User = (props) => {
   }
 
   useEffect(() => {
-    const token = 'Bearer ' + user.token;
-    axios({
-      method: 'get',
-      url: 'https://api.imviczz.com/api/user/info',
-      headers: {
-        Authorization: token
-      }
-    })
-      .then(res => {
-
-        let data = (res.data);
-        if (data !== false) {
-          setPhoneNumber(data[0].phoneNumber)
+    if(user.token){
+      const token = 'Bearer ' + user.token;
+      axios({
+        method: 'get',
+        url: 'https://api.imviczz.com/api/user/info',
+        headers: {
+          Authorization: token
         }
-      });
+      })
+        .then(res => {
+  
+          let data = (res.data);
+          if (data !== false) {
+            setPhoneNumber(data[0].phoneNumber)
+          }
+        });
+    }
+    
   }, [])
 
   return (
@@ -100,11 +117,11 @@ const User = (props) => {
       <div className="row justify-content-center" style={{ paddingTop: "25px" }}>
 
         <div className="col-md-4">
-        <div className="card card-header text-primary">Account Dashboard</div>
+          <div className="card card-header text-primary">Account Dashboard</div>
 
           <div className="list-group">
 
-          <div className="list-group-item"><i className="fa fa-user"></i> <span> <Link to="/account/account-details"> <span>Account Details </span></Link> </span></div>
+            <div className="list-group-item"><i className="fa fa-user"></i> <span> <Link to="/account/account-details"> <span>Account Details </span></Link> </span></div>
             <div className="list-group-item"><i className="fa fa-phone"></i> <span> <Link to="/account/phone-number"> <span>Phone Number</span></Link> </span></div>
             <div className="list-group-item"><i className="fa fa-key"></i> <span> <Link to="/account/password"> <span>Password</span></Link> </span></div>
             <div className="list-group-item"><i className="fa fa-credit-card"></i> <span> <Link to="/account/payment"> <span>Payment Method</span></Link> </span></div>
@@ -121,19 +138,21 @@ const User = (props) => {
                 <div className="form-group row">
                   <label htmlFor="phone_number" className="col-md-4 col-form-label text-md-right">Phone Number</label>
                   <div className="col-md-6">
-                    <input type="text" id="phone_number" onChange={handlePhoneChange} className="form-control"  value={phoneNumber} required autoFocus />
+                    <input type="text" id="phone_number" onChange={handlePhoneChange} className={"form-control " + validPhone} value={phoneNumber} required />
                   </div>
                 </div>
 
-                <div className="col-md-6 offset-md-4 center-align"style={{alignItems:"center"}}>
-                  <button type="button" className="btn btn-primary" onClick={saveChanges}>
-                    Save Changes
-                          </button>
-                  <div id="loading-spinner" className="d-none" style={{padding:"10px"}}> 
-                    <div className="spinner-border d-flex justify-content-center " role="status">
-                        <span className="sr-only">Loading...</span>
-                    </div>
-                  </div>
+                <div className="col-md-6 offset-md-4 center-align" style={{ alignItems: "center" }}>
+                  {validPhone=="" ? <button type="button" className="btn btn-primary" onClick={saveChanges}> Save Changes </button> 
+                  
+                  : 
+                  <div>
+                      <p className="horizontal-align text-danger">Phone number must contain 9 digits.</p>
+
+                  <button type="button" className="btn btn-primary horizontal-align" disabled > Save Changes </button>
+                  </div> 
+                  }
+
                   {showResult()}
                 </div>
 

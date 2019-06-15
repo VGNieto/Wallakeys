@@ -113,7 +113,10 @@ const Product = (props) => {
 
 
                       <div className="section" style={{ paddingBottom: "20px" }}>
+                        {user.token ? 
                         <button className="btn btn-success" onClick={()=> {addToCart(game)}}><i className="fa fa-shopping-cart"></i>Add to Cart</button>
+                        : <a  className="btn btn-success" href="#" data-toggle="modal" data-target="#login-overlay">Add to Cart <i className="fa fa-shopping-cart"></i></a>}
+                        
                         <h6 style={{ marginTop: "10px" }}><a href="#"><i className="fa fa-heart"></i> Add to Wishlist</a></h6>
                       </div>
                     </div>

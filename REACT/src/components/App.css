@@ -71,6 +71,11 @@
   margin-top: 10px;
 }
 
+.horizontal-align{
+  display:block;
+  margin: auto;
+}
+
 .logo-categories {
   width: 30px;
   color: white;

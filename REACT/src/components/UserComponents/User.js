@@ -16,10 +16,13 @@ const User = (props) => {
     birthday: "",
     country: "",
   })
+
+  const [validName,setValidName] = useState("");
   const [result, setResult] = useState();
   const [spinnerTimeOut, setSpinnerTimeOut] = useState();
   const [savedTimeOut, setSavedTimeOut] = useState();
 
+  console.log(validName);
 
   const countryHandle = () => {
 
@@ -133,7 +136,18 @@ const User = (props) => {
   }
   
   const handleFullNameChanges = (e) => {
-    setUserdetails({ ...userDetails, fullname: e.currentTarget.value })
+    setUserdetails({ ...userDetails, fullname: e.currentTarget.value });
+    let reg = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+    if (e.currentTarget.value.length == 0) {
+      setValidName("");
+    } else {
+      if (reg.test(e.currentTarget.value)) {
+        setValidName("")
+      } else {
+        setValidName("is-invalid");
+      }
+    }
+    console.log(reg.test(e.currentTarget.value));
   }
 
   const handleCountryChanges = (e) => {
@@ -141,6 +155,9 @@ const User = (props) => {
   }
 
   useEffect(() => {
+    if(user.token){
+
+    
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
@@ -156,6 +173,7 @@ const User = (props) => {
           setUserdetails({ ...userDetails, ...data[0] })
         }
       });
+    }
   }, [])
 
 
@@ -182,6 +200,7 @@ const User = (props) => {
             <div className="card-header">Account details</div>
             <div className="card-body">
               <form action="" method="">
+
                 <div className="form-group row">
                   <label htmlFor="email_address" className="col-md-4 col-form-label text-md-right">Email</label>
                   <div className="col-md-6">
@@ -192,7 +211,8 @@ const User = (props) => {
                 <div className="form-group row">
                   <label htmlFor="full_name" className="col-md-4 col-form-label text-md-right">Full Name</label>
                   <div className="col-md-6">
-                    <input type="text" id="full_name" className="form-control" name="full_name" onChange={handleFullNameChanges} defaultValue={userDetails.fullname} required autoFocus />
+                    <input type="text" id="full_name" className={"form-control " + validName} name="full_name" onChange={handleFullNameChanges} defaultValue={userDetails.fullname} required autoFocus />
+                    {validName != "" ? <p className="horizontal-align text-danger"> Name must contain only letters</p> : null }
                   </div>
                 </div>
 
@@ -215,9 +235,13 @@ const User = (props) => {
 
 
                 <div className="col-md-6 offset-md-4 center-align"style={{alignItems:"center"}}>
-                  <button type="button" className="btn btn-primary" onClick={saveChanges}>
-                    Save Changes
-                          </button>
+                  {validName=="" ? <button type="button" className="btn btn-primary" onClick={saveChanges}> Save Changes </button> 
+                    
+                    : 
+                    <div>
+                    <button type="button" className="btn btn-primary horizontal-align" disabled > Save Changes </button>
+                    </div> 
+                    }
                   <div id="loading-spinner" className="d-none" style={{padding:"10px"}}> 
                     <div className="spinner-border d-flex justify-content-center " role="status">
                         <span className="sr-only">Loading...</span>
