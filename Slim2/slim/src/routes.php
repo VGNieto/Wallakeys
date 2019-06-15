@@ -330,9 +330,11 @@ return function (App $app) {
             [ '$set' => ['password' => $newpassword]]
         );
         
-        if (!isset($info[0])) {
-            $info = true;
-        }
+     	if(is_null($info[0])){
+		$info = false;
+	} else{
+		$info = true;
+	}
        
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
