@@ -37,7 +37,28 @@ const Wishlist = (props) => {
         });
     }
   }, [])
+  const loadAllWishList = () =>{
+    if (user.token) {
+      const token = 'Bearer ' + user.token;
+      axios({
+        method: 'get',
+        url: 'https://api.imviczz.com/api/user/wishlist/get',
+        headers: {
+          Authorization: token,
+        }
+      })
+        .then(res => {
 
+          let data = (res.data);
+          if (data !== false) {
+
+
+            setGames(data);
+
+          }
+        });
+    }
+}
   const removeFromWishlist = (game)=>{
     console.log(game);
     if (user.token) {
@@ -57,7 +78,8 @@ const Wishlist = (props) => {
           let data = (res.data);
           if (data !== false) {
             
-            useState();
+            loadAllWishList();
+            
           }
         });
     }
