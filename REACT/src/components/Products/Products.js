@@ -110,7 +110,30 @@ const Products = () => {
 
     }
 
+    const addToWishList = (game) => {
+        if(user.token){
+            const token = "Bearer "+ user.token;
+        
+        axios({
+            method: 'post',
+            url: 'https://api.imviczz.com/api/user/wishlist/add',
+            headers:{
+                Authorization: token,
+            },
+            params:{
+                game: game._id.$oid,
+            }
+        })
+            .then(res => {
 
+                let data = (res.data);
+                if (data !== false) {
+                   
+                }
+            });
+
+        }
+    }
 
 
     return (
@@ -134,7 +157,7 @@ const Products = () => {
 
                             </Link>
                             <ul className="social">
-                                {user.token ? <li onClick={() => { addToCart(game) }}><a href="#"><i className="fa fa-heart"></i></a></li>
+                                {user.token ? <li onClick={() => { addToWishList(game) }}><a href="#"><i className="fa fa-heart"></i></a></li>
                                 :
                                 <li><a href="#" data-toggle="modal" data-target="#login-overlay"><i className="fa fa-heart"></i></a></li>
                                 }

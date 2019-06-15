@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext,useState,useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import 'react-bootstrap/dist/react-bootstrap'
@@ -16,27 +16,54 @@ const Wishlist = (props) => {
   const [cart, setCart] = useContext(CartContext);
 
   useEffect(() => {
-    const token = 'Bearer ' + user.token;
-    axios({
-      method: 'get',
-      url: 'https://api.imviczz.com/api/products',
-      headers: {
-        Authorization: token,
-      }
-    })
-      .then(res => {
-
-        let data = (res.data);
-        if (data !== false) {
-
-
-          setGames(data);
-
-
+    if (user.token) {
+      const token = 'Bearer ' + user.token;
+      axios({
+        method: 'get',
+        url: 'https://api.imviczz.com/api/user/wishlist/get',
+        headers: {
+          Authorization: token,
         }
-      });
+      })
+        .then(res => {
+
+          let data = (res.data);
+          if (data !== false) {
+
+
+            setGames(data);
+
+          }
+        });
+    }
   }, [])
 
+  const removeFromWishlist = (game)=>{
+    console.log(game);
+    if (user.token) {
+      const token = 'Bearer ' + user.token;
+      axios({
+        method: 'post',
+        url: 'https://api.imviczz.com/api/user/wishlist/remove',
+        headers: {
+          Authorization: token,
+        },
+        params:{
+          id: game,
+        }
+      })
+        .then(res => {
+
+          let data = (res.data);
+          if (data !== false) {
+            
+            useState();
+          }
+        });
+    }
+
+  }
+ 
   const addToCart = (game) => {
 
     let actualQuantity = 1;
@@ -64,38 +91,47 @@ const Wishlist = (props) => {
     return (
       <div className="container row wishlist-grid">
         {games.map((game) =>
-          <div className="col-sm-6 col-md-4 col-lg-3 wishlist-product" key={game._id.$oid}>
-              <div className="wishlist-image">
-                <Link
-                  to={{
-                    pathname: "/product/" + game.name.split(" ").join("-").toLowerCase(),
-                    state: {
-                      productID: game._id.$oid,
+          <div className="col-sm-6 col-md-4 col-lg-3 wishlist-product" key={game[0]._id.$oid}>
+            <div className="wishlist-image">
+              <Link
+                to={{
+                  pathname: "/product/" + game[0].name.split(" ").join("-").toLowerCase(),
+                  state: {
+                    productID: game[0]._id.$oid,
 
-                    }
-                  }}
-                >
-                  <img src={images(`./${game.img}`)} />
+                  }
+                }}
+              >
+                <img src={images(`./${game[0].img}`)} />
 
-                </Link>
-                
+              </Link>
+
+            </div>
+
+            <div className="wishlist-action-buttons">
+              <button className="btn btn-primary" onClick={()=>addToCart(game[0])}> <i className="fa fa-shopping-bag"></i> </button>
+              <button className="btn btn-danger" onClick={() => removeFromWishlist(game[0]._id.$oid)}> <i className="fa fa-heart-broken"></i> </button>
+
+            </div>
+
+            <div className="wishlist-content">
+            <Link
+                to={{
+                  pathname: "/product/" + game[0].name.split(" ").join("-").toLowerCase(),
+                  state: {
+                    productID: game[0]._id.$oid,
+
+                  }
+                }}
+              >
+              <h3 className="title">{game[0].name}</h3>
+
+              </Link>
+              <div className="price">
+                {game[0].price +" $"}
               </div>
 
-              <div className="wishlist-action-buttons">
-                  <button className="btn btn-primary"> <i className="fa fa-shopping-bag"></i> </button>
-                  <button className="btn btn-danger"> <i className="fa fa-heart-broken"></i> </button>
-
-              </div>
-
-              <div className="wishlist-content">
-                
-                <h3 className="title"><a href="#">{game.name}</a></h3>
-                <div className="price">
-                  {game.price}
-                  <span>$75.00</span>
-                </div>
-
-              </div>
+            </div>
           </div>
         )}
       </div>
@@ -114,7 +150,7 @@ const Wishlist = (props) => {
       <div className="row justify-content-center" style={{ paddingTop: "25px" }}>
 
         <div className="col-md-4">
-        <div className="card card-header text-primary">Account Dashboard</div>
+          <div className="card card-header text-primary">Account Dashboard</div>
 
           <div className="list-group">
 
@@ -131,8 +167,8 @@ const Wishlist = (props) => {
           <div className="card">
             <div className="card-header">Wishlist</div>
             <div className="card-body">
-              { games != null ? show_games() : 0 }
-            </div>
+              {games != null ? show_games() : <p> You don't have any games in the wishlist!</p>}
+             </div>
           </div>
         </div>
 
