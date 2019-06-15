@@ -93,6 +93,8 @@ function App() {
                   <Route exact path="/platform/:id" component={Products} />
                   <Route exact path="/products" component={Products} />
                   <Route exact path="/product/:id" component={Product} />
+                  <Route exact path="/products/:id" component={Products} />
+
                   <PrivateRoute exact path="/test" component={Test} />
 
                   <Footer />

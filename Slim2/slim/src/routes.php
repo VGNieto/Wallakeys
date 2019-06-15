@@ -126,6 +126,20 @@ return function (App $app) {
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
         ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
+    //Search product
+    $app->get('/api/product/search', function (Request $request, Response $response, array $args) use ($container) {
+        $db = new db();
+        $mongo = $db->connect();
+        $data = $mongo->wallakeys->games->find()->toArray();
+        $search = $request->getParam('search');
+
+        $data = $mongo->wallakeys->games->find(['name' =>  ['$regex' => $search,'$options' => "i"] ] )->toArray();
+
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    });
+
+
 
     //Filter Products
     $app->get('/api/products/filter', function (Request $request, Response $response, array $args) use ($container) {

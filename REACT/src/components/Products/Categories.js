@@ -16,36 +16,23 @@ const Categories = () => {
     return (
         <div>
         <Navbar style={{ backgroundColor: "#263238" }}variant="dark">
-            <Container className="d-flex justify-content-center categories"> 
-                <Row>
-                    <Col className="text-center">
+            <Container style={{justifyContent:"space-evenly"}}> 
 
-                    <button className="categorie-span"> <i className="fas fa-th fa-lg" style={{position:"relative",top:"1px"}} />
-                        <Link to="/products/all">ALL GAMES</Link>
-                    </button>
+                    <div className="categorie-span"> <img alt="" src={steam} className="logo-categories"></img> STEAM
+                    </div>
 
-                    <button className="categorie-span"> <img alt="" src={steam} className="logo-categories"></img> 
-                        <Link to="/products/steam">STEAM</Link>
-                    </button>
+                    <div className="categorie-span"> <img alt="" src={uplay} className="logo-categories"></img> UPLAY
+                    </div>
+                    <div className="categorie-span"> <img alt="" src={xbox} className="logo-categories"></img> XBOX
+                    </div>
+                    <div className="categorie-span"> <img alt="" src={origin} className="logo-categories"></img> ORIGIN
+                    </div>
+                    <div className="categorie-span"> <img alt="" src={psn} className="logo-categories"></img> PSN
+                    </div>
+                    <div className="categorie-span"> <img alt="" src={battle} className="logo-categories"></img> BATTLE
+                    </div>
 
-                    <button className="categorie-span"> <img alt="" src={uplay} className="logo-categories"></img> 
-                        <Link to="/products/uplay">UPLAY</Link>
-                    </button>
-                    <button className="categorie-span"> <img alt="" src={xbox} className="logo-categories"></img>
-                        <Link to="/products/xbox">XBOX</Link>
-                    </button>
-                    <button className="categorie-span"> <img alt="" src={origin} className="logo-categories"></img> 
-                        <Link to="/products/origin">ORIGIN</Link>
-                    </button>
-                    <button className="categorie-span"> <img alt="" src={psn} className="logo-categories"></img> 
-                        <Link to="/products/uplay">UPLAY</Link>
-                    </button>
-                    <button className="categorie-span"> <img alt="" src={battle} className="logo-categories"></img>
-                        <Link to="/products/battle">BATTLE</Link>
-                    </button>
-
-                    </Col>
-                </Row>
+                    
                 
             </Container>
         </Navbar>
