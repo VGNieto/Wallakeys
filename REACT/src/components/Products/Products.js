@@ -20,7 +20,7 @@ const Products = () => {
 
         axios({
             method: 'get',
-            url: 'http://localhost:8080/api/products',
+            url: 'https://api.imviczz.com/api/products',
         })
             .then(res => {
 
@@ -53,7 +53,7 @@ const Products = () => {
     const updateGames = () => {
         axios({
             method: 'get',
-            url: 'http://localhost:8080/api/products/filter',
+            url: 'https://api.imviczz.com/api/products/filter',
             params: {
                 filterCategories: filters.filters.filterCategories.toString(),
                 filterPlatforms: filters.filters.filterPlatforms.toString(),
@@ -74,7 +74,7 @@ const Products = () => {
     const loadAllGames = () =>{
         axios({
             method: 'get',
-            url: 'http://localhost:8080/api/products',
+            url: 'https://api.imviczz.com/api/products',
         })
             .then(res => {
 
@@ -116,7 +116,7 @@ const Products = () => {
         
         axios({
             method: 'post',
-            url: 'http://localhost:8080/api/user/wishlist/add',
+            url: 'https://api.imviczz.com/api/user/wishlist/add',
             headers:{
                 Authorization: token,
             },

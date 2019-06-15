@@ -15,7 +15,7 @@ const Filters = (props) => {
     useEffect(() => {
         axios({
             method: 'get',
-            url: 'http://localhost:8080/api/categories',
+            url: 'https://api.imviczz.com/api/categories',
 
         })
             .then(res => {
@@ -29,7 +29,7 @@ const Filters = (props) => {
 
         axios({
             method: 'get',
-            url: 'http://localhost:8080/api/platforms',
+            url: 'https://api.imviczz.com/api/platforms',
 
         })
             .then(res => {

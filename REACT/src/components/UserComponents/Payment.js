@@ -195,7 +195,7 @@ const Payment = (props) => {
 
     axios({
       method: 'delete',
-      url: 'http://localhost:8080/api/user/deletecard',
+      url: 'https://api.imviczz.com/api/user/deletecard',
       headers: {
         Authorization: token,
 
@@ -241,7 +241,7 @@ const Payment = (props) => {
 
     axios({
       method: 'post',
-      url: 'http://localhost:8080/api/user/addcard',
+      url: 'https://api.imviczz.com/api/user/addcard',
       headers: {
         Authorization: token,
 
@@ -279,7 +279,7 @@ const Payment = (props) => {
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
-      url: 'http://localhost:8080/api/user/info',
+      url: 'https://api.imviczz.com/api/user/info',
       headers: {
         Authorization: token
       }

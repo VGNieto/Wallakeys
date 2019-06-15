@@ -86,7 +86,7 @@ const Checkout = (props) => {
             if (user.token) {
                 axios({
                     method: 'get',
-                    url: 'http://localhost:8080/api/user/account/cards',
+                    url: 'https://api.imviczz.com/api/user/account/cards',
                     headers: {
                         Authorization: token,
                     }
@@ -109,7 +109,7 @@ const Checkout = (props) => {
 
         axios({
             method: 'post',
-            url: 'http://localhost:8080/api/user/addcard',
+            url: 'https://api.imviczz.com/api/user/addcard',
             headers: {
                 Authorization: token,
 
@@ -148,7 +148,7 @@ const Checkout = (props) => {
 
         axios({
             method: 'post',
-            url: 'http://localhost:8080/api/order/new',
+            url: 'https://api.imviczz.com/api/order/new',
             headers: {
                 Authorization: token,
             },
@@ -179,7 +179,7 @@ const Checkout = (props) => {
             const token = 'Bearer ' + user.token;
             axios({
                 method: 'post',
-                url: 'http://localhost:8080/api/user/wishlist/remove',
+                url: 'https://api.imviczz.com/api/user/wishlist/remove',
                 headers: {
                     Authorization: token,
                 },

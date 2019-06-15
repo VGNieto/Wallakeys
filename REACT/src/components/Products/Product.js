@@ -26,7 +26,7 @@ const Product = (props) => {
 
     axios({
       method: "get",
-      url: 'http://localhost:8080/api/product/info',
+      url: 'https://api.imviczz.com/api/product/info',
       params: {
         productID: props.location.state.productID,
       }
