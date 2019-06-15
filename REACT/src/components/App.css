@@ -30,6 +30,13 @@
   flex-wrap: wrap;
 }
 
+.nav-bar{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .navbar-buttons {
   display: flex;
   align-content: center;
@@ -40,6 +47,7 @@
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
+  text-decoration: none;
 }
 
 .list-group {
@@ -79,6 +87,10 @@
 .logo-categories {
   width: 30px;
   color: white;
+}
+
+.categorie-span{
+  text-align: center;
 }
 
 .carousel-inner {
@@ -475,6 +487,11 @@
 
 .product-grid3 .social li a:hover {
   background: #2f22e6;
+  color: #fff;
+}
+
+.product-grid3 .social li:first-child a:hover {
+  background: red;
   color: #fff;
 }
 

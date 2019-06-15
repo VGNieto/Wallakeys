@@ -7,7 +7,9 @@ export const FiltersContext = createContext();
 export const FiltersReducer = (props) => {
 
     const initialState = {
-        filters: {},
+        filters: {
+            
+        },
     };
 
     function reducer(state, action) {

@@ -12,6 +12,7 @@ const Filters = (props) => {
     const [filterCategories, setFilterCategories] = useState([])
     const [filterPlatforms, setFilterPlatforms] = useState([])
     const [filterPrice, setFilterPrice] = useState([])
+
     useEffect(() => {
         axios({
             method: 'get',

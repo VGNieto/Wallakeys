@@ -6,19 +6,26 @@ import logo from '../../img/logo.png';
 import { UserContext } from '../UserDispatch';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../CartDispatch';
-
+import { GamesContext } from '../GamesDispatch';
+import axios from 'axios';
 const Header = () => {
 
 
   const [loginModal, setLoginModal] = useState(false)
   const [user, dispatch] = useContext(UserContext);
   const [cart, setCart] = useContext(CartContext);
-
+  const [games,setGames] = useContext(GamesContext);
+  const [search,setSearch] = useState();
 
   const changeLogin = () => {
     setLoginModal(!loginModal)
   }
 
+  const handleSearch = (e) =>{
+    setSearch(e.target.value);
+    searchGame(e.target.value);
+
+  }
   const handleLogout = () => {
     dispatch({ type: 'logout' });
     window.location.href="/"
@@ -31,6 +38,28 @@ const Header = () => {
       }) 
     return total;
   }
+
+  const searchGame=(game)=>{
+
+    axios({
+      method: 'get',
+      url: 'https://api.imviczz.com/api/product/search',
+      params:{
+        search: game
+      }
+    })
+      .then(res => {
+
+        let data = (res.data);
+        if (data !== false) {
+          setGames(
+            { type: "addGames", games: data }
+        );       
+       }
+        });
+  }
+
+
   return (
     <div>
       <Navbar style={{ backgroundColor: "#1b2327", borderBottom: "1px solid gray" }} className="d-flex align-items-center" variant="dark">
@@ -59,8 +88,7 @@ const Header = () => {
 
               <div className="float-lg-right right-nav" >
                  
-                <input type="text" placeholder=" Search..." style={{marginTop:"13px",height:"30px" }} />
-                <Button variant="outline-primary" style={{marginTop:"10px"}} className="ml-2" >Search</Button>
+                <input type="text" placeholder=" Search..." className="form-control" onChange={handleSearch} style={{marginTop:"13px",height:"30px",width:"300px" }} />
 
                 <div className="navbar-buttons">
                   {user.token == null ?
@@ -73,7 +101,7 @@ const Header = () => {
                   {user.token == null ?
                     null
                     :
-                    <Link to={'/account/cart'}><Button variant="btn btn-primary" style={{ marginLeft: "10px" }} > <i className="fa fa-shopping-cart"></i> Cart: {totalProducts()}</Button> </Link>
+                    <Link to={'/account/cart'}><Button variant="btn btn-primary" style={{ marginLeft: "10px" }} > <i className="fa fa-shopping-cart"></i> Cart {totalProducts()}</Button> </Link>
                   }
 
 

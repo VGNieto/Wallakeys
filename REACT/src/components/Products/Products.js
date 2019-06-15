@@ -41,7 +41,7 @@ const Products = () => {
                 if (element.length > 0) {
                     updateGames();
                     return;
-                } 
+                }
             }
         }
         loadAllGames();
@@ -71,7 +71,7 @@ const Products = () => {
             });
     }
 
-    const loadAllGames = () =>{
+    const loadAllGames = () => {
         axios({
             method: 'get',
             url: 'https://api.imviczz.com/api/products',
@@ -111,34 +111,60 @@ const Products = () => {
     }
 
     const addToWishList = (game) => {
-        if(user.token){
-            const token = "Bearer "+ user.token;
-        
-        axios({
-            method: 'post',
-            url: 'https://api.imviczz.com/api/user/wishlist/add',
-            headers:{
-                Authorization: token,
-            },
-            params:{
-                game: game._id.$oid,
-            }
-        })
-            .then(res => {
-                console.log(game._id.$oid);
-                let data = (res.data);
-                if (data !== false) {
-                   
+        if (user.token) {
+            const token = "Bearer " + user.token;
+
+            axios({
+                method: 'post',
+                url: 'https://api.imviczz.com/api/user/wishlist/add',
+                headers: {
+                    Authorization: token,
+                },
+                params: {
+                    game: game._id.$oid,
                 }
-            });
+            })
+                .then(res => {
+                    console.log(game._id.$oid);
+                    let data = (res.data);
+                    if (data !== false) {
+
+                    }
+                });
 
         }
+    }
+
+    const orderGames = (e) => {
+        console.log(e.currentTarget.value);
+        switch (e.currentTarget.value) {
+            case "1": setGames(
+                { type: "addGames", games: games.items.sort((a, b) => a.price - b.price) }
+            );
+                break;
+            case "2": setGames(
+                { type: "addGames", games: games.items.sort((a, b) => b.price - a.price) }
+            ); break;
+            case "3": setGames(
+                { type: "addGames", games: games.items.sort((a, b) => a.name.localeCompare(b.name)) }
+            );
+
+                
+        }
+
     }
 
 
     return (
 
         <div className="container row">
+            <select className="form-control" onChange={orderGames} style={{ marginBottom: "30px" }}>
+                <option value="0" defaultValue>Order by...</option>
+                <option value="1" >Cheapest first</option>
+                <option value="2">Most expensive first</option>
+                <option value="3" >Alphabetical Order </option>
+            </select>
+
             {games.items.map((game) =>
 
                 <div className="col-sm-6 col-md-4 col-lg-3" key={game._id.$oid}>
@@ -158,23 +184,34 @@ const Products = () => {
                             </Link>
                             <ul className="social">
                                 {user.token ? <li onClick={() => { addToWishList(game) }}><a href="#"><i className="fa fa-heart"></i></a></li>
-                                :
-                                <li><a href="#" data-toggle="modal" data-target="#login-overlay"><i className="fa fa-heart"></i></a></li>
+                                    :
+                                    <li><a href="#" data-toggle="modal" data-target="#login-overlay"><i className="fa fa-heart"></i></a></li>
                                 }
 
                                 {user.token ? <li onClick={() => { addToCart(game) }}><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
-                                :
-                                <li><a href="#" data-toggle="modal" data-target="#login-overlay"><i className="fa fa-shopping-cart"></i></a></li>
+                                    :
+                                    <li><a href="#" data-toggle="modal" data-target="#login-overlay"><i className="fa fa-shopping-cart"></i></a></li>
                                 }
 
                             </ul>
                             <span className="product-new-label">New</span>
                         </div>
                         <div className="product-content">
-                            <h3 className="title"><a href="#">{game.name}</a></h3>
+                            <Link
+                                to={{
+                                    pathname: "/product/" + game.name.split(" ").join("-").toLowerCase(),
+                                    state: {
+                                        productID: game._id.$oid,
+
+                                    }
+                                }}
+                            >
+                                <h3 className="title">{game.name}</h3>
+
+                            </Link>
                             <div className="price">
-                                {game.price}
-                                <span>$75.00</span>
+                                {game.price + " "}
+                                <span> $75.00</span>
                             </div>
 
                         </div>
