@@ -85,7 +85,7 @@ const Login = (props) => {
     const sendRegister = () => {
         axios({
             method: 'post',
-            url: 'https://api.imviczz.com/api/user/register',
+            url: 'http://localhost:8080/api/user/register',
             params: {
                 email: emailRegister,
                 password: passwordRegister
@@ -110,7 +110,7 @@ const Login = (props) => {
     const sendLogin = () => {
         axios({
             method: 'post',
-            url: 'https://api.imviczz.com/api/user/login',
+            url: 'http://localhost:8080/api/user/login',
             params: {
                 email: emailLogin,
                 password: passwordLogin

@@ -20,7 +20,7 @@ const Wishlist = (props) => {
       const token = 'Bearer ' + user.token;
       axios({
         method: 'get',
-        url: 'https://api.imviczz.com/api/user/wishlist/get',
+        url: 'http://localhost:8080/api/user/wishlist/get',
         headers: {
           Authorization: token,
         }
@@ -44,7 +44,7 @@ const Wishlist = (props) => {
       const token = 'Bearer ' + user.token;
       axios({
         method: 'post',
-        url: 'https://api.imviczz.com/api/user/wishlist/remove',
+        url: 'http://localhost:8080/api/user/wishlist/remove',
         headers: {
           Authorization: token,
         },

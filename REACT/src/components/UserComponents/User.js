@@ -102,7 +102,7 @@ const User = (props) => {
     
     axios({
       method: 'post',
-      url: 'https://api.imviczz.com/api/user/update',
+      url: 'http://localhost:8080/api/user/update',
       headers: {
         Authorization: token,
 
@@ -161,7 +161,7 @@ const User = (props) => {
     const token = 'Bearer ' + user.token;
     axios({
       method: 'get',
-      url: 'https://api.imviczz.com/api/user/info',
+      url: 'http://localhost:8080/api/user/info',
       headers: {
         Authorization: token
       }

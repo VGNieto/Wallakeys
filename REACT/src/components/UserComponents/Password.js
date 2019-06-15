@@ -56,7 +56,7 @@ const Password = (props) => {
 
     axios({
       method: 'post',
-      url: 'https://api.imviczz.com/api/user/updatepassword',
+      url: 'http://localhost:8080/api/user/updatepassword',
       headers: {
         Authorization: token,
 
