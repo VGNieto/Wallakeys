@@ -359,6 +359,12 @@
   padding: 30px;
 }
 
+.checkout-confirm-order{
+  padding-right: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
 .checkout-confirm-orders{
   display: flex;
   justify-content:space-between;
