@@ -51,7 +51,7 @@ const Payment = (props) => {
 
   }
   const handleNumberChange = (e) => {
-    if(e.currentTarget.value.length<20){
+    if (e.currentTarget.value.length < 20) {
       setNumber(e.currentTarget.value);
 
       if (e.currentTarget.value.length != 0) {
@@ -102,13 +102,13 @@ const Payment = (props) => {
     detailToOpen.className == "order-details-active" ? detailToOpen.className = "order-details" : detailToOpen.className = "order-details-active"
   }
 
-  const validateAll = () =>{
-    if(isValidCVV=="" && isValidCard=="" && isValidMonth=="" && isValidYear=="" && isValidName=="" && 
-      cvv.length>0 && number.length>0 && month.length>0 && year.length>0 && fullName.length>0){
-    return true;
-      } else{
-        return false;
-      }
+  const validateAll = () => {
+    if (isValidCVV == "" && isValidCard == "" && isValidMonth == "" && isValidYear == "" && isValidName == "" &&
+      cvv.length > 0 && number.length > 0 && month.length > 0 && year.length > 0 && fullName.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
   const showResult = () => {
 
@@ -377,75 +377,75 @@ const Payment = (props) => {
                       </div>
 
 
+                    </div>
+                  </div>
+
+                  <div className="col-sm-4">
+                    <div className="form-group">
+                      <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV </label>
+                      <input type="number" className={"form-control " + isValidCVV} onChange={handleCVVChange} value={cvv} required="" />
+                    </div>
+                    {isValidCVV != "" ? <p className="text-danger">CVV must be 3 numbers.</p> : null}
+
                   </div>
                 </div>
+                {console.log(validateAll())}
+                <div className="col-md-12" style={{ display: "flex", flexDirection: "column" }} >
+                  {validateAll() && !disabledNew ? <button type="button" className="btn btn-primary" onClick={addCard}> Add new card </button>
+                    :
+                    <button type="button" className="btn btn-primary" disabled> Add new card </button>
+                  }
 
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV </label>
-                    <input type="number" className={"form-control " + isValidCVV} onChange={handleCVVChange} value={cvv} required="" />
+
+                  <div id="loading-spinner" className="d-none" style={{ padding: "10px" }}>
+                    <div className="spinner-border d-flex justify-content-center " role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
                   </div>
-                  {isValidCVV != "" ? <p className="text-danger">CVV must be 3 numbers.</p> : null}
-
+                  {showResult()}
                 </div>
-                </div>
-              {console.log(validateAll())}
-              <div className="col-md-12" style={{display:"flex",flexDirection:"column"}} >
-              {validateAll() && !disabledNew ? <button type="button" className="btn btn-primary" onClick={addCard}> Add new card </button>
-              :
-              <button type="button" className="btn btn-primary" disabled> Add new card </button>
-              }
-
-
-                <div id="loading-spinner" className="d-none" style={{ padding: "10px" }}>
-                  <div className="spinner-border d-flex justify-content-center " role="status">
-                    <span className="sr-only">Loading...</span>
-                  </div>
-                </div>
-                {showResult()}
-              </div>
               </form>
 
 
-            <div id="pwdModal" className="modal fade" tabIndex="-1" role="dialog" aria-hidden="true">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h4 className="center-align">Introduce your password</h4>
-                  </div>
-                  <div className="modal-body">
-                    <div className="col-md-12">
-                      <div className="panel panel-default">
-                        <div className="panel-body">
-                          <div className="text-center">
-                            <div className="panel-body">
-                              <fieldset>
-                                <div className="form-group">
-                                  <input className="form-control input-lg" placeholder="Password" value={password} onChange={handlePasswordChange} name="Password" type="Password" />
-                                </div>
-                                <button className="btn btn-lg btn-primary btn-block" data-dismiss="modal" aria-hidden="true" onClick={confirmDelete}>Delete Card</button>
-                              </fieldset>
+              <div id="pwdModal" className="modal fade" tabIndex="-1" role="dialog" aria-hidden="true">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h4 className="center-align">Introduce your password</h4>
+                    </div>
+                    <div className="modal-body">
+                      <div className="col-md-12">
+                        <div className="panel panel-default">
+                          <div className="panel-body">
+                            <div className="text-center">
+                              <div className="panel-body">
+                                <fieldset>
+                                  <div className="form-group">
+                                    <input className="form-control input-lg" placeholder="Password" value={password} onChange={handlePasswordChange} name="Password" type="Password" />
+                                  </div>
+                                  <button className="btn btn-lg btn-primary btn-block" data-dismiss="modal" aria-hidden="true" onClick={confirmDelete}>Delete Card</button>
+                                </fieldset>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="modal-footer">
-                    <div className="col-md-12">
-                      <button className="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <div className="modal-footer">
+                      <div className="col-md-12">
+                        <button className="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+
             </div>
-
-
           </div>
         </div>
-      </div>
 
-    </div>
+      </div>
     </div >
 
 

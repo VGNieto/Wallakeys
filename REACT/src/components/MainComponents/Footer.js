@@ -30,20 +30,19 @@ const Footer = () => {
 
                 <div className="container">
                     <ul className="footer-links">
-                        <li><a href="http://webenlance.com">Home</a></li>
-                        <li><a href="http://webenlance.com">About</a></li>
-                        <li><a href="http://webenlance.com">Services</a></li>
-                        <li><a href="http://webenlance.com">Pricing</a></li>
-                        <li><a href="http://webenlance.com">Blog</a></li>
-                        <li><a href="http://webenlance.com">Contact</a></li>
+                        <li><a href="https://www.imviczz.com">Home</a></li>
+                        <li><a href="https://www.imviczz.com">About</a></li>
+                        <li><a href="https://www.imviczz.com">Products</a></li>
+                        <li><a href="https://www.imviczz.com">Cookies and Privacy</a></li>
+                        <li><a href="https://www.imviczz.com">Contact</a></li>
                     </ul>
                     <p className="center-align">Copyright @2019 | Designed With by VCZ CODE</p>
 
                     <ul className="social_footer">
-                        <li><a href="http://webenlance.com"><i className="fab fa-facebook-f"></i></a></li>
-                        <li><a href="http://webenlance.com"><i className="fab fa-twitter"></i></a></li>
-                        <li><a href="http://webenlance.com"><i className="fab fa-linkedin"></i></a></li>
-                        <li><a href="http://webenlance.com"><i className="fab fa-instagram"></i></a></li>
+                        <li><a href="https://www.imviczz.com"><i className="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://www.imviczz.com"><i className="fab fa-twitter"></i></a></li>
+                        <li><a href="https://www.imviczz.com"><i className="fab fa-linkedin"></i></a></li>
+                        <li><a href="https://www.imviczz.com"><i className="fab fa-instagram"></i></a></li>
                     </ul>
                 </div>
 

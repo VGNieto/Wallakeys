@@ -81,7 +81,7 @@ return function (App $app) {
             'iat' => $now->getTimeStamp(),
             'exp' => $future->getTimeStamp(),
             'jti' => $jti,
-            'oid' => $inserted->getInsertedID()
+            'oid' =>  strval($inserted->getInsertedID())
             ];
 
             $secret = 'secret_key';
@@ -89,7 +89,7 @@ return function (App $app) {
         
             $data['token'] = $token;
             $data['expires'] = $future->getTimeStamp();
-            $data['oid'] = $inserted->getInsertedID();
+            $data['oid'] = strval($inserted->getInsertedID());
 
             return $response->withStatus(201)
             ->withHeader('Content-Type', 'application/json')
@@ -102,7 +102,7 @@ return function (App $app) {
 
     $app->delete('/api/user/delete', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
        
@@ -272,7 +272,7 @@ return function (App $app) {
     //Get user's info
     $app->get('/api/user/info', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
        
@@ -286,7 +286,7 @@ return function (App $app) {
     //Get user's info
     $app->get('/api/user/account/cards', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
        
@@ -302,7 +302,7 @@ return function (App $app) {
     //Update user's account details info
     $app->post('/api/user/update', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -330,7 +330,7 @@ return function (App $app) {
     //Update user's password
     $app->post('/api/user/updatepassword', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -353,7 +353,7 @@ return function (App $app) {
     //Update user's phone
     $app->post('/api/user/updatephone', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -378,7 +378,7 @@ return function (App $app) {
     //Set new user's card
     $app->post('/api/user/addcard', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -406,7 +406,7 @@ return function (App $app) {
     //Delete user's card
     $app->delete('/api/user/deletecard', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -431,7 +431,7 @@ return function (App $app) {
     //Insert new product to wishlist
     $app->post('/api/user/wishlist/add', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -452,7 +452,7 @@ return function (App $app) {
     //Remove  item from wishlist
     $app->post('/api/user/wishlist/remove', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -472,13 +472,13 @@ return function (App $app) {
         }
         
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
-        ->write(json_encode($info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+        ->write(json_encode($id, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
     });
 
     //Get wishlist
     $app->get('/api/user/wishlist/get', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -498,7 +498,7 @@ return function (App $app) {
     //Insert new order
     $app->post('/api/order/new', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         //Get the request parameters.
@@ -542,7 +542,7 @@ return function (App $app) {
     //Get user's orders
     $app->get('/api/user/orders', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
        
@@ -556,7 +556,7 @@ return function (App $app) {
     //Get order detail
     $app->get('/api/user/order/details', function (Request $request, Response $response, array $args) use ($container) {
         $token = $request->getAttribute('Authorization');
-        $oid = $token['oid']->{'$oid'};
+        $oid = $token['oid'];
         $db = new db();
         $mongo = $db->connect();
         $orderID = $request->getParam("orderID");

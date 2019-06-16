@@ -22,7 +22,7 @@ const Checkout = (props) => {
         _id: {},
 
     });
-
+    const [message, setMessage] = useState("no-order");
     //Payment method
     const [isPaypal, setIsPaypal] = useState(false);
     //Show credit cards
@@ -31,16 +31,105 @@ const Checkout = (props) => {
     const [saveCreditCard, setSaveCreditCard] = useState(false);
     //New card
     const [disabledNew, setDisabledNew] = useState(false);
-    const [fullName, setFullName] = useState();
-    const [number, setNumber] = useState();
-    const [month, setMonth] = useState();
-    const [year, setYear] = useState();
-    const [cvv, setCVV] = useState();
+    const [fullName, setFullName] = useState("");
+    const [number, setNumber] = useState("");
+    const [month, setMonth] = useState("");
+    const [year, setYear] = useState("");
+    const [cvv, setCVV] = useState("");
     //Selected card
     const [card, setCard] = useState("undefined");
     //Checkout result
     const [result, setResult] = useState();
+    const [isValidName, setIsValidName] = useState("");
+    const [isValidCard, setIsValidCard] = useState("");
+    const [isValidMonth, setIsValidMonth] = useState("");
+    const [isValidYear, setIsValidYear] = useState("");
+    const [isValidCVV, setIsValidCVV] = useState("");
 
+
+    const [spinnerTimeOut, setSpinnerTimeOut] = useState();
+    const [savedTimeOut, setSavedTimeOut] = useState();
+
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.currentTarget.value);
+    }
+
+
+    const handleFullNameChange = (e) => {
+        setFullName(e.currentTarget.value);
+
+        let reg = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+        if (reg.test(e.currentTarget.value)) {
+            setIsValidName("")
+        } else {
+            setIsValidName("is-invalid");
+        }
+
+
+    }
+    const handleNumberChange = (e) => {
+        if (e.currentTarget.value.length < 20) {
+            setNumber(e.currentTarget.value);
+
+            if (e.currentTarget.value.length != 0) {
+                setNumber(e.currentTarget.value.replace(/-/g, "").match(/.{1,4}/g).join("-"));
+            }
+            let reg = /^\d{4}-?\d{4}-?\d{4}-?\d{4}/
+            if (reg.test(e.currentTarget.value)) {
+                setIsValidCard("")
+            } else {
+                setIsValidCard("is-invalid");
+            }
+        }
+    }
+    const handleMonthChange = (e) => {
+        setMonth(e.currentTarget.value);
+        if (e.currentTarget.value > 0 && e.currentTarget.value < 13) {
+            setIsValidMonth("")
+        } else {
+            setIsValidMonth("is-invalid")
+        }
+    }
+    const handleYearChange = (e) => {
+        setYear(e.currentTarget.value);
+        if (e.currentTarget.value >= new Date().getFullYear()) {
+            setIsValidYear("")
+        } else {
+            setIsValidYear("is-invalid")
+        }
+    }
+    const handleCVVChange = (e) => {
+        setCVV(e.currentTarget.value);
+        if (e.currentTarget.value.length == 3) {
+            setIsValidCVV("")
+        } else {
+            setIsValidCVV("is-invalid")
+        }
+    }
+
+    const handleNewMethod = (e) => {
+        let form = document.getElementById("new-payment-method");
+        let actual = document.getElementById("actualCard");
+        actual.className == "d-none" ? actual.className = "btn btn-primary" : actual.className = "d-none";
+        form.className == "account-payment-active" ? form.className = "account-payment" : form.className = "account-payment-active"
+    }
+
+    const handleOpenDetails = (e) => {
+        const dataButton = e.currentTarget.getAttribute("data-button");
+        let detailToOpen = document.getElementById(dataButton);
+
+        detailToOpen.className == "order-details-active" ? detailToOpen.className = "order-details" : detailToOpen.className = "order-details-active"
+    }
+
+    const validateAll = () => {
+        if (isValidCVV == "" && isValidCard == "" && isValidMonth == "" && isValidYear == "" && isValidName == "" &&
+            cvv.length > 0 && number.length > 0 && month.length > 0 && year.length > 0 && fullName.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     const handlePaypalMethod = (e) => {
         setIsPaypal(!isPaypal);
@@ -48,28 +137,8 @@ const Checkout = (props) => {
     const handleCardChange = (e) => {
         setCard(e.currentTarget.value);
     }
-    const handleFullNameChange = (e) => {
-        setFullName(e.currentTarget.value);
-    }
-    const handleNumberChange = (e) => {
-        setNumber(e.currentTarget.value);
-    }
-    const handleMonthChange = (e) => {
-        setMonth(e.currentTarget.value);
-    }
-    const handleYearChange = (e) => {
-        setYear(e.currentTarget.value);
-    }
-    const handleCVVChange = (e) => {
-        setCVV(e.currentTarget.value);
-    }
 
-    const handleNewMethod = (e) => {
-        setDisabledNew(!disabledNew);
-        setShowCreditCards(!showCreditCards);
-        let form = document.getElementById("new-payment-method");
-        form.className == "account-payment-active" ? form.className = "account-payment" : form.className = "account-payment-active"
-    }
+
 
     const totalPrice = () => {
         let totalPrice = 0;
@@ -77,6 +146,21 @@ const Checkout = (props) => {
             totalPrice += parseFloat(element.subtotal);
         });
         return (parseFloat(totalPrice).toFixed(2));
+    }
+    
+    const show_message=()=>{
+
+        return (
+            message=="order" ? <div id="loading-spinner" className="" style={{ padding: "10px" }}>
+            <div className="spinner-border d-flex justify-content-center " role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+            </div> :
+
+            <p> First you have to place an order</p>
+        )
+
+
     }
 
     //Get all user cards
@@ -94,7 +178,8 @@ const Checkout = (props) => {
                     .then(res => {
 
                         let data = (res.data);
-                        if (data !== false) {
+                        if (data.length > 0) {
+                            console.log(data);
                             setCreditCards(data[0]);
                         }
                     });
@@ -163,19 +248,29 @@ const Checkout = (props) => {
             if (res) {
 
                 localStorage.removeItem("cart");
+                games.forEach((game) => {
+                    removeFromWishlist(game.substr(0, game.indexOf("+")));
+                })
+                setMessage("order");
                 setCart({ type: "removeCart", text: null })
                 setOrder({ type: "createOrder", text: res.data })
 
-                games.forEach((game)=>{
-                    removeFromWishlist(game.substr(0,game.indexOf("+")));
-                })
-                
-                window.location.href = "/account/cart/checkout/order-details"
+                setTimeout(() => {
+                    window.location.href = "/account/cart/checkout/order-details"
+
+                }, 1000)
+
             }
 
         });
     }
 
+    const formatCard = (num) => {
+        if (num.length != 0) {
+            setNumber(num.replace(/-/g, "").match(/.{1,4}/g).join("-"));
+        }
+
+    }
     const removeFromWishlist = (game) => {
         console.log(game);
         if (user.token) {
@@ -203,8 +298,11 @@ const Checkout = (props) => {
     }
 
     const confirmOrderButton = () => {
-        if (!disabledNew) {
+        if (!disabledNew && card != "undefined") {
             return (<button className="btn btn-primary" onClick={createOrder} id="actualCard"><i className="fa fa-cash-register"></i> Confirm order</button>)
+        } else{
+            return (<button className="btn btn-primary" disabled id="actualCard"><i className="fa fa-cash-register"></i> Confirm order</button>)
+
         }
     }
 
@@ -271,51 +369,94 @@ const Checkout = (props) => {
 
                             </div>
 
-                            <form role="form " className="account-payment" id="new-payment-method" style={{ paddingTop: "30px" }}>
+                            <form role="form " className="account-payment" id="new-payment-method">
                                 <div className="form-group">
                                     <label htmlFor="username">Full name</label>
-                                    <input type="text" className="form-control" onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
+                                    <input type="text" className={"form-control " + isValidName} onChange={handleFullNameChange} value={fullName} placeholder="" required="" />
+                                    {isValidName != "" ? <p className="text-danger">Name must contain only letters</p> : null}
+
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="cardNumber">Card number</label>
                                     <div className="input-group">
-                                        <input type="text" className="form-control" onChange={handleNumberChange} name="cardNumber" value={number} placeholder="" />
+                                        <input type="text" className={"form-control " + isValidCard} onChange={handleNumberChange} name="cardNumber" value={number} placeholder="" />
                                         <div className="input-group-append">
                                             <span className="input-group-text text-muted">
                                                 <i className="fab fa-cc-visa"></i>   <i className="fab fa-cc-amex"></i>
                                                 <i className="fab fa-cc-mastercard"></i>
                                             </span>
                                         </div>
+
                                     </div>
+                                    {isValidCard != "" ? <p className="text-danger">Card number is invalid.</p> : null}
+
                                 </div>
 
                                 <div className="row">
-                                    <div className="col-sm-8">
-                                        <div className="form-group">
-                                            <label><span className="hidden-xs">Expiration</span> </label>
-                                            <div className="input-group">
-                                                <input type="number" className="form-control" onChange={handleMonthChange} placeholder="MM" name="" value={month} />
-                                                <input type="number" className="form-control" onChange={handleYearChange} placeholder="YY" name="" value={year} />
+
+                                    <div className="col-sm-8 row">
+                                        <div className="col-sm-4">
+                                            <div className="form-group">
+                                                <label><span className="hidden-xs">Expiration</span> </label>
+                                                <div className="input-group">
+                                                    <input type="number" className={"form-control " + isValidMonth} onChange={handleMonthChange} placeholder="MM" name="" value={month} />
+                                                    {isValidMonth != "" ? <p className="text-danger">Month is invalid.</p> : null}
+                                                </div>
                                             </div>
+
+                                        </div>
+                                        <div className="col-sm-4">
+                                            <div className="form-group">
+                                                <label><span className="hidden-xs">Expiration</span> </label>
+                                                <div className="input-group">
+                                                    <input type="number" className={"form-control " + isValidYear} onChange={handleYearChange} placeholder="YY" name="" value={year} />
+                                                    {isValidYear != "" ? <p className="text-danger">Year is invalid.</p> : null}
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
+
                                     <div className="col-sm-4">
                                         <div className="form-group">
                                             <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV </label>
-                                            <input type="number" className="form-control" onChange={handleCVVChange} value={cvv} required="" />
+                                            <input type="number" className={"form-control " + isValidCVV} onChange={handleCVVChange} value={cvv} required="" />
                                         </div>
+                                        {isValidCVV != "" ? <p className="text-danger">CVV must be 3 numbers.</p> : null}
+
                                     </div>
                                 </div>
-                                <div className="col-md-6 offset-md-4 center-align" style={{ alignItems: "center" }}>
-                                    <div style={{ paddingRight: "30px" }}>
-                                        <input className="form-check-input" type="checkbox" onClick={() => { setSaveCreditCard(!saveCreditCard) }}
-                                            value={saveCreditCard} id="defaultCheck1" />
-                                        <label className="form-check-label" htmlFor="defaultCheck1">
-                                            Save credit card
-                                        </label>
-                                    </div>
-                                    <button type="button" className="btn btn-primary" onClick={createOrder} value="newCredit" > <i className="fa fa-cash-register"></i> Confirm order </button>
+                                {console.log(validateAll())}
+                                <div className="col-md-12" style={{ display: "flex", flexDirection: "column" }} >
+                                    {validateAll() && !disabledNew ?
+                                        <div>
+                                            <div className="checkout-confirm-order">
+                                                <input className="form-check-input" type="checkbox" onClick={() => { setSaveCreditCard(!saveCreditCard) }}
+                                                    value={saveCreditCard} id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
+                                                    Save credit card
+                                                </label>
+                                                <button type="button" className="btn btn-primary" onClick={createOrder}> Confirm order </button>
+
+                                            </div>
+                                        </div>
+                                        :
+                                        <div>
+                                        <div className="checkout-confirm-order">
+                                            <input className="form-check-input" type="checkbox" disabled 
+                                                value={saveCreditCard} id="defaultCheck1" />
+                                            <label className="form-check-label" htmlFor="defaultCheck1">
+                                                Save credit card
+                                            </label>
+                                            <button type="button" className="btn btn-primary" disabled > Confirm order </button>
+
+                                        </div>
+                                        </div>
+                                    }
+
+
                                     <div id="loading-spinner" className="d-none" style={{ padding: "10px" }}>
                                         <div className="spinner-border d-flex justify-content-center " role="status">
                                             <span className="sr-only">Loading...</span>
@@ -323,6 +464,7 @@ const Checkout = (props) => {
                                     </div>
                                 </div>
                             </form>
+
                         </div>
 
                         <div className="tab-pane fade" id="nav-tab-paypal">
@@ -347,7 +489,7 @@ const Checkout = (props) => {
 
     return (
 
-        cart && cart.items.length > 0 ? showProducts() : <div className="col-md-12" style={{ textAlign: "center", marginTop: "50px" }}>First you have to add something to your cart! <Link className="btn btn-secondary" to="/"> <i className="fa fa-angle-left"></i> Go back to home </Link></div>
+        cart && cart.items.length > 0 ? showProducts() : <div className="col-md-12" style={{ textAlign: "center", marginTop: "50px" }}>{show_message} </div>
     );
 
 }
