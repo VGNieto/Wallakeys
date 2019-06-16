@@ -132,7 +132,12 @@ const Checkout = (props) => {
     }
 
     const handlePaypalMethod = (e) => {
-        setIsPaypal(!isPaypal);
+        setShowCreditCards(false);
+        setIsPaypal(true);
+    }
+    const handleCardMethod = (e) =>{
+        setIsPaypal(false);
+        setShowCreditCards(true)
     }
     const handleCardChange = (e) => {
         setCard(e.currentTarget.value);
@@ -147,17 +152,18 @@ const Checkout = (props) => {
         });
         return (parseFloat(totalPrice).toFixed(2));
     }
-    
-    const show_message=()=>{
+
+    const show_message = () => {
 
         return (
-            message=="order" ? <div id="loading-spinner" className="" style={{ padding: "10px" }}>
-            <div className="spinner-border d-flex justify-content-center " role="status">
-                <span className="sr-only">Loading...</span>
-            </div>
+            message == "order" ? <div id="loading-spinner" className="" style={{ padding: "10px", display:"flex",justifyContent:"center" }}>
+                <p style={{marginRight:"20px"}}> Processing your order </p>
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
             </div> :
 
-            <p> First you have to place an order</p>
+                <p> First you have to place an order</p>
         )
 
 
@@ -166,6 +172,7 @@ const Checkout = (props) => {
     //Get all user cards
     useEffect(() => {
         if (user.token) {
+
             const token = 'Bearer ' + user.token;
             if (user.token) {
                 axios({
@@ -185,6 +192,9 @@ const Checkout = (props) => {
                     });
             }
         }
+
+
+
     }, [])
 
     //Add new card
@@ -218,6 +228,35 @@ const Checkout = (props) => {
 
 
         });
+    }
+
+    const showPaypal = () => {
+
+        let button = document.getElementById("paypal-button-container");
+        if (button && !button.firstChild) {
+            paypal.Buttons({
+                createOrder: function (data, actions) {
+                    // Set up the transaction
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: totalPrice()
+                            }
+                        }]
+                    });
+                },
+                onApprove: function (data, actions) {
+                    // Capture the funds from the transaction
+                    return actions.order.capture().then(function (details) {
+                        // Show a success message to your buyer
+                        createOrder();
+                    });
+                }
+            }).render('#paypal-button-container');
+    
+        }
+
+        
     }
 
     //Create new order
@@ -256,8 +295,7 @@ const Checkout = (props) => {
                 setOrder({ type: "createOrder", text: res.data })
 
                 setTimeout(() => {
-                    window.location.href = "/account/cart/checkout/order-details"
-
+                    window.location.href="/account/cart/checkout/order-details";
                 }, 1000)
 
             }
@@ -300,7 +338,7 @@ const Checkout = (props) => {
     const confirmOrderButton = () => {
         if (!disabledNew && card != "undefined") {
             return (<button className="btn btn-primary" onClick={createOrder} id="actualCard"><i className="fa fa-cash-register"></i> Confirm order</button>)
-        } else{
+        } else {
             return (<button className="btn btn-primary" disabled id="actualCard"><i className="fa fa-cash-register"></i> Confirm order</button>)
 
         }
@@ -334,14 +372,14 @@ const Checkout = (props) => {
                     </div>
                     <ul className="nav bg-light nav-pills rounded nav-fill mb-3 payment-methods" role="tablist">
                         <li className="nav-item">
-                            <a className="nav-link active" data-toggle="pill" onClick={handlePaypalMethod} href="#nav-tab-card">
+                            <a className="nav-link active" data-toggle="pill" onClick={handleCardMethod} href="#nav-tab-card">
                                 <i className="fa fa-credit-card"></i> Credit Card</a></li>
                         <li className="nav-item">
                             <a className="nav-link" data-toggle="pill" onClick={handlePaypalMethod} href="#nav-tab-paypal">
                                 <i className="fab fa-paypal"></i>  Paypal</a></li>
 
                     </ul>
-                    {showCreditCards && !isPaypal ? <div className="input-group mb-3">
+                    {showCreditCards ? <div className="input-group mb-3">
                         <div className="input-group-prepend">
                             <label className="input-group-text" htmlFor="inputGroupSelect01">Credit Card</label>
                         </div>
@@ -444,15 +482,15 @@ const Checkout = (props) => {
                                         </div>
                                         :
                                         <div>
-                                        <div className="checkout-confirm-order">
-                                            <input className="form-check-input" type="checkbox" disabled 
-                                                value={saveCreditCard} id="defaultCheck1" />
-                                            <label className="form-check-label" htmlFor="defaultCheck1">
-                                                Save credit card
+                                            <div className="checkout-confirm-order">
+                                                <input className="form-check-input" type="checkbox" disabled
+                                                    value={saveCreditCard} id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
+                                                    Save credit card
                                             </label>
-                                            <button type="button" className="btn btn-primary" disabled > Confirm order </button>
+                                                <button type="button" className="btn btn-primary" disabled > Confirm order </button>
 
-                                        </div>
+                                            </div>
                                         </div>
                                     }
 
@@ -468,17 +506,26 @@ const Checkout = (props) => {
                         </div>
 
                         <div className="tab-pane fade" id="nav-tab-paypal">
-                            <p>You will be redirected to PayPal site to complete the order.</p>
-                            <p>
-
-                                <button type="button" className="btn btn-primary" onClick={createOrder}> <i className="fab fa-paypal"></i> Checkout with Paypal </button>
+                            <p>You will be redirected to PayPal site to complete the order.
+                                    
 
                             </p>
+                            
+                            <div id="paypal-button-container">
+
+                            </div>
+
+                            {showPaypal()}
 
                         </div>
 
+                        {isPaypal ? <div><p> Test account: </p>
+                        <p>Email: wallatest@gmail.com</p>
+                        <p> Password: wallatest </p></div>
+                            :
+                            null}
                     </div>
-                    <div className="col-md-12"><Link className="btn btn-warning" to="/account/cart"> <i className="fa fa-angle-left"></i> Back to cart </Link></div>
+                    <div className="col-md-12"><Link className="btn btn-warning" style={{margin:"20px"}} to="/account/cart"> <i className="fa fa-angle-left"></i> Back to cart </Link></div>
 
 
                 </div>
@@ -487,9 +534,11 @@ const Checkout = (props) => {
     }
 
 
+
+
     return (
 
-        cart && cart.items.length > 0 ? showProducts() : <div className="col-md-12" style={{ textAlign: "center", marginTop: "50px" }}>{show_message} </div>
+        cart && cart.items.length > 0 ? showProducts() : <div className="col-md-12" style={{ textAlign: "center", marginTop: "50px" }}>{show_message()} </div>
     );
 
 }

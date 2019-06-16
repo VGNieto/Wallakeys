@@ -78,7 +78,7 @@ const OrderDetails = (props) => {
 
                     </div>
 
-                    <div className="col-md-12"><Link className="btn btn-secondary" to="/"> <i className="fa fa-angle-left"></i> Home page </Link></div>
+                    <div className="col-md-12"><Link className="btn btn-secondary" style={{margin:"20px"}} to="/"> <i className="fa fa-angle-left"></i> Home page </Link></div>
 
 
                 </div>
