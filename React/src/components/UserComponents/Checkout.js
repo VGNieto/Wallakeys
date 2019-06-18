@@ -13,6 +13,7 @@ const images = require.context('../../img', true);
 
 const Checkout = (props) => {
 
+    //0
     const [user, setUser] = useContext(UserContext);
     const [cart, setCart] = useContext(CartContext)
     const [order, setOrder] = useContext(OrderContext);
@@ -22,6 +23,7 @@ const Checkout = (props) => {
         _id: {},
 
     });
+
     const [message, setMessage] = useState("no-order");
     //Payment method
     const [isPaypal, setIsPaypal] = useState(false);
@@ -47,14 +49,6 @@ const Checkout = (props) => {
     const [isValidCVV, setIsValidCVV] = useState("");
 
 
-    const [spinnerTimeOut, setSpinnerTimeOut] = useState();
-    const [savedTimeOut, setSavedTimeOut] = useState();
-
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.currentTarget.value);
-    }
-
 
     const handleFullNameChange = (e) => {
         setFullName(e.currentTarget.value);
@@ -65,8 +59,6 @@ const Checkout = (props) => {
         } else {
             setIsValidName("is-invalid");
         }
-
-
     }
     const handleNumberChange = (e) => {
         if (e.currentTarget.value.length < 20) {
@@ -135,7 +127,7 @@ const Checkout = (props) => {
         setShowCreditCards(false);
         setIsPaypal(true);
     }
-    const handleCardMethod = (e) =>{
+    const handleCardMethod = (e) => {
         setIsPaypal(false);
         setShowCreditCards(true)
     }
@@ -156,8 +148,8 @@ const Checkout = (props) => {
     const show_message = () => {
 
         return (
-            message == "order" ? <div id="loading-spinner" className="" style={{ padding: "10px", display:"flex",justifyContent:"center" }}>
-                <p style={{marginRight:"20px"}}> Processing your order </p>
+            message == "order" ? <div id="loading-spinner" className="" style={{ padding: "10px", display: "flex", justifyContent: "center" }}>
+                <p style={{ marginRight: "20px" }}> Processing your order </p>
                 <div className="spinner-border" role="status">
                     <span className="sr-only">Loading...</span>
                 </div>
@@ -253,10 +245,10 @@ const Checkout = (props) => {
                     });
                 }
             }).render('#paypal-button-container');
-    
+
         }
 
-        
+
     }
 
     //Create new order
@@ -295,7 +287,7 @@ const Checkout = (props) => {
                 setOrder({ type: "createOrder", text: res.data })
 
                 setTimeout(() => {
-                    window.location.href="/account/cart/checkout/order-details";
+                    window.location.href = "/account/cart/checkout/order-details";
                 }, 1000)
 
             }
@@ -507,10 +499,10 @@ const Checkout = (props) => {
 
                         <div className="tab-pane fade" id="nav-tab-paypal">
                             <p>You will be redirected to PayPal site to complete the order.
-                                    
+
 
                             </p>
-                            
+
                             <div id="paypal-button-container">
 
                             </div>
@@ -520,12 +512,12 @@ const Checkout = (props) => {
                         </div>
 
                         {isPaypal ? <div><p> Test account: </p>
-                        <p>Email: wallatest@gmail.com</p>
-                        <p> Password: wallatest </p></div>
+                            <p>Email: wallatest@gmail.com</p>
+                            <p> Password: wallatest </p></div>
                             :
                             null}
                     </div>
-                    <div className="col-md-12"><Link className="btn btn-warning" style={{margin:"20px"}} to="/account/cart"> <i className="fa fa-angle-left"></i> Back to cart </Link></div>
+                    <div className="col-md-12"><Link className="btn btn-warning" style={{ margin: "20px" }} to="/account/cart"> <i className="fa fa-angle-left"></i> Back to cart </Link></div>
 
 
                 </div>

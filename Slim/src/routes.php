@@ -27,7 +27,7 @@ return function (App $app) {
         //Create the token and encode it.
         if (count($user)>0 && count($user)<2) {
             $now = new DateTime();
-            $future = new DateTime('+500 minutes');
+            $future = new DateTime('+60 minutes');
             $jti = (new Base62)->encode(random_bytes(16));
             $payload = [
             'iat' => $now->getTimeStamp(),
@@ -75,7 +75,7 @@ return function (App $app) {
             $inserted = $mongo->wallakeys->users->insertOne(['email'=>$email,'password'=>$password], array());
 
             $now = new DateTime();
-            $future = new DateTime('+500 minutes');
+            $future = new DateTime('+60 minutes');
             $jti = (new Base62)->encode(random_bytes(16));
             $payload = [
             'iat' => $now->getTimeStamp(),
@@ -110,10 +110,10 @@ return function (App $app) {
         
         if (($delete->getDeletedCount())>0) {
             return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
-            ->write(json_encode("User has been deleted succesfully", JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+            ->write(json_encode("true", JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
         } else {
             return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
-            ->write(json_encode("error", JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+            ->write(json_encode("false", JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
         }
     });
 
@@ -172,37 +172,37 @@ return function (App $app) {
         if ($platforms != null and $categories != null and isset($maxPrice) and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
                                                                       ["platforms" =>['$all'=>$platforms]],
-                                                                      ["price" =>['$gt'=>intval($minPrice),'$lt'=>intval($maxPrice)]] ]   ])->toArray();
+                                                                      ["price" =>['$gt'=>doubleval($minPrice),'$lt'=>doubleval($maxPrice)]] ]   ])->toArray();
         } elseif ($platforms != null and $categories != null and !isset($maxPrice) and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
                                                                       ["platforms" =>['$all'=>$platforms]],
-                                                                      ["price" =>['$gt'=>intval($minPrice)]]]    ])->toArray();
+                                                                      ["price" =>['$gt'=>doubleval($minPrice)]]]    ])->toArray();
         } elseif ($platforms != null and $categories != null and isset($maxPrice) and !isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
                                                                       ["platforms" =>['$all'=>$platforms]],
-                                                                      ["price" =>['$lt'=>intval($maxPrice)]]]    ])->toArray();
+                                                                      ["price" =>['$lt'=>doubleval($maxPrice)]]]    ])->toArray();
         
         //If categories not null and prices change
         } elseif ($categories != null and isset($maxPrice) and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
-                                                                  ["price" =>['$gt'=>intval($minPrice),'$lt'=>intval($maxPrice)]] ]   ])->toArray();
+                                                                  ["price" =>['$gt'=>doubleval($minPrice),'$lt'=>doubleval($maxPrice)]] ]   ])->toArray();
         } elseif ($categories != null and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
-                                                                        ["price" =>['$gt'=>intval($minPrice)]] ]   ])->toArray();
+                                                                        ["price" =>['$gt'=>doubleval($minPrice)]] ]   ])->toArray();
         } elseif ($categories != null and isset($maxPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["categories" => ['$in'=>$categories]],
-                                                                        ["price" =>['$lt'=>intval($maxPrice)]] ]   ])->toArray();
+                                                                        ["price" =>['$lt'=>doubleval($maxPrice)]] ]   ])->toArray();
                            
         //If platforms not null and prices change
         } elseif ($platforms != null and isset($maxPrice) and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [     ["platforms" =>['$all'=>$platforms]],
-                                                                        ["price" =>['$gt'=>intval($minPrice),'$lt'=>intval($maxPrice)]] ]   ])->toArray();
+                                                                        ["price" =>['$gt'=>doubleval($minPrice),'$lt'=>doubleval($maxPrice)]] ]   ])->toArray();
         } elseif ($platforms != null and isset($minPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [     ["platforms" =>['$all'=>$platforms]],
-                                                                        ["price" =>['$gt'=>intval($minPrice)]] ]   ])->toArray();
+                                                                        ["price" =>['$gt'=>doubleval($minPrice)]] ]   ])->toArray();
         } elseif ($platforms != null and isset($maxPrice)) {
             $data = $mongo->wallakeys->games->find([   '$and' => [    ["platforms" =>['$all'=>$platforms]],
-                                                                        ["price" =>['$lt'=>intval($maxPrice)]] ]   ])->toArray();
+                                                                        ["price" =>['$lt'=>doubleval($maxPrice)]] ]   ])->toArray();
 
         //If platforms and categories are not null but prices are
         } elseif ($platforms != null and $categories != null) {
@@ -219,15 +219,15 @@ return function (App $app) {
         
         //If only min and max price
         } elseif (isset($minPrice) and isset($maxPrice)) {
-            $data = $mongo->wallakeys->games->find(["price" =>['$gt'=>intval($minPrice),'$lt'=>intval($maxPrice)]])->toArray();
+            $data = $mongo->wallakeys->games->find(["price" =>['$gt'=>doubleval($minPrice),'$lt'=>doubleval($maxPrice)]])->toArray();
         
         //If only max price
         } elseif (isset($maxPrice)) {
-            $data = $mongo->wallakeys->games->find(["price" =>['$lt'=>intval($maxPrice)]])->toArray();
+            $data = $mongo->wallakeys->games->find(["price" =>['$lt'=>doubleval($maxPrice)]])->toArray();
         
         //If onlye min price
         } elseif (isset($minPrice)) {
-            $data = $mongo->wallakeys->games->find(["price" =>['$gt'=>intval($minPrice)]])->toArray();
+            $data = $mongo->wallakeys->games->find(["price" =>['$gt'=>doubleval($minPrice)]])->toArray();
         }
 
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
@@ -318,8 +318,10 @@ return function (App $app) {
                 ['upsert' => true]
             );
         }
-        if (!isset($info[0])) {
+        if (!is_null($info[0])) {
             $info = true;
+        } else{
+            $info = false;
         }
        
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json')
@@ -528,7 +530,7 @@ return function (App $app) {
         }
 
         $orderID = substr(str_shuffle(str_repeat("0123456789", 6)), 0, 6);
-        $date = (new DateTime())->format('Y-m-s H:i:s');
+        $date = (new DateTime())->format('Y-m-d H:i:s');
         $info[] = $mongo->wallakeys->users->findOneAndUpdate(
             ['_id' => new MongoDB\BSON\ObjectId($oid)],
             [ '$push' =>['orders' => [

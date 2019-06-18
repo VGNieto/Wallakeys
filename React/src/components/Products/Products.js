@@ -138,6 +138,8 @@ const Products = () => {
     const orderGames = (e) => {
         console.log(e.currentTarget.value);
         switch (e.currentTarget.value) {
+            case "0" : loadAllGames()
+                        break;
             case "1": setGames(
                 { type: "addGames", games: games.items.sort((a, b) => a.price - b.price) }
             );
@@ -159,10 +161,10 @@ const Products = () => {
 
         <div className="container row">
             <select className="form-control" onChange={orderGames} style={{ marginBottom: "30px" }}>
-                <option value="0" defaultValue>Order by...</option>
+                <option value="0" defaultValue>Featured Games</option>
+                <option value="3" >Alphabetical Order </option>
                 <option value="1" >Cheapest first</option>
                 <option value="2">Most expensive first</option>
-                <option value="3" >Alphabetical Order </option>
             </select>
 
             {games.items.map((game) =>
