@@ -18,20 +18,21 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {},
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.8.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "bootstrap-loader": "^3.0.4",
+    "caniuse-lite": "^1.0.30000974",
     "jquery": "^3.4.1",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-router-dom": "^5.0.0",
     "tether": "^1.4.6"
-  }
+  },
+  "browserslist": [
+    "last 1 version",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
