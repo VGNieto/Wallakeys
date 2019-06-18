@@ -27,7 +27,12 @@ export const UserReducer = (props) => {
 
     useEffect(() => {
         const myItem = localStorage.getItem("token_id");
-        if (myItem !== null) { dispatch({ type: 'login', text: JSON.parse(myItem) })    }
+        let date = new Date();
+       
+        if (myItem !== null && JSON.parse(myItem).expires>date.getTime()/1000) { console.log(date.getTime());
+        console.log(JSON.parse(myItem).expires); dispatch({ type: 'login', text: JSON.parse(myItem) })    } else{
+            localStorage.clear();
+        }
         
     }, []);
 

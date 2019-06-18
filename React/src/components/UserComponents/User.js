@@ -16,8 +16,9 @@ const User = (props) => {
     birthday: "",
     country: "",
   })
+  const [password, setPassword] = useState();
 
-  const [validName,setValidName] = useState("");
+  const [validName, setValidName] = useState("");
   const [result, setResult] = useState();
   const [spinnerTimeOut, setSpinnerTimeOut] = useState();
   const [savedTimeOut, setSavedTimeOut] = useState();
@@ -56,31 +57,60 @@ const User = (props) => {
       "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia",
       "Zambia", "Zimbabwe"];
 
-      const countr = countries.map((country) => {
-          if (country == userDetails.country){
-            return (<option value={country} key={country} selected> {country}</option>)
+    const countr = countries.map((country) => {
+      if (country == userDetails.country) {
+        return (<option value={country} key={country} selected> {country}</option>)
 
-          } else{
-            return (<option value={country} key={country}> {country}</option>)
+      } else {
+        return (<option value={country} key={country}> {country}</option>)
 
-          }
+      }
+
+    });
+
+    return (
+      countr
+    )
+
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.currentTarget.value);
+  }
+  const confirmDelete = (e) => {
+    if (user.token) {
+      const token = 'Bearer ' + user.token;
+
+
+      clearTimeout(savedTimeOut);
+
+      axios({
+        method: 'delete',
+        url: 'https://api.imviczz.com/api/user/delete',
+        headers: {
+          Authorization: token,
+
+        },
+
+      }).then(res => {
+
+        if(res.data == true){
+          dispatch({ type: 'logout' });
+          window.location.href="/"
+        }
 
       });
-
-      return (
-        countr
-      )
-
+    }
   }
   const showResult = () => {
 
     if (result == true) {
       return (
-        <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "green" }}>Changes saved</p>
+        <p className="" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "green" }}>Changes saved</p>
       )
     } else if (result == false) {
       return (
-        <p className="d-none" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "red" }}>Changes not saved</p>
+        <p className="" id="saved-changes" style={{ margin: "0", paddingLeft: "15px", color: "red" }}>Changes not saved</p>
       )
     } else {
       return (
@@ -99,7 +129,7 @@ const User = (props) => {
     savedchanges.className = "d-none";
     clearTimeout(spinnerTimeOut);
     clearTimeout(savedTimeOut);
-    
+
     axios({
       method: 'post',
       url: 'https://api.imviczz.com/api/user/update',
@@ -115,7 +145,7 @@ const User = (props) => {
     })
       .then(res => {
         setResult(res.data);
-
+        console.log(res.data);
         setSpinnerTimeOut(setTimeout(() => {
           savedchanges.className = "";
           spinner.className = "d-none";
@@ -134,7 +164,7 @@ const User = (props) => {
   const handleBirthdayChange = (e) => {
     setUserdetails({ ...userDetails, birthday: e.currentTarget.value })
   }
-  
+
   const handleFullNameChanges = (e) => {
     setUserdetails({ ...userDetails, fullname: e.currentTarget.value });
     let reg = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
@@ -155,24 +185,24 @@ const User = (props) => {
   }
 
   useEffect(() => {
-    if(user.token){
+    if (user.token) {
 
-    
-    const token = 'Bearer ' + user.token;
-    axios({
-      method: 'get',
-      url: 'https://api.imviczz.com/api/user/info',
-      headers: {
-        Authorization: token
-      }
-    })
-      .then(res => {
 
-        let data = (res.data);
-        if (data !== false) {
-          setUserdetails({ ...userDetails, ...data[0] })
+      const token = 'Bearer ' + user.token;
+      axios({
+        method: 'get',
+        url: 'https://api.imviczz.com/api/user/info',
+        headers: {
+          Authorization: token
         }
-      });
+      })
+        .then(res => {
+
+          let data = (res.data);
+          if (data !== false) {
+            setUserdetails({ ...userDetails, ...data[0] })
+          }
+        });
     }
   }, [])
 
@@ -182,7 +212,7 @@ const User = (props) => {
       <div className="row justify-content-center" style={{ paddingTop: "25px" }}>
 
         <div className="col-md-4">
-        <div className="card card-header text-primary">Account Dashboard</div>
+          <div className="card card-header text-primary">Account Dashboard</div>
 
           <div className="list-group">
 
@@ -212,7 +242,7 @@ const User = (props) => {
                   <label htmlFor="full_name" className="col-md-4 col-form-label text-md-right">Full Name</label>
                   <div className="col-md-6">
                     <input type="text" id="full_name" className={"form-control " + validName} name="full_name" onChange={handleFullNameChanges} defaultValue={userDetails.fullname} required autoFocus />
-                    {validName != "" ? <p className="horizontal-align text-danger"> Name must contain only letters</p> : null }
+                    {validName != "" ? <p className="horizontal-align text-danger"> Name must contain only letters</p> : null}
                   </div>
                 </div>
 
@@ -220,6 +250,7 @@ const User = (props) => {
                   <label htmlFor="country" className="col-md-4 col-form-label text-md-right">Country</label>
                   <div className="col-md-6">
                     <select className="custom-select" id="country" name="country_select" onChange={handleCountryChanges} required >
+                      <option selected disabled> Select one...</option>
                       {countryHandle()}
                     </select>
                   </div>
@@ -229,31 +260,67 @@ const User = (props) => {
                   <label htmlFor="birth_date" className="col-md-4 col-form-label text-md-right">Birthday</label>
                   <div className="col-md-6">
                     <input type="date" id="birth_date" className="form-control" onChange={handleBirthdayChange}
-                    defaultValue={userDetails.birthday} name="birth_date" required />
+                      defaultValue={userDetails.birthday} name="birth_date" required />
                   </div>
                 </div>
 
 
-                <div className="col-md-6 offset-md-4 center-align"style={{alignItems:"center"}}>
-                  {validName=="" ? <button type="button" className="btn btn-primary" onClick={saveChanges}> Save Changes </button> 
-                    
-                    : 
+                <div className="col-md-6 offset-md-4 center-align" style={{ alignItems: "center" }}>
+                  {validName == "" ? <button type="button" className="btn btn-primary" onClick={saveChanges}> Save Changes </button>
+
+                    :
                     <div>
-                    <button type="button" className="btn btn-primary horizontal-align" disabled > Save Changes </button>
-                    </div> 
-                    }
-                  <div id="loading-spinner" className="d-none" style={{padding:"10px"}}> 
+                      <button type="button" className="btn btn-primary horizontal-align" disabled > Save Changes </button>
+                    </div>
+                  }
+                  <div id="loading-spinner" className="d-none" style={{ padding: "10px" }}>
                     <div className="spinner-border d-flex justify-content-center " role="status">
-                        <span className="sr-only">Loading...</span>
+                      <span className="sr-only">Loading...</span>
                     </div>
                   </div>
-                  { showResult()}
+                  {showResult()}
                 </div>
               </form>
             </div>
           </div>
         </div>
+
+        <div id="pwdModal" className="modal fade" tabIndex="-1" role="dialog" aria-hidden="true">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4 className="center-align">Are you sure? Introduce your password</h4>
+              </div>
+              <div className="modal-body">
+                <div className="col-md-12">
+                  <div className="panel panel-default">
+                    <div className="panel-body">
+                      <div className="text-center">
+                        <div className="panel-body">
+                          <fieldset>
+                            <div className="form-group">
+                              <input className="form-control input-lg" placeholder="Password" value={password} onChange={handlePasswordChange} name="Password" type="Password" />
+                            </div>
+                            <button className="btn btn-lg btn-primary btn-block" data-dismiss="modal" aria-hidden="true" onClick={confirmDelete}>Delete account</button>
+                          </fieldset>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <div className="col-md-12">
+                  <button className="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
+      <a style={{ float: "right" }} className="text-danger" href="#" data-target="#pwdModal" data-toggle="modal">Delete account</a>
+
     </div>
 
 

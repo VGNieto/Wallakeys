@@ -111,10 +111,10 @@ const Password = (props) => {
                   <div className="col-md-6">
                     <input type="password" id="new_password" onChange={handleNewValue} className={"form-control " + isValidPassword} name="new_password" required />
                   </div>
-                  {isValidPassword != "" ? <p className="horizontal-align text-danger">Password must cointain 4-8 characters and atleast 1 number</p> : null}
+                  {isValidPassword != "" ? <p className="horizontal-align text-danger">Password must cointain 4-8 characters and at least 1 number</p> : null}
                 </div>
 
-                <div className="col-md-6 offset-md-4 " style={{display:"flex",flexDirection:"column"}} >
+                <div className="col-md-6 offset-md-4 " style={{display:"flex"}} >
                   { isValidPassword == "" && !saveChangesActive  ? <button type="button" className="horizontal-align btn btn-primary"  onClick={saveChanges}>Save Changes  </button>
                     :
                     <button type="button" className="horizontal-align btn btn-primary" disabled>Save Changes  </button>

@@ -23,7 +23,7 @@ const User = (props) => {
     let detailToOpen = document.getElementById(dataButton);
 
     detailToOpen.className == "orders-row-active" ? detailToOpen.className = "orders-row" :
-    detailToOpen.className = "orders-row-active"
+      detailToOpen.className = "orders-row-active"
   }
 
 
@@ -35,8 +35,8 @@ const User = (props) => {
         {orders.orders.map((element) =>
           <div className="form-group" key={element.id}>
             <button className="form-control  card-details-button" data-button={element.id} onClick={(e) => { handleOpenDetails(e) }} >
-              <p data-button="card-1"> {"Order nº" + element.id}</p>
-              <p style={{ fontSize: "12px" }}> {"Order date:" + element.date}</p>
+              <p data-button="card-1"> {"Order nº " + element.id}</p>
+              <p style={{ fontSize: "12px" }}> {"Order date: " + element.date}</p>
               <i className="fa fa-chevron-down " data-button="card-1" disabled></i>
             </button>
             <div className="row orders-row " id={element.id}>
@@ -117,21 +117,23 @@ const User = (props) => {
 
 
   useEffect(() => {
-    const token = 'Bearer ' + user.token;
-    axios({
-      method: 'get',
-      url: 'https://api.imviczz.com/api/user/orders',
-      headers: {
-        Authorization: token
-      }
-    })
-      .then(res => {
-
-        let data = (res.data);
-        if (data !== false) {
-          setOrders(data[0])
+    if (user.token) {
+      const token = 'Bearer ' + user.token;
+      axios({
+        method: 'get',
+        url: 'https://api.imviczz.com/api/user/orders',
+        headers: {
+          Authorization: token
         }
-      });
+      })
+        .then(res => {
+
+          let data = (res.data);
+          if (data !== false) {
+            setOrders(data[0])
+          }
+        });
+    }
   }, [])
 
 

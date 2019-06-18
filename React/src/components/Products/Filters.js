@@ -189,11 +189,11 @@ const Filters = (props) => {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Min</label>
-                                    <input type="number" onChange={update_price} className="form-control" id="minPrice" placeholder="$0" />
+                                    <input type="number" onChange={update_price} className="form-control"  min="0" id="minPrice" placeholder="$0" />
                                 </div>
                                 <div className="form-group col-md-6 text-right">
                                     <label>Max</label>
-                                    <input type="number" onChange={update_price} className="form-control" id="maxPrice" placeholder="$1,0000" />
+                                    <input type="number" onChange={update_price} className="form-control" max="1000" min="0" id="maxPrice" placeholder="$1,0000" />
                                 </div>
                             </div>
                         </div>

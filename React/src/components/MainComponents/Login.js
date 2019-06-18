@@ -185,7 +185,7 @@ const Login = (props) => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
-                                                    <button onClick={sendLogin} type="button" className="btn btn-primary btn-block"> Login  </button>
+                                                    <button onClick={sendLogin} type="button" className="btn btn-primary btn-block"> Log in  </button>
                                                 </div>
                                                 <div className="center-align d-none" id="loading-spinner">
                                                     <div className="spinner-border d-flex justify-content-center " role="status">
@@ -219,7 +219,7 @@ const Login = (props) => {
                                                             <input className={"form-control " + passwordError} placeholder="New Password" name="passwordRegister" type="password"
                                                             value={passwordRegister} onChange={handleChange} />
                                                         </div>
-                                                        {passwordError != "" ? <p className="text-danger" style={{display:"block",margin:"auto"}}>Password must contain 4-8 characters and atleast 1 number</p> : null}
+                                                        {passwordError != "" ? <p className="text-danger" style={{display:"block",margin:"auto"}}>Password must contain 4-8 characters and at least 1 number</p> : null}
 
                                                     </div>
 
@@ -246,13 +246,13 @@ const Login = (props) => {
                                         <li><span className="fa fa-check text-success"></span> Save your favorites</li>
                                         <li><span className="fa fa-check text-success"></span> Fast checkout</li>
                                     </ul>
-                                    <button onClick={handleRegister} className="btn btn-info horizontal-align">Register now!</button>
+                                    <button onClick={handleRegister} className="btn btn-info">Register now!</button>
                                 </div>
                                 :
                                 <div className="col-sm-6">
-                                    <p >Already have account?  <span className="text-success">LOGIN</span></p>
+                                    <p className="horizontal-align" >Already have account? </p>
                                     
-                                    <button onClick={handleRegister} className="btn btn-info horizontal-align ">Login!</button>
+                                    <button onClick={handleRegister} className="btn btn-info">Log in!</button>
                                 </div>}
                             </div>
                         </div>
